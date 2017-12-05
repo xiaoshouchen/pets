@@ -4,6 +4,7 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity
 } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'; // 1.0.0-beta.14
+import{ArticleDetail}from '../details/forum/ArticleDetail'
 
 
 class HomeScreen extends Component {
@@ -49,9 +50,11 @@ class HomeScreen extends Component {
 
     }
 
-
+    static navigationOptions = {
+        title: 'Welcome',
+      };
     render() {
-
+        const { navigate } = this.props.navigation;        
         if (this.state.isLoading) {
             return (
                 <View style={{ flex: 1, paddingTop: 20 }}>
@@ -73,9 +76,7 @@ class HomeScreen extends Component {
                     renderItem={({ item }) => (
                         <View>
                             <Text style={{ fontSize: 15 }} onPress={
-                                ({ navigation }) => {
-                                    navigation.navigate('ArticleDetail');
-                                }
+                                () => navigate('ArticleDetail',{id:item.id})   
                             }>
                                 {item.type==undefined?'【分享】':item.type}{item.title}
                             </Text>

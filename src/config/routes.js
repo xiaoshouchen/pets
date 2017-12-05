@@ -8,6 +8,7 @@ import {ProfileScreen} from '../screens/tabs/Profile';
 import {SelectionScreen} from '../screens/tabs/Selection';
 import {StoreScreen} from '../screens/tabs/Store';
 import {LoginScreen} from '../screens/Login';
+import { ArticleDetail } from '../screens/details/forum/ArticleDetail';
 
 const Tabs = TabNavigator({
     Home: {
@@ -106,6 +107,10 @@ const Tabs = TabNavigator({
       screen: LoginScreen,
       headerTitle: '登陆小宠乐园'
     },
+    ArticleDetail:{
+      screen:ArticleDetail,
+      headerTitle:"文章"
+    }
   });
   
   export default RootNavigator;
