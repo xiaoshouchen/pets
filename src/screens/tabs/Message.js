@@ -1,12 +1,9 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import RichEditor from 'react-native-webview-richeditor';
 
 const MessageScreen = ({ navigation }) => (
-  <Text onPress={
-    ()=>{
-      navigation.navigate('ArticleDetail',{name:'1'})
-    }
-  }>消息</Text>
+  <RichEditor />  
 )
 export {MessageScreen}
