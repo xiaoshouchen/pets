@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import {RichTextEditor, RichTextToolbar} from 'react-native-zss-rich-text-editor';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 
-const MessageScreen = ({ navigation }) => (
-  <View style={styles.container}>
-  <RichEditor />  
-  <KeyboardSpacer/>
-  </View>
-)
+
+class MessageScreen extends Component{
+  constructor(props){
+    super(props)
+    this.state={
+      html:props.editorHtml
+    }
+  }
+  render()
+  {
+    const { navigate } = this.props.navigation;     
+    return <View style={styles.container}>
+    <Button title="提交" onPress={
+      ()=>{
+        alert(this.state.messagesReceivedFromWebView)
+      }
+    }/>
+    </View>
+}}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

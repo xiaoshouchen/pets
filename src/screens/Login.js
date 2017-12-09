@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View,TextInput} from 'react-native';
 import { Card, PricingCard, ListItem, Button, Tile, FormLabel, FormInput } from 'react-native-elements';
-
+import App from '../utils/app.core'
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +12,7 @@ class LoginScreen extends Component {
     }
   }
   render() {
+    const { navigate } = this.props.navigation;            
     return (
       <View style={{ backgroundColor: "white", flex: 1 }}>
         <FormLabel
@@ -61,7 +62,8 @@ class LoginScreen extends Component {
         <Button
           disabled={this.state.disableButton}
           onPress={() => {
-            alert(this.state.passwordIsNull)
+            App.setASCache('gloabl_login_token','123');
+            navigate('Home'); 
           }}
           buttonStyle={{ marginTop: 15 }}
           title="登陆"
