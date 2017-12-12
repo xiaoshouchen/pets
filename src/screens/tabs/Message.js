@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { Icon} from 'react-native-elements'
 
 
 class MessageScreen extends Component{
@@ -9,6 +10,18 @@ class MessageScreen extends Component{
     this.state={
       html:props.editorHtml
     }
+  }
+  static navigationOptions= {
+    tabBarLabel: "消息",
+    title: '个人消息',
+    tabBarIcon: ({ tintColor, focused }) => (
+      <Icon
+        name='bell'
+        size={20}
+        type='font-awesome'
+        color={tintColor}
+      />
+    ),
   }
   render()
   {

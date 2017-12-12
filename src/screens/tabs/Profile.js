@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { Icon, Avatar } from 'react-native-elements'
@@ -6,8 +6,21 @@ import { Icon, Avatar } from 'react-native-elements'
 const pic = {
   uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
 };
-const ProfileScreen = ({ navigation }) => (
-  <ScrollView>
+class  ProfileScreen extends Component{
+  static navigationOptions= {
+    tabBarLabel: "我的",
+    title: '个人资料',
+    tabBarIcon: ({ tintColor, focused }) => (
+      <Icon
+        name='person'
+        size={30}
+        type="MaterialIcons"
+        color={tintColor}
+      />
+    ),
+  }
+  render(){
+    return <ScrollView>
     <View style={styles.lineContainer}>
       <Avatar
         medium
@@ -61,7 +74,9 @@ const ProfileScreen = ({ navigation }) => (
       </View>
     </View>
   </ScrollView>
-)
+  }
+}
+  
 export { ProfileScreen }
 const styles = StyleSheet.create({
   lineContainer: {

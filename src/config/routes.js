@@ -13,63 +13,9 @@ import { AddArticle } from '../screens/details/forum/AddArticle';
 import  App  from '../utils/app.core'
 
 const Tabs = TabNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: '小宠乐园',
-      headerRight:
-        <Button title={App.checkLogin() ? "+" : "登陆"}
-          onPress={
-            () => {
-              if (App.checkLogin()) {
-                navigation.navigate('Message')
-              }
-              else { navigation.navigate('Login') }
-
-            }
-          }
-        />,
-      tabBarLabel: '主页',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Icon
-          name='home'
-          size={30}
-          type="MaterialIcons"
-          color={tintColor}
-        />
-      ),
-    }),
-  },
-  Selection: {
-    screen: SelectionScreen,
-    navigationOptions: {
-      tabBarLabel: "精选",
-      title: '文章精选',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Icon
-          name='list'
-          size={30}
-          type="MaterialIcons"
-          color={tintColor}
-        />
-      ),
-    }
-  },
-  Message: {
-    screen: MessageScreen,
-    navigationOptions: {
-      tabBarLabel: "消息",
-      title: '个人消息',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Icon
-          name='bell'
-          size={20}
-          type='font-awesome'
-          color={tintColor}
-        />
-      ),
-    }
-  },
+  Home: {screen: HomeScreen,},
+  Selection: {screen: SelectionScreen,},
+  Message: {screen: MessageScreen,},
   Store: {
     screen: StoreScreen,
     navigationOptions: {
@@ -87,18 +33,7 @@ const Tabs = TabNavigator({
   },
   Profile: {
     screen: ProfileScreen,
-    navigationOptions: {
-      tabBarLabel: "我的",
-      title: '个人资料',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Icon
-          name='person'
-          size={30}
-          type="MaterialIcons"
-          color={tintColor}
-        />
-      ),
-    }
+    
   }
 },
   {
