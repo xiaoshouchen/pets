@@ -17,7 +17,7 @@ class StoreScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://192.168.123.170/pets/index.php/api/products')
+        return fetch('http://www.xiaochongleyuan.com/api/products')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -38,7 +38,7 @@ class StoreScreen extends Component {
                 style={{
                     height: 1,
                     width: "100%",
-                    backgroundColor: "#607D8B",
+                    backgroundColor: "white",
                 }}
             />
         );
@@ -97,7 +97,7 @@ class StoreScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    MainContainer: {
         backgroundColor: 'white',
     },
     item: {

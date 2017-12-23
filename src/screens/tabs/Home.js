@@ -42,7 +42,7 @@ class HomeScreen extends Component {
       })
     componentDidMount() {
 
-        return fetch('http://192.168.123.170/pets/index.php/api/article')
+        return fetch('http://www.xiaochongleyuan.com/api/article')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
