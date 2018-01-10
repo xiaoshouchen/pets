@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react'
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity,Image
-} from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation'; // 1.0.0-beta.14
-import{ArticleDetail}from '../details/forum/ArticleDetail'
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Image
+} from 'react-native'
+import {TabNavigator, StackNavigator} from 'react-navigation'
+import { Icon } from 'react-native-elements';
+import {ArticleDetail} from '../details/forum/ArticleDetail'
 
 
 class StoreScreen extends Component {
@@ -17,7 +18,7 @@ class StoreScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://www.xiaochongleyuan.com/api/products')
+        return fetch('http://123.207.217.225/api/products')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -51,14 +52,29 @@ class StoreScreen extends Component {
     }
 
     static navigationOptions = {
-        title: 'Welcome',
-      };
+        tabBarLabel: "商城",
+        headerLeft: <Icon
+            name='shopping-cart'
+            size={30}
+            type="MaterialIcons"
+        />,
+        title: '小宠商城',
+        tabBarIcon: ({tintColor, focused}) => (
+            <Icon
+                name='shopping-cart'
+                size={30}
+                type="MaterialIcons"
+                color={tintColor}
+            />
+        ),
+    }
+
     render() {
-        const { navigate } = this.props.navigation;        
+        const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
@@ -73,14 +89,14 @@ class StoreScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({ item }) => (
-                        <View style={{flexDirection:'row'}}>
-                            <Image source={{uri:item.img1}} style={styles.product_img}/>
+                    renderItem={({item}) => (
+                        <View style={{flexDirection: 'row'}}>
+                            <Image source={{uri: item.img1}} style={styles.product_img}/>
                             <View>
-                            <Text style={styles.product_title}>{item.title}</Text>
-                            <Text style={styles.product_describe}>{item.describe}</Text>
-                            <Text style={styles.product_price}>￥{item.price}</Text>
-                            <Text>{item.created_at}</Text>
+                                <Text style={styles.product_title}>{item.title}</Text>
+                                <Text style={styles.product_describe}>{item.describe}</Text>
+                                <Text style={styles.product_price}>￥{item.price}</Text>
+                                <Text>{item.created_at}</Text>
                             </View>
                         </View>)
                     }
@@ -119,26 +135,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
         height: 44,
     },
-    product_img:{
-      width:100,
-      height:100,
-      margin:10
+    product_img: {
+        width: 100,
+        height: 100,
+        margin: 10
     },
     product_price: {
-      paddingTop: 6,
-      fontSize: 16,
-      color: 'red'
+        paddingTop: 6,
+        fontSize: 16,
+        color: 'red'
     },
     product_title: {
-      paddingTop: 10,
-      fontSize: 16,
-      color:"black"
+        paddingTop: 10,
+        fontSize: 16,
+        color: "black"
     },
     product_describe: {
-      paddingTop: 6,
-      fontSize: 14,
+        paddingTop: 6,
+        fontSize: 14,
     },
 
 });
 
-export { StoreScreen }
+export {StoreScreen}
