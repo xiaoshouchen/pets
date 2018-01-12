@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity,Button
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Button
 } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { TabNavigator, StackNavigator } from 'react-navigation'; // 1.0.0-beta.14
-import{ArticleDetail}from '../details/forum/ArticleDetail';
-import  App  from '../../utils/app.core'
-
+import {Icon} from 'react-native-elements';
+import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'; // 1.0.0-beta.14
+import {ArticleDetail} from '../details/forum/ArticleDetail';
+import App from '../../utils/app.core'
+import {ProfileScreen} from "./Profile";
+import {MessageScreen} from "./Message";
+import {SelectionScreen} from "./Selection";
+import {StoreScreen} from "./Store";
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -16,33 +19,37 @@ class HomeScreen extends Component {
             isLoading: true
         }
     }
-    static navigationOptions = ({ navigation }) => ({
+
+    static navigationOptions = ({navigation}) => ({
         title: '小宠乐园',
         headerRight:
-          <Button title={App.checkLogin() ? "+" : "登陆"}
-            onPress={
-              () => {
-                if (App.checkLogin()) {
-                  navigation.navigate('Message')
-                }
-                else { navigation.navigate('Login') }
-  
-              }
-            }
-          />,
+            <Button title={App.checkLogin() ? "发布" : "登陆"}
+                    onPress={
+                        () => {
+                            if (App.checkLogin()) {
+                                navigation.navigate('Message')
+                            }
+                            else {
+                                navigation.navigate('Login')
+                            }
+
+                        }
+                    }
+            />,
         tabBarLabel: '主页',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='home'
-            size={30}
-            type="MaterialIcons"
-            color={tintColor}
-          />
+        tabBarIcon: ({tintColor, focused}) => (
+            <Icon
+                name='home'
+                size={30}
+                type="MaterialIcons"
+                color={tintColor}
+            />
         ),
-      })
+    })
+
     componentDidMount() {
 
-        return fetch('http://www.xiaochongleyuan.com/api/article')
+        return fetch('http://123.207.217.225//api/article')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -74,12 +81,13 @@ class HomeScreen extends Component {
         Alert.alert(fruit_name);
 
     }
+
     render() {
-        const { navigate } = this.props.navigation;        
+        const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
@@ -94,12 +102,12 @@ class HomeScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({ item }) => (
+                    renderItem={({item}) => (
                         <View>
-                            <Text style={{ fontSize: 15 }} onPress={
-                                () => navigate('ArticleDetail',{id:item.id})   
+                            <Text style={{fontSize: 15}} onPress={
+                                () => navigate('ArticleDetail', {id: item.id})
                             }>
-                                {item.type==undefined?'【分享】':item.type}{item.title}
+                                {item.type == undefined ? '【分享】' : item.type}{item.title}
                             </Text>
                             <Text>{item.type}</Text>
                             <Text>{item.created_at}</Text>
@@ -144,4 +152,4 @@ const styles = StyleSheet.create({
 
 });
 
-export { HomeScreen }
+export {HomeScreen}

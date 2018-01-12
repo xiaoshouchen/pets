@@ -25,7 +25,7 @@ class ArticleDetail extends Component {
                 justifyContent: 'space-between',
               }}>
                     <WebView style={{flex:1}}
-                             source={{uri: "http://www.xiaochongleyuan.com/api/article/"+params.id}}/>
+                             source={{uri: "http://123.207.217.225/api/article/"+params.id}}/>
                     <Button title='评论' style={{height:50}} onPress={()=>{navigate('AddArticle')}}/> 
             </View>
         );
