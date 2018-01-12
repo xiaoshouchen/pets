@@ -1,6 +1,7 @@
 import React from 'react';
 import {StackNavigator, TabNavigator, TabBarBottom, TabBarTop} from 'react-navigation';
 import {HomeScreen} from '../screens/tabs/Home';
+import {HotScreen} from '../screens/tabs/Hot';
 import {MessageScreen} from '../screens/tabs/Message';
 import {ProfileScreen} from '../screens/tabs/Profile';
 import {SelectionScreen} from '../screens/tabs/Selection';
@@ -11,15 +12,15 @@ import {AddArticle} from '../screens/details/forum/AddArticle';
 
 const IndexTabs = TabNavigator({
         Home: {screen: HomeScreen},
-        Selection: {screen: SelectionScreen},
-        Message: {screen: MessageScreen},
+        Hot: {screen: HotScreen},
     },
     {
         tabBarComponent: TabBarTop,
         tabBarPosition: 'top',
         swipeEnabled: true,
         tabBarOptions: {
-            activeTintColor: '#505d5b',
+            activeTintColor: '#374341',
+            inactiveTintColor:'#859391',
             labelStyle: {
                 fontSize: 12,
             },

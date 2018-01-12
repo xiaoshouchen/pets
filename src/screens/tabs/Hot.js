@@ -8,7 +8,7 @@ import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
 import {ArticleDetail} from '../details/forum/ArticleDetail'
 import App from '../../utils/app.core'
 
-class HomeScreen extends Component {
+class HotScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,7 +33,7 @@ class HomeScreen extends Component {
                     onPress={
                         () => {
                             if (App.checkLogin()) {
-                                navigation.navigate('Login')
+                                navigation.navigate('Message')
                             }
                             else {
                                 navigation.navigate('Login')
@@ -42,7 +42,7 @@ class HomeScreen extends Component {
                         }
                     }
             />,
-        tabBarLabel: '推荐',
+        tabBarLabel: '热门',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='home'
@@ -55,7 +55,7 @@ class HomeScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/article')
+        return fetch('http://123.207.217.225//api/article')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -180,4 +180,4 @@ const styles = StyleSheet.create({
 
 });
 
-export {HomeScreen}
+export {HotScreen}
