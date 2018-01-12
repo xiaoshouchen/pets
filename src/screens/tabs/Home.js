@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Button
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
-import {Icon} from 'react-native-elements';
-import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'; // 1.0.0-beta.14
-import {ArticleDetail} from '../details/forum/ArticleDetail';
+import {Icon} from 'react-native-elements'
+import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
+import {ArticleDetail} from '../details/forum/ArticleDetail'
 import App from '../../utils/app.core'
-import {ProfileScreen} from "./Profile";
-import {MessageScreen} from "./Message";
-import {SelectionScreen} from "./Selection";
-import {StoreScreen} from "./Store";
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -22,6 +18,16 @@ class HomeScreen extends Component {
 
     static navigationOptions = ({navigation}) => ({
         title: '小宠乐园',
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#3fd132'},
+        headerLeft:
+            <Icon
+                name='search'
+                size={30}
+                type="MaterialIcons"
+            />
+        ,
         headerRight:
             <Button title={App.checkLogin() ? "发布" : "登陆"}
                     onPress={
@@ -70,7 +76,7 @@ class HomeScreen extends Component {
                 style={{
                     height: 1,
                     width: "100%",
-                    backgroundColor: "#607D8B",
+                    backgroundColor: "#d9d7e8",
                 }}
             />
         );
@@ -103,14 +109,20 @@ class HomeScreen extends Component {
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
                     renderItem={({item}) => (
-                        <View>
-                            <Text style={{fontSize: 15}} onPress={
+                        <View style={styles.item}>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <Image source={{url: item.avatar_img}} style={styles.avatar}/>
+                                <View>
+                                    <Text style={styles.name}>{item.name}</Text>
+                                    <Text style={styles.date}>{item.created_at}</Text>
+                                </View>
+                            </View>
+                            <Text style={styles.title} onPress={
                                 () => navigate('ArticleDetail', {id: item.id})
                             }>
                                 {item.type == undefined ? '【分享】' : item.type}{item.title}
                             </Text>
-                            <Text>{item.type}</Text>
-                            <Text>{item.created_at}</Text>
+                            <Text style={styles.content}>{item.content}</Text>
                         </View>)
 
                     }
@@ -127,28 +139,44 @@ class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    MainContainer: {
         backgroundColor: 'white',
     },
     item: {
-        flexWrap: 'wrap',
-        flexDirection: 'row',
         borderRadius: 5,
         backgroundColor: 'white',
         marginTop: 8,
         marginLeft: 10,
         marginRight: 10,
     },
-    MainContainer: {
-        justifyContent: 'center',
-        flex: 1,
+    avatar: {
+        marginLeft: 5,
+        marginTop: 5,
+        marginRight: 15,
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        marginBottom: 5
     },
-
-    FlatListItemStyle: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
+    title: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginBottom: 5
     },
+    name: {
+        marginTop: 8,
+    },
+    date: {
+        marginTop: 4,
+        fontSize:10,
+        color:'#a19fa9'
+    },
+    content: {
+        marginLeft: 5,
+        fontSize: 12,
+        color: '#495863',
+        marginBottom: 10
+    }
 
 });
 

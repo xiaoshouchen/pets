@@ -19,7 +19,7 @@ const IndexTabs = TabNavigator({
         tabBarPosition: 'top',
         swipeEnabled: true,
         tabBarOptions: {
-            activeTintColor: '#d7e9e7',
+            activeTintColor: '#505d5b',
             labelStyle: {
                 fontSize: 12,
             },
