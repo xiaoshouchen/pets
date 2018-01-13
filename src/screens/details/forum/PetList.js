@@ -10,7 +10,7 @@ class Pet extends Component {
     render() {
         return (
             <View>
-
+                <Button onpress={}>添加宠物</Button>
             </View>
         )
             ;

@@ -5,14 +5,6 @@ class ArticleDetail extends Component {
     static navigationOptions= {
         tabBarLabel: "分享您的经验或故事",
         title: '分享您的经验或故事',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            name='bell'
-            size={20}
-            type='font-awesome'
-            color={tintColor}
-          />
-        ),
       }
     render() {
         const {params}=this.props.navigation.state;

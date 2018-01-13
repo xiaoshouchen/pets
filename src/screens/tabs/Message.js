@@ -17,7 +17,7 @@ class MessageScreen extends Component {
         title: '个人消息',
         tabBarIcon: ({tintColor, focused}) => (
             <Image
-                source={require('../../image/tab_launch.png')}
+                source={require('../../image/launch.png')}
             />
         ),
     }

@@ -4,7 +4,7 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image
 } from 'react-native'
 import {TabNavigator, StackNavigator} from 'react-navigation'
-import { Icon } from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {ArticleDetail} from '../details/forum/ArticleDetail'
 
 
@@ -55,7 +55,7 @@ class StoreScreen extends Component {
         tabBarLabel: "商城",
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ffb600'},
+        headerStyle: {backgroundColor: '#ff8302'},
         headerLeft: <Icon
             name='shopping-cart'
             size={30}
@@ -83,53 +83,53 @@ class StoreScreen extends Component {
         }
 
         return (
-
             <View style={styles.MainContainer}>
-                <View style={{flexDirection:'row',backgroundColor:'white',marginBottom:10}}>
-                    <View style={{flex:1,margin:10}}>
-                        <Image source={require('../../image/hot1.png')} style={{width:48,height:48,marginBottom:5}}/>
-                        <Text>宠物零食</Text>
+                <View style={styles.item_list}>
+                    <View style={styles.itemLeft}>
+                        <Image source={require('../../image/f-0.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物零食</Text>
                     </View>
-                    <View style={{flex:1,margin:10}}>
-                        <Image source={require('../../image/hot2.png')} style={{width:48,height:48,marginBottom:5}}/>
-                        <Text>宠物口粮</Text>
+                    <View style={styles.item}>
+                        <Image source={require('../../image/f-1.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物口粮</Text>
                     </View>
-                    <View style={{flex:1,margin:10}}>
-                        <Image source={require('../../image/hot3.png')} style={{width:48,height:48,marginBottom:5}}/>
-                        <Text>宠物卫生</Text>
+                    <View style={styles.item}>
+                        <Image source={require('../../image/f-2.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物卫生</Text>
                     </View>
-                    <View style={{flex:1,margin:10}}>
-                        <Image source={require('../../image/hot4.png')} style={{width:48,height:48,marginBottom:5}}/>
-                        <Text>宠物用品</Text>
+                    <View style={styles.item}>
+                        <Image source={require('../../image/f-3.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物用品</Text>
                     </View>
-                    <View style={{flex:1,margin:10}}>
-                        <Image source={require('../../image/hot3.png')} style={{width:48,height:48,marginBottom:5}}/>
-                        <Text>宠物零食</Text>
+                    <View style={styles.itemRight}>
+                        <Image source={require('../../image/f-4.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物零食</Text>
                     </View>
-
                 </View>
-                <Text>为您推荐</Text>
-                <FlatList
-
-                    data={this.state.dataSource}
-
-                    ItemSeparatorComponent={this.FlatListItemSeparator}
-
-                    renderItem={({item}) => (
-                        <View style={{flexDirection: 'row',backgroundColor:'white'}}>
-                            <Image source={{uri: item.img1}} style={styles.product_img}/>
-                            <View>
-                                <Text style={styles.product_title}>{item.title}</Text>
-                                <Text style={styles.product_describe}>{item.describe}</Text>
-                                <Text style={styles.product_price}>￥{item.price}</Text>
-                                <Text>{item.created_at}</Text>
-                            </View>
-                        </View>)
-                    }
-
-                    keyExtractor={(item, index) => index}
-
-                />
+                <View style={styles.goods}>
+                    <Text style={{margin:10}}>为您推荐</Text>
+                    <FlatList
+                        data={this.state.dataSource}
+                        ItemSeparatorComponent={this.FlatListItemSeparator}
+                        renderItem={({item}) => (
+                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                                <Image source={{uri: item.img1}} style={styles.product_img}/>
+                                <View>
+                                    <Text style={styles.product_title}>{item.title}</Text>
+                                    <Text style={styles.product_describe}>{item.describe}</Text>
+                                    <Text style={styles.product_price}>￥{item.price}</Text>
+                                    <Text>{item.created_at}</Text>
+                                </View>
+                            </View>)
+                        }
+                        keyExtractor={(item, index) => index}
+                    />
+                </View>
 
 
             </View>
@@ -139,28 +139,36 @@ class StoreScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    MainContainer: {
-        backgroundColor: '#f5f5f9',
-
-    },
     item: {
-        flexWrap: 'wrap',
+        marginTop: 10,
+        marginBottom: 10,
+        paddingLeft: 10
+    },
+    itemText: {
+        textAlign: 'center'
+    },
+    itemLeft: {
+        marginTop: 10,
+        marginBottom: 10,
+        paddingLeft: 10
+    },
+    itemRight: {
+        marginTop: 10,
+        marginBottom: 10,
+        paddingRight: 10
+    },
+    item_list: {
         flexDirection: 'row',
-        borderRadius: 5,
         backgroundColor: 'white',
-        marginTop: 8,
-        marginLeft: 10,
-        marginRight: 10,
+        justifyContent: 'space-between'
     },
     MainContainer: {
-        justifyContent: 'center',
         flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
-
-    FlatListItemStyle: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
+    goods: {
+        flex: 1
     },
     product_img: {
         width: 100,

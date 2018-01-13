@@ -9,6 +9,7 @@ import {StoreScreen} from '../screens/tabs/Store';
 import {LoginScreen} from '../screens/Login';
 import {ArticleDetail} from '../screens/details/forum/ArticleDetail';
 import {AddArticle} from '../screens/details/forum/AddArticle';
+import {AddPet} from "../screens/details/forum/AddPet";
 
 const IndexTabs = TabNavigator({
         Home: {screen: HomeScreen},
@@ -20,7 +21,7 @@ const IndexTabs = TabNavigator({
         swipeEnabled: true,
         tabBarOptions: {
             activeTintColor: '#374341',
-            inactiveTintColor:'#859391',
+            inactiveTintColor: '#859391',
             labelStyle: {
                 fontSize: 12,
             },
@@ -49,13 +50,13 @@ const RootNavigator = StackNavigator({
         screen: LoginScreen,
         headerTitle: '登陆小宠乐园'
     },
-    ArticleDetail: {
-        screen: ArticleDetail,
-        headerTitle: "文章"
-    },
+    ArticleDetail: {screen: ArticleDetail},
     AddArticle: {
         screen: AddArticle,
         headerTitle: "文章"
+    },
+    AddPet:{
+        screen:AddPet
     }
 });
 
