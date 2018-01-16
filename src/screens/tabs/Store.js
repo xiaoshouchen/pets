@@ -5,8 +5,6 @@ import {
 } from 'react-native'
 import {TabNavigator, StackNavigator} from 'react-navigation'
 import {Icon} from 'react-native-elements';
-import {ArticleDetail} from '../details/forum/ArticleDetail'
-
 
 class StoreScreen extends Component {
     constructor(props) {

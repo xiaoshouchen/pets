@@ -10,6 +10,7 @@ import {LoginScreen} from '../screens/Login';
 import {ArticleDetail} from '../screens/details/forum/ArticleDetail';
 import {AddArticle} from '../screens/details/forum/AddArticle';
 import {AddPet} from "../screens/details/forum/AddPet";
+import {PetList} from "../screens/details/forum/PetList";
 
 const IndexTabs = TabNavigator({
         Home: {screen: HomeScreen},
@@ -55,9 +56,8 @@ const RootNavigator = StackNavigator({
         screen: AddArticle,
         headerTitle: "文章"
     },
-    AddPet:{
-        screen:AddPet
-    }
+    AddPet:{screen:AddPet},
+    PetList:{screen:PetList}
 });
 
 export default RootNavigator;

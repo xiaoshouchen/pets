@@ -24,7 +24,7 @@ class SelectionScreen extends Component {
         return (
             <View style={{backgroundColor:'white'}}>
                 <View style={styles.top}>
-                    <TouchableOpacity style={styles.buttonLeft}>
+                    <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigate('PetList')}>
                         <Text style={styles.text}>宠物</Text>
                     </TouchableOpacity>
                     <View style={styles.petImageView}>
