@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
-import {StyleSheet, Text, View, ScrollView, Image,SectionList} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableNativeFeedback} from 'react-native';
 import {Icon, Avatar} from 'react-native-elements'
+import itemList from '../../config/ItemList'
+import {ScoreScreen} from "./Score";
 
 const pic = {
     uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
@@ -53,6 +55,7 @@ class ProfileScreen extends Component {
             </View>
         );
     };
+
     render() {
         return (
             <View style={{backgroundColor: 'white'}}>
@@ -62,22 +65,20 @@ class ProfileScreen extends Component {
                     <Image style={styles.male} />
                 </View>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
+
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
-                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
-                    </View>
-                    <View style={{width: 1, height: 15, backgroundColor: '#f5f5f9'}}/>
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>15</Text>
-                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>帖子</Text>
-                    </View>
-                    <View style={{width: 1, height: 15, backgroundColor: '#f5f5f9'}}/>
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>22</Text>
-                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>收藏</Text>
-                    </View>
+                    {itemList.proFile.map((list) => {
+                        return(
+                            <TouchableNativeFeedback onPress={() => this.props.navigation.navigate(list.screen, {name: '1'})}>
+                                <View style={{alignItems: 'center', flex: 1}}>
+                                    <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>{list.val}</Text>
+                                    <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>{list.name}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        )
+                    })}
                 </View>
+
                 <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
                 <SectionList
                     keyExtractor={this._keyExtractor}

@@ -11,10 +11,37 @@ import {ArticleDetail} from '../screens/details/forum/ArticleDetail';
 import {AddArticle} from '../screens/details/forum/AddArticle';
 import {AddPet} from "../screens/details/forum/AddPet";
 import {PetList} from "../screens/details/forum/PetList";
+import {ScoreScreen} from "../screens/tabs/Score";
+import {PostScreen} from "../screens/tabs/Post";
+import {CollectionScreen} from "../screens/tabs/Collection";
+import {BrowsingHistoryScreen} from "../screens/tabs/BrowsingHistory";
+import {ShoppingCartScreen} from "../screens/tabs/ShoppingCart";
+import {CollectionGoodsScreen} from "../screens/tabs/CollectionGoods";
 
 const IndexTabs = TabNavigator({
         Home: {screen: HomeScreen},
         Hot: {screen: HotScreen},
+    },
+    {
+        tabBarComponent: TabBarTop,
+        tabBarPosition: 'top',
+        swipeEnabled: true,
+        tabBarOptions: {
+            activeTintColor: '#374341',
+            inactiveTintColor: '#859391',
+            labelStyle: {
+                fontSize: 12,
+            },
+            style: {
+                backgroundColor: 'white',
+            },
+        }
+
+    });
+
+const CollectionTabs = TabNavigator({
+        Collection: {screen: CollectionScreen},
+        CollectionGoods: {screen: CollectionGoodsScreen},
     },
     {
         tabBarComponent: TabBarTop,
@@ -57,7 +84,12 @@ const RootNavigator = StackNavigator({
         headerTitle: "文章"
     },
     AddPet:{screen:AddPet},
-    PetList:{screen:PetList}
+    PetList:{screen:PetList},
+    ScoreScreen:{screen: ScoreScreen},
+    PostScreen:{screen: PostScreen},
+    CollectionScreen:{screen: CollectionTabs},
+    ShoppingCartScreen:{screen: ShoppingCartScreen},
+    BrowsingHistoryScreen:{screen: BrowsingHistoryScreen}
 });
 
 export default RootNavigator;
