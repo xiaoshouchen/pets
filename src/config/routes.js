@@ -63,7 +63,6 @@ const CollectionTabs = TabNavigator({
     })
 
 const Tabs = TabNavigator({
-        PersonalInfoChangeScreen:{screen: PersonalInfoChangeScreen},
         Index: {screen: IndexTabs},
         Selection: {screen: SelectionScreen},
         Message: {screen: MessageScreen},
