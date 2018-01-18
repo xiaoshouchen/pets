@@ -1,5 +1,2 @@
-const appSets={
-    url:"http://192.168.123.170/pets",
-
-}
-export default appSets;
+const BASE_URL="https://www.xiaochongleyuan.com/api/";
+export default articles='';
