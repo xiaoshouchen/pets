@@ -3,7 +3,6 @@ import {
     Button, StyleSheet, View
 } from 'react-native'
 import Text from "react-native-elements/src/text/Text";
-import {PersonalInfoChangeScreen} from "./PersonalInfoChange";
 
 class PersonalScreen extends Component{
     constructor(props) {
@@ -12,13 +11,16 @@ class PersonalScreen extends Component{
 
         }
     }
-    static navigationOptions = (navigation) => ({
+    static navigationOptions = ({navigation}) => ({
         title: '个人信息',
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
         headerStyle: {backgroundColor: '#ff8302'},
         headerRight:
-            <Button title={'修改'} onPress={() => this.props.navigation.navigate('PersonalInfoChangeScreen',{name: '1'})}
+            <Button title={'修改'} onPress = {
+                () => {
+                    navigation.navigate('PersonalInfoChange', {name: '1'})
+                }}
             />
     })
     render(){

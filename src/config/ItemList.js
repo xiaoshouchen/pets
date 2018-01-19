@@ -14,8 +14,8 @@ export default {
     ],
 
     proFile:[
-        {name:'积分', val: '123', screen: 'ScoreScreen'},
-        {name:'帖子', val: '123', screen: 'PostScreen'},
-        {name:'收藏', val: '123', screen: 'CollectionScreen'}
+        {name:'积分', val: '123', screen: 'Score'},
+        {name:'帖子', val: '123', screen: 'Post'},
+        {name:'收藏', val: '123', screen: 'Collection'}
     ]
 }
