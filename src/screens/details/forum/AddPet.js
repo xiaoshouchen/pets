@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, Button, Image, TextInput, Picker,
+    StyleSheet, Text, View, ScrollView,  Image, TextInput, Picker,
     TouchableNativeFeedback
 } from 'react-native'
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
+import {Button} from "react-native-elements";
 
 class AddPet extends Component {
     constructor(props) {
@@ -125,7 +126,9 @@ class AddPet extends Component {
                         <Picker.Item label="MM" value="female" />
                     </Picker>
                 </View>
-                <Button onPress={()=> alert('添加成功')} title={'添加'}/>
+                <View style={{flexDirection: 'row', justifyContent: 'center',}}>
+                    <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> alert('添加成功')} title={'保存'}/>
+                </View>
             </View>
         );
     }
@@ -140,6 +143,7 @@ const styles = StyleSheet.create(
         },
 
         imageView: {
+            marginTop: 10,
             alignItems: 'center',
         },
         image: {

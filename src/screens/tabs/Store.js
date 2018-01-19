@@ -119,7 +119,7 @@ class StoreScreen extends Component {
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
                         renderItem={({item}) => (
-                            <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('ProductDetail',{title: item.title})}>
+                            <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('ProductDetail',{item: item})}>
                                 <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                     <Image source={{uri: item.img1}} style={styles.product_img}/>
                                     <View>
