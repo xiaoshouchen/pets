@@ -86,40 +86,32 @@ class StoreScreen extends Component {
         return (
             <View style={styles.MainContainer}>
                 <View style={styles.item_list}>
-                    {/*<View style={styles.itemLeft}>*/}
-                        {/*<Image source={require('../../image/f-0.png')}*/}
-                               {/*style={{width: 48, height: 48, marginBottom: 5}}/>*/}
-                        {/*<Text style={styles.itemText}>宠物零食</Text>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.item}>*/}
-                        {/*<Image source={require('../../image/f-1.png')}*/}
-                               {/*style={{width: 48, height: 48, marginBottom: 5}}/>*/}
-                        {/*<Text style={styles.itemText}>宠物口粮</Text>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.item}>*/}
-                        {/*<Image source={require('../../image/f-2.png')}*/}
-                               {/*style={{width: 48, height: 48, marginBottom: 5}}/>*/}
-                        {/*<Text style={styles.itemText}>宠物卫生</Text>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.item}>*/}
-                        {/*<Image source={require('../../image/f-3.png')}*/}
-                               {/*style={{width: 48, height: 48, marginBottom: 5}}/>*/}
-                        {/*<Text style={styles.itemText}>宠物用品</Text>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.itemRight}>*/}
-                        {/*<Image source={require('../../image/f-4.png')}*/}
-                               {/*style={{width: 48, height: 48, marginBottom: 5}}/>*/}
-                        {/*<Text style={styles.itemText}>宠物零食</Text>*/}
-                    {/*</View>*/}
-                    {ItemList.storeMenu.map((list) => {
-                        return (
-                            <View style={styles.item}>
-                                <Image source={list.icon}
-                                style={{width: 48, height: 48, marginBottom: 5}}/>
-                                <Text style={styles.itemText}>{list.title}</Text>
-                            </View>
-                        )
-                    })}
+                    <View style={styles.itemLeft}>
+                        <Image source={require('../../image/f-0.png')}
+                             style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物零食</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Image source={require('../../image/f-1.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物口粮</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Image source={require('../../image/f-2.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物卫生</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Image source={require('../../image/f-3.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物用品</Text>
+                    </View>
+                    <View style={styles.itemRight}>
+                        <Image source={require('../../image/f-4.png')}
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
+                        <Text style={styles.itemText}>宠物零食</Text>
+                    </View>
+                   
                 </View>
                 <View style={styles.goods}>
                     <Text style={{margin:10}}>为您推荐</Text>

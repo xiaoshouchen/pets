@@ -4,9 +4,6 @@ import {StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableNativeF
 import {Icon, Avatar} from 'react-native-elements'
 import itemList from '../../config/ItemList'
 
-const pic = {
-    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-};
 const sectonDatas = {
     section1:[
         {title:'购物车',icon:require('../../image/home_contribute.png'),screen: 'ShoppingCart'}
@@ -62,7 +59,7 @@ class ProfileScreen extends Component {
             <View style={{backgroundColor: 'white'}}>
                 <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Personal', {name: '1'})}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image style={styles.avatar} source={{uri:'http://123.207.217.225/img/1/tx.jpg'}}/>
+                        <Image style={styles.avatar} source={{uri:'http://123.207.217.225/img/tx.jpg'}}/>
                         <Text style={styles.userName}>管理员</Text>
                         <Image style={styles.male} />
                     </View>

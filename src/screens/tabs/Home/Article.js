@@ -5,10 +5,9 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements'
 import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
-import {ArticleDetail} from '../details/forum/ArticleDetail'
-import App from '../../utils/app.core'
+import App from '../../../utils/app.core'
 
-class HotScreen extends Component {
+class ArticleScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,46 +15,9 @@ class HotScreen extends Component {
         }
     }
 
-    static navigationOptions = ({navigation}) => ({
-        title: '小宠乐园',
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
-        headerLeft:
-            <Icon
-                name='search'
-                size={30}
-                type="MaterialIcons"
-            />
-        ,
-        headerRight:
-            <Button title={App.checkLogin() ? "发布" : "登陆"}
-                    onPress={
-                        () => {
-                            if (App.checkLogin()) {
-                                navigation.navigate('Message')
-                            }
-                            else {
-                                navigation.navigate('Login')
-                            }
-
-                        }
-                    }
-            />,
-        tabBarLabel: '热门',
-        tabBarIcon: ({tintColor, focused}) => (
-            <Icon
-                name='home'
-                size={30}
-                type="MaterialIcons"
-                color={tintColor}
-            />
-        ),
-    })
-
     componentDidMount() {
 
-        return fetch('http://123.207.217.225//api/article')
+        return fetch('http://123.207.217.225/api/articles')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -180,4 +142,4 @@ const styles = StyleSheet.create({
 
 });
 
-export {HotScreen}
+export {ArticleScreen}
