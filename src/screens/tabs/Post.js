@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Image
+import {
+    StyleSheet, FlatList, Text, View,
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback
 } from 'react-native';
 
 class PostScreen extends Component {
@@ -50,6 +51,7 @@ class PostScreen extends Component {
 
     render(){
         if (this.state.isLoading) {
+            console.log(this.state.dataSource);
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
                     <ActivityIndicator/>
@@ -64,20 +66,26 @@ class PostScreen extends Component {
                     <Image style={styles.male} />
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>发帖</Text>
-                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>2</Text>
-                    </View>
+                    <TouchableNativeFeedback  onPress={() => this.componentDidMount()}>
+                        <View style={{alignItems: 'center', flex: 1}}>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>发帖</Text>
+                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>2</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                     <View style={{width: 1, height: 15, backgroundColor: '#f5f5f9'}}/>
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>回复中</Text>
-                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>2</Text>
-                    </View>
+                    <TouchableNativeFeedback  onPress={() => this.setState({dataSource: null})}>
+                        <View style={{alignItems: 'center', flex: 1}}>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>回复中</Text>
+                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>2</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                     <View style={{width: 1, height: 15, backgroundColor: '#f5f5f9'}}/>
-                    <View style={{alignItems: 'center', flex: 1}}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>收藏</Text>
-                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>3</Text>
-                    </View>
+                    <TouchableNativeFeedback  onPress={() => this.setState({dataSource: null})}>
+                        <View style={{alignItems: 'center', flex: 1}}>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>收藏</Text>
+                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>3</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                 </View>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
                 <FlatList

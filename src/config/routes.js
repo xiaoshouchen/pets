@@ -11,12 +11,14 @@ import {ArticleDetail} from '../screens/details/forum/ArticleDetail';
 import {AddArticle} from '../screens/details/forum/AddArticle';
 import {AddPet} from "../screens/details/forum/AddPet";
 import {PetList} from "../screens/details/forum/PetList";
-import {ScoreScreen} from "../screens/tabs/Score";
+import {ScoreScreen} from "../screens/details/profile/Score";
 import {PostScreen} from "../screens/tabs/Post";
-import {CollectionScreen} from "../screens/tabs/Collection";
-import {BrowsingHistoryScreen} from "../screens/tabs/BrowsingHistory";
-import {ShoppingCartScreen} from "../screens/tabs/ShoppingCart";
-import {CollectionGoodsScreen} from "../screens/tabs/CollectionGoods";
+import {CollectionScreen} from "../screens/details/profile/Collection";
+import {BrowsingHistoryScreen} from "../screens/details/profile/BrowsingHistory";
+import {ShoppingCartScreen} from "../screens/details/profile/ShoppingCart";
+import {CollectionGoodsScreen} from "../screens/details/profile/CollectionGoods";
+import {PersonalScreen} from "../screens/details/profile/Personal";
+import {PersonalInfoChangeScreen} from "../screens/details/profile/PersonalInfoChange";
 
 const IndexTabs = TabNavigator({
         Home: {screen: HomeScreen},
@@ -83,13 +85,15 @@ const RootNavigator = StackNavigator({
         screen: AddArticle,
         headerTitle: "文章"
     },
-    AddPet:{screen:AddPet},
-    PetList:{screen:PetList},
+    AddPet:{screen: AddPet},
+    PetList:{screen: PetList},
     ScoreScreen:{screen: ScoreScreen},
     PostScreen:{screen: PostScreen},
     CollectionScreen:{screen: CollectionTabs},
     ShoppingCartScreen:{screen: ShoppingCartScreen},
-    BrowsingHistoryScreen:{screen: BrowsingHistoryScreen}
+    BrowsingHistoryScreen:{screen: BrowsingHistoryScreen},
+    PersonalScreen:{screen: PersonalScreen},
+    PersonalInfoChangeScreen:{screen: PersonalInfoChangeScreen}
 });
 
 export default RootNavigator;

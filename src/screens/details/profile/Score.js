@@ -52,7 +52,7 @@ class ScoreScreen extends Component {
             <View style={styles.MainContainer}>
                 <View  style={styles.description}>
                     <Text style={{fontSize:30}}>100</Text>
-                    <Text style={{}}>分</Text>
+                    <Text>分</Text>
                     <Text style={styles.descriptionText}>积分说明</Text>
                 </View>
                 <View style={styles.goods}>
@@ -89,10 +89,11 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center'
     },
     descriptionText:{
         fontSize: 10,
-        color: '#912CEE'
+        color: '#912CEE',
     },
     goods: {
         flex: 1
