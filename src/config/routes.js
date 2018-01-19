@@ -12,7 +12,7 @@ import {AddArticle} from '../screens/details/forum/AddArticle';
 import {AddPet} from "../screens/details/forum/AddPet";
 import {PetList} from "../screens/details/forum/PetList";
 import {ScoreScreen} from "../screens/details/profile/Score";
-import {PostScreen} from "../screens/tabs/Post";
+import {PostScreen} from "../screens/details/profile/Posts";
 import {CollectionScreen} from "../screens/details/profile/Collection";
 import {BrowsingHistoryScreen} from "../screens/details/profile/BrowsingHistory";
 import {ShoppingCartScreen} from "../screens/details/store/ShoppingCart";
