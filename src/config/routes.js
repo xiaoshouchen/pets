@@ -15,10 +15,12 @@ import {ScoreScreen} from "../screens/details/profile/Score";
 import {PostScreen} from "../screens/tabs/Post";
 import {CollectionScreen} from "../screens/details/profile/Collection";
 import {BrowsingHistoryScreen} from "../screens/details/profile/BrowsingHistory";
-import {ShoppingCartScreen} from "../screens/details/profile/ShoppingCart";
+import {ShoppingCartScreen} from "../screens/details/store/ShoppingCart";
 import {CollectionGoodsScreen} from "../screens/details/profile/CollectionGoods";
 import {PersonalScreen} from "../screens/details/profile/Personal";
 import {PersonalInfoChangeScreen} from "../screens/details/profile/PersonalInfoChange";
+import {RegisterScreen} from '../screens/Register'
+import {ProductDetailScreen} from '../screens/details/store/ProductDetail'
 
 const IndexTabs = TabNavigator({
         Home: {screen: HomeScreen},
@@ -87,13 +89,15 @@ const RootNavigator = StackNavigator({
     },
     AddPet:{screen: AddPet},
     PetList:{screen: PetList},
-    ScoreScreen:{screen: ScoreScreen},
-    PostScreen:{screen: PostScreen},
-    CollectionScreen:{screen: CollectionTabs},
-    ShoppingCartScreen:{screen: ShoppingCartScreen},
-    BrowsingHistoryScreen:{screen: BrowsingHistoryScreen},
-    PersonalScreen:{screen: PersonalScreen},
-    PersonalInfoChangeScreen:{screen: PersonalInfoChangeScreen}
+    Score:{screen: ScoreScreen},
+    Post:{screen: PostScreen},
+    Collection:{screen: CollectionTabs},
+    ShoppingCart:{screen: ShoppingCartScreen},
+    BrowsingHistory:{screen: BrowsingHistoryScreen},
+    Personal:{screen: PersonalScreen},
+    PersonalInfoChange:{screen: PersonalInfoChangeScreen},
+    Register: {screen: RegisterScreen},
+    ProductDetail: {screen: ProductDetailScreen}
 });
 
 export default RootNavigator;

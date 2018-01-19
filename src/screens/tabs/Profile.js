@@ -9,11 +9,11 @@ const pic = {
 };
 const sectonDatas = {
     section1:[
-        {title:'购物车',icon:require('../../image/home_contribute.png'),screen: 'ShoppingCartScreen'}
+        {title:'购物车',icon:require('../../image/home_contribute.png'),screen: 'ShoppingCart'}
     ],
     section2:[
-        {title:'我的收藏',icon:require('../../image/home_video_icon.png'),screen: 'CollectionScreen'},
-        {title:'浏览记录',icon:require('../../image/home_watch_record_icon.png'),screen: 'BrowsingHistoryScreen'},
+        {title:'我的收藏',icon:require('../../image/home_video_icon.png'),screen: 'Collection'},
+        {title:'浏览记录',icon:require('../../image/home_watch_record_icon.png'),screen: 'BrowsingHistory'},
     ],
     section3:[
         {title:'收益',icon:require('../../image/home_harvest_icon.png')},
@@ -60,7 +60,7 @@ class ProfileScreen extends Component {
     render() {
         return (
             <View style={{backgroundColor: 'white'}}>
-                <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('PersonalScreen', {name: '1'})}>
+                <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Personal', {name: '1'})}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image style={styles.avatar} source={{uri:'http://123.207.217.225/img/1/tx.jpg'}}/>
                         <Text style={styles.userName}>管理员</Text>

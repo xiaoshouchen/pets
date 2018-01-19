@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Image
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback
 } from 'react-native'
 import {TabNavigator, StackNavigator} from 'react-navigation'
 import {Icon} from 'react-native-elements';
@@ -49,6 +49,8 @@ class StoreScreen extends Component {
         Alert.alert(fruit_name);
 
     }
+
+
 
     static navigationOptions = {
         tabBarLabel: "商城",
@@ -125,15 +127,17 @@ class StoreScreen extends Component {
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
                         renderItem={({item}) => (
-                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                                <Image source={{uri: item.img1}} style={styles.product_img}/>
-                                <View>
-                                    <Text style={styles.product_title}>{item.title}</Text>
-                                    <Text style={styles.product_describe}>{item.describe}</Text>
-                                    <Text style={styles.product_price}>￥{item.price}</Text>
-                                    <Text>{item.created_at}</Text>
+                            <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('ProductDetail',{title: item.title})}>
+                                <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                                    <Image source={{uri: item.img1}} style={styles.product_img}/>
+                                    <View>
+                                        <Text style={styles.product_title}>{item.title}</Text>
+                                        <Text style={styles.product_describe}>{item.describe}</Text>
+                                        <Text style={styles.product_price}>￥{item.price}</Text>
+                                        <Text>{item.created_at}</Text>
+                                    </View>
                                 </View>
-                            </View>)
+                            </TouchableNativeFeedback>)
                         }
                         keyExtractor={(item, index) => index}
                     />
