@@ -56,7 +56,7 @@ class StoreScreen extends Component {
         tabBarLabel: "商城",
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerStyle: {backgroundColor: '#44a3ff'},
         headerRight: <Icon
             name='shopping-cart'
             size={25}

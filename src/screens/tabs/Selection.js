@@ -8,7 +8,7 @@ class SelectionScreen extends Component {
         title: '我的萌宠',
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerStyle: {backgroundColor: '#44a3ff'},
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='pets'
@@ -115,9 +115,9 @@ const styles = StyleSheet.create(
             paddingTop:25
         },
         petImage: {
-            width: 80,
-            height: 80,
-            borderRadius:40,
+            width: 100,
+            height: 100,
+            borderRadius:50,
         },
         buttonLeft: {
             width: 80,

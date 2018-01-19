@@ -28,7 +28,7 @@ class ProfileScreen extends Component {
         tabBarLabel: "我的",
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerStyle: {backgroundColor: '#44a3ff'},
         title: '个人资料',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon

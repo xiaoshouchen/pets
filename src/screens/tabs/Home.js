@@ -42,7 +42,7 @@ class HomeScreen extends Component {
         title: '小宠乐园',
         headerTitleStyle: { color: '#fff' },
         headerBackTitle: null,
-        headerStyle: { backgroundColor: '#ff8302' },
+        headerStyle: { backgroundColor: '#44a3ff' },
         headerRight:
             <Icon
                 name='search'
