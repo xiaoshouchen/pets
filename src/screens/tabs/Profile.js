@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
 import {StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableNativeFeedback} from 'react-native';
-import {Icon, Avatar} from 'react-native-elements'
 import itemList from '../../config/ItemList'
+import Icon from 'react-native-vector-icons/Feather';
 
 const sectonDatas = {
     section1:[
@@ -32,9 +32,8 @@ class ProfileScreen extends Component {
         title: '个人资料',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
-                name='person'
+                name='user'
                 size={30}
-                type="MaterialIcons"
                 color={tintColor}
             />
         ),

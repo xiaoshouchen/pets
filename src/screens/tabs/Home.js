@@ -3,7 +3,7 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
-import { Icon } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/Feather';
 import { TabNavigator, TabBarTop } from 'react-navigation'
 import { ShowScreen } from './Home/Show'
 import { ArticleScreen } from './Home/Article'
@@ -15,6 +15,16 @@ const HomeTabs = TabNavigator({
     Article: { screen: ArticleScreen },
 },
     {
+        tabBarOptions: {
+            activeTintColor: '#374341',
+            inactiveTintColor: '#859391',
+            labelStyle: {
+                fontSize: 12,
+            },
+            style: {
+                backgroundColor: 'white',
+            },
+        },
         tabBarComponent: TabBarTop,
         tabBarPosition: 'top',
         swipeEnabled: true,
@@ -33,28 +43,16 @@ class HomeScreen extends Component {
         headerTitleStyle: { color: '#fff' },
         headerBackTitle: null,
         headerStyle: { backgroundColor: '#ff8302' },
-        headerLeft:
+        headerRight:
             <Icon
                 name='search'
                 size={30}
                 type="MaterialIcons"
+                color="white"
+                style={{paddingRight:5,}}
             />
         ,
-        headerRight:
-            <Button title={App.checkLogin() ? "发布" : "登陆"}
-                onPress={
-                    () => {
-                        if (App.checkLogin()) {
-                            navigation.navigate('Login')
-                        }
-                        else {
-                            navigation.navigate('Login')
-                        }
-
-                    }
-                }
-            />,
-        tabBarLabel: '推荐',
+        tabBarLabel: '主页',
         tabBarIcon: ({ tintColor, focused }) => (
             <Icon
                 name='home'
@@ -66,15 +64,15 @@ class HomeScreen extends Component {
     })
 
     render() {
-        const {navigate} = this.props.navigation;
+        const { navigate } = this.props.navigation;
         return (
-            <View style={{flex: 1}}>
-                <HomeTabs navigation={this.props.navigation}/>
+            <View style={{ flex: 1 }}>
+                <HomeTabs navigation={this.props.navigation} />
             </View>
         );
     }
 }
-HomeScreen.router=HomeTabs.router;
+HomeScreen.router = HomeTabs.router;
 const styles = StyleSheet.create({
     MainContainer: {
         backgroundColor: 'white',

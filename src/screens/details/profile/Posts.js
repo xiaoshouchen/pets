@@ -22,7 +22,7 @@ class PostScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/article')
+        return fetch('http://123.207.217.225/api/articles')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -97,7 +97,7 @@ class PostScreen extends Component {
                     renderItem={({item}) => (
                         <View style={styles.item}>
                             <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Image source={{url: item.avatar_img}} style={styles.avatar}/>
+                                <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
                                 <View>
                                     <Text style={styles.name}>{item.name}</Text>
                                     <Text style={styles.date}>{item.created_at}</Text>

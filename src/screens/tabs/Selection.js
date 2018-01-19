@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, TouchableOpacity,Image} from 'react-native';
-import {Icon} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class SelectionScreen extends Component {
     static navigationOptions = {
@@ -11,9 +11,8 @@ class SelectionScreen extends Component {
         headerStyle: {backgroundColor: '#ff8302'},
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
-                name='list'
+                name='pets'
                 size={30}
-                type="MaterialIcons"
                 color={tintColor}
             />
         ),
@@ -23,6 +22,9 @@ class SelectionScreen extends Component {
         const {navigate}=this.props.navigation;
         return (
             <View style={{backgroundColor:'white'}}>
+            <View>
+                <Image source={require('../../image/back.jpg')} style={{width:null,height:200}}/>
+            </View>
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigate('PetList')}>
                         <Text style={styles.text}>宠物</Text>
@@ -103,9 +105,9 @@ const styles = StyleSheet.create(
         top: {
             flexDirection: 'row',
             justifyContent: 'center',
-            backgroundColor:'#ff8302',
             paddingBottom:20,
-            marginBottom:10
+            marginBottom:10,
+            marginTop:-200
         },
         petImageView: {
             flex: 3,

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
 import {StyleSheet, Text, View, ScrollView, Button, Image} from 'react-native';
-import {Icon} from 'react-native-elements'
-
+import Icon from 'react-native-vector-icons/Feather';
 
 class MessageScreen extends Component {
     constructor(props) {
@@ -13,11 +12,12 @@ class MessageScreen extends Component {
     }
 
     static navigationOptions = {
-        tabBarLabel: " ",
-        title: '个人消息',
-        tabBarIcon: ({tintColor, focused}) => (
-            <Image
-                source={require('../../image/launch.png')}
+        header:null,
+        tabBarLabel:"秀一秀",
+        showLabel:false,
+        tabBarIcon: () => (
+            <Icon
+                name='camera' size={35} color="#900"
             />
         ),
     }

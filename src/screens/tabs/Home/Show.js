@@ -14,6 +14,9 @@ class ShowScreen extends Component {
             isLoading: true
         }
     }
+    static navigationOptions = ({ navigation }) => ({
+        title: '分享',
+    })
     componentDidMount() {
 
         return fetch('http://123.207.217.225/api/articles')
@@ -72,7 +75,7 @@ class ShowScreen extends Component {
                     renderItem={({ item }) => (
                         <View style={styles.item}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <Image source={{ url: item.avatar_img }} style={styles.avatar} />
+                                <Image source={{ uri: item.avatar_img }} style={styles.avatar} />
                                 <View>
                                     <Text style={styles.name}>{item.name}</Text>
                                     <Text style={styles.date}>{item.created_at}</Text>

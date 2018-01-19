@@ -4,7 +4,7 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback
 } from 'react-native'
 import {TabNavigator, StackNavigator} from 'react-navigation'
-import {Icon} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 import ItemList from '../../config/ItemList'
 
 class StoreScreen extends Component {
@@ -57,17 +57,17 @@ class StoreScreen extends Component {
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
         headerStyle: {backgroundColor: '#ff8302'},
-        headerLeft: <Icon
+        headerRight: <Icon
             name='shopping-cart'
-            size={30}
-            type="MaterialIcons"
+            size={25}
+            color='white'
+            style={{marginRight: 5,}}
         />,
         title: '小宠商城',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='shopping-cart'
                 size={30}
-                type="MaterialIcons"
                 color={tintColor}
             />
         ),

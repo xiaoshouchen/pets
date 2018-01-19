@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
-import {Icon} from 'react-native-elements'
-import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
+import { Icon } from 'react-native-elements'
+import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation'
 import App from '../../../utils/app.core'
 
 class ArticleScreen extends Component {
@@ -14,7 +14,9 @@ class ArticleScreen extends Component {
             isLoading: true
         }
     }
-
+    static navigationOptions = ({ navigation }) => ({
+        title: '宠物秀',
+    })
     componentDidMount() {
 
         return fetch('http://123.207.217.225/api/articles')
@@ -51,11 +53,11 @@ class ArticleScreen extends Component {
     }
 
     render() {
-        const {navigate} = this.props.navigation;
+        const { navigate } = this.props.navigation;
         if (this.state.isLoading) {
             return (
-                <View style={{flex: 1, paddingTop: 20}}>
-                    <ActivityIndicator/>
+                <View style={{ flex: 1, paddingTop: 20 }}>
+                    <ActivityIndicator />
                 </View>
             );
         }
@@ -70,17 +72,17 @@ class ArticleScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                         <View style={styles.item}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Image source={{url: item.avatar_img}} style={styles.avatar}/>
+                            <View style={{ flex: 1, flexDirection: 'row' }}>
+                                <Image source={{ uri: item.avatar_img }} style={styles.avatar} />
                                 <View>
                                     <Text style={styles.name}>{item.name}</Text>
                                     <Text style={styles.date}>{item.created_at}</Text>
                                 </View>
                             </View>
                             <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', {id: item.id})
+                                () => navigate('ArticleDetail', { id: item.id })
                             }>
                                 {item.type == undefined ? '【分享】' : item.type}{item.title}
                             </Text>
@@ -130,8 +132,8 @@ const styles = StyleSheet.create({
     },
     date: {
         marginTop: 4,
-        fontSize:10,
-        color:'#a19fa9'
+        fontSize: 10,
+        color: '#a19fa9'
     },
     content: {
         marginLeft: 5,
@@ -142,4 +144,4 @@ const styles = StyleSheet.create({
 
 });
 
-export {ArticleScreen}
+export { ArticleScreen }
