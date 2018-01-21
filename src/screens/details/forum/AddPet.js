@@ -96,7 +96,6 @@ class AddPet extends Component {
                         customStyles={{
                             dateText:{
 
-                                marginRight: 15
                             },
                             dateInput: {
                                 borderColor: 'white',
@@ -167,8 +166,10 @@ const styles = StyleSheet.create(
             padding: 0,
         },
         text: {
-            textAlign: 'auto',
-            fontSize: 16
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            fontSize: 16,
+            includeFontPadding: false
         },
 
         itemView: {
