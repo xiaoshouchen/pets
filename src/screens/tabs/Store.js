@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableHighlight
 } from 'react-native'
 import {TabNavigator, StackNavigator} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Feather';
@@ -119,7 +119,7 @@ class StoreScreen extends Component {
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
                         renderItem={({item}) => (
-                            <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('ProductDetail',{item: item})}>
+                            <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail',{item: item})}>
                                 <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                     <Image source={{uri: item.img1}} style={styles.product_img}/>
                                     <View>
@@ -129,7 +129,7 @@ class StoreScreen extends Component {
                                         <Text>{item.created_at}</Text>
                                     </View>
                                 </View>
-                            </TouchableNativeFeedback>)
+                            </TouchableHighlight>)
                         }
                         keyExtractor={(item, index) => index}
                     />

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, Text, View, ScrollView,  Image, TextInput, Picker,
-    TouchableNativeFeedback
+    TouchableHighlight
 } from 'react-native'
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
@@ -59,9 +59,9 @@ class AddPet extends Component {
         return (
             <View style={styles.mainer}>
                 <View style={styles.imageView}>
-                    <TouchableNativeFeedback onPress = {this.selectPhotoTapped.bind(this)}>
+                    <TouchableHighlight onPress = {this.selectPhotoTapped.bind(this)}>
                         <Image style={styles.image} source={this.state.avatarSource}/>
-                    </TouchableNativeFeedback>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.inputView}>
                     <Text style={styles.text}>宠物名字</Text>
