@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, TouchableOpacity,Image} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class SelectionScreen extends Component {
     static navigationOptions = {
         tabBarLabel: "萌宠",
         title: '我的萌宠',
-        headerTitleStyle: {color: '#fff'},
+        headerTitleStyle: { color: '#fff' },
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
-        tabBarIcon: ({tintColor, focused}) => (
+        headerStyle: { backgroundColor: '#44a3ff' },
+        tabBarIcon: ({ tintColor, focused }) => (
             <Icon
                 name='pets'
                 size={30}
@@ -19,63 +19,108 @@ class SelectionScreen extends Component {
     };
 
     render() {
-        const {navigate}=this.props.navigation;
+        const { navigate } = this.props.navigation;
         return (
-            <View style={{backgroundColor:'white'}}>
-            <View>
-                <Image source={require('../../image/back.jpg')} style={{width:null,height:200}}/>
-            </View>
+            <View style={{ backgroundColor: 'white' }}>
+                <View style={{ height: 180 }}>
+                    <Image source={require('../../image/back.jpg')} style={{ width: null, height: 180 }} />
+                </View>
                 <View style={styles.top}>
-                    <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigate('PetList')}>
+                    <TouchableOpacity style={styles.buttonLeft} onPress={() => navigate('PetList')}>
                         <Text style={styles.text}>宠物</Text>
                     </TouchableOpacity>
                     <View style={styles.petImageView}>
                         <View>
-                        <Image style={styles.petImage} source={{uri:'http://123.207.217.225/img/1/tx.jpg'}}></Image>
-                            <Text style={{textAlign:'center'}}>二狗</Text>
+                            <Image style={styles.petImage} source={{ uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58' }}></Image>
+                            <Text style={{ textAlign: 'center' }}>二狗</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.buttonRight} onPress={(navigation)=>{
+                    <TouchableOpacity style={styles.buttonRight} onPress={(navigation) => {
                         navigate('AddPet');
                     }}>
                         <Text style={styles.text}>提醒</Text>
                     </TouchableOpacity>
                 </View>
-                <View>
+                <View style={styles.functionArea}>
+                    <Text style={styles.smallTitle}>专属推荐</Text>
                     <View style={styles.item_list}>
                         <View style={styles.itemLeft}>
                             <Image source={require('../../image/f-0.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物零食</Text>
-                        </View>
-                        <View style={styles.item}>
-                            <Image source={require('../../image/f-1.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物口粮</Text>
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>饮食搭配</Text>
                         </View>
                         <View style={styles.item}>
                             <Image source={require('../../image/f-2.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物卫生</Text>
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>医疗卫生</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-3.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物用品</Text>
+                            <Image source={require('../../image/dog_train.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>训练交流</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/f-6.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>美容清洁</Text>
                         </View>
                         <View style={styles.itemRight}>
                             <Image source={require('../../image/f-4.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物零食</Text>
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>玩具用品</Text>
                         </View>
                     </View>
                 </View>
+                <View>
+                    <Text style={styles.smallTitle}>常用功能</Text>
+                    <View style={styles.item_list}>
+                        <View style={styles.itemLeft}>
+                            <Image source={require('../../image/diary.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>宠物日记</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/dog_house.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>领养发布</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/f-7.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>宠物配对</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/f-8.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>宠物百科</Text>
+                        </View>
+                        <View style={styles.itemRight}>
+                            <Image source={require('../../image/f-1.png')}
+                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                            <Text style={styles.itemText}>专家问答</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={{backgroundColor:'#eeeeee',height:10}}></View>
+                <View style={styles.scroll}>
+                    <TouchableOpacity style={{flex:1}}>
+                        <Text style={{textAlign:'center',fontSize:16}}>养宠必读</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1}}>
+                        <Text style={{textAlign:'center',fontSize:16}}>提醒事项</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1}}>
+                        <Text style={{textAlign:'center',fontSize:16}}>商品推荐</Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
+
         )
     }
 }
 
-export {SelectionScreen}
+export { SelectionScreen }
 
 const styles = StyleSheet.create(
     {
@@ -105,25 +150,24 @@ const styles = StyleSheet.create(
         top: {
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingBottom:20,
-            marginBottom:10,
-            marginTop:-200
+            marginBottom: 10,
+            marginTop: -180
         },
         petImageView: {
             flex: 3,
-            alignItems:'center',
-            paddingTop:25
+            alignItems: 'center',
+            paddingTop: 25
         },
         petImage: {
             width: 100,
             height: 100,
-            borderRadius:50,
+            borderRadius: 50,
         },
         buttonLeft: {
             width: 80,
             height: 30,
             justifyContent: 'center',
-            backgroundColor: '#fcc311',
+            backgroundColor: 'rgba(107, 242, 252, 0.5)',
             borderBottomRightRadius: 15,
             borderTopRightRadius: 15,
             overflow: 'hidden',
@@ -134,7 +178,7 @@ const styles = StyleSheet.create(
             width: 80,
             height: 30,
             justifyContent: 'center',
-            backgroundColor: '#fcc311',
+            backgroundColor: 'rgba(107, 242, 252, 0.8)',
             borderBottomLeftRadius: 15,
             borderTopLeftRadius: 15,
             overflow: 'hidden',
@@ -143,6 +187,21 @@ const styles = StyleSheet.create(
         },
         text: {
             textAlign: 'center'
+        },
+        smallTitle: {
+            height: 16,
+            fontSize: 12,
+            backgroundColor: '#eeeeee',
+            width: 55,
+            borderBottomRightRadius: 8,
+            borderTopRightRadius: 8,
+        },
+        functionArea: {
+            marginTop: 30,
+        },
+        scroll: {
+            flexDirection: 'row',
+            height:40
         }
     }
 )

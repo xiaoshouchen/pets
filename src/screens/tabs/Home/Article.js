@@ -3,7 +3,7 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
-import { Icon } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation'
 import App from '../../../utils/app.core'
 
@@ -15,7 +15,7 @@ class ArticleScreen extends Component {
         }
     }
     static navigationOptions = ({ navigation }) => ({
-        title: '宠物秀',
+        title: '文章分享',
     })
     componentDidMount() {
 
@@ -87,6 +87,15 @@ class ArticleScreen extends Component {
                                 {item.type == undefined ? '【分享】' : item.type}{item.title}
                             </Text>
                             <Text style={styles.content}>{item.content}</Text>
+                            <View style={{flexDirection:'row',flex:1}}>
+                                <TouchableOpacity>
+                                    <Icon
+                                        name='star'
+                                        size={16} 
+                                        color='yellow'
+                                        />
+                                </TouchableOpacity>
+                            </View>
                         </View>)
 
                     }
