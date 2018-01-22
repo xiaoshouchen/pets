@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback, RefreshControl
 } from 'react-native';
 
 class PostScreen extends Component {
