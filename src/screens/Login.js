@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 40,
-    backgroundColor: '#00B233',
+    backgroundColor: '#05a7dc',
   },
   heading: {
     color: 'white',
