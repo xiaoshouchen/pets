@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableNativeFeedback, RefreshControl
+    Alert, ActivityIndicator, Platform, Image, TouchableOpacity, RefreshControl
 } from 'react-native';
 
 class PostScreen extends Component {
@@ -65,27 +65,27 @@ class PostScreen extends Component {
                     <Text style={styles.userName}>管理员</Text>
                     <Image style={styles.male} />
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <TouchableNativeFeedback  onPress={() => this.componentDidMount()}>
+                <View style={{flexDirection: 'row', alignItems: 'center', height: 80, justifyContent: 'space-around'}}>
+                    <TouchableOpacity tyle={{flex: 1}} onPress={() => this.componentDidMount()}>
                         <View style={{alignItems: 'center', flex: 1}}>
                             <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>发帖</Text>
                             <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>2</Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableOpacity>
                     <View style={{width: 1, height: 15, backgroundColor: '#f5f5f9'}}/>
-                    <TouchableNativeFeedback  onPress={() => this.setState({dataSource: null})}>
+                    <TouchableOpacity tyle={{flex: 1}} onPress={() => this.setState({dataSource: null})}>
                         <View style={{alignItems: 'center', flex: 1}}>
                             <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>回复中</Text>
                             <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>2</Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableOpacity>
                     <View style={{width: 1, height: 15, backgroundColor: '#f5f5f9'}}/>
-                    <TouchableNativeFeedback  onPress={() => this.setState({dataSource: null})}>
+                    <TouchableOpacity tyle={{flex: 1}} onPress={() => this.setState({dataSource: null})}>
                         <View style={{alignItems: 'center', flex: 1}}>
                             <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>收藏</Text>
                             <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>3</Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableOpacity>
                 </View>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
                 <FlatList

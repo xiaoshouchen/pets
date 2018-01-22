@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Button, StyleSheet, View, Text, TouchableNativeFeedback, Image, Picker
+    Button, StyleSheet, View, Text, TouchableOpacity, Image, Picker
 } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 
@@ -57,12 +57,12 @@ class PersonalInfoChangeScreen extends Component{
     render(){
         return(
             <View>
-                <TouchableNativeFeedback onPress = {this.selectPhotoTapped.bind(this)}>
+                <TouchableOpacity onPress = {this.selectPhotoTapped.bind(this)}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image style={styles.avatar} source={this.state.avatarSource}/>
                         <Image style={styles.male} />
                     </View>
-                </TouchableNativeFeedback>
+                </TouchableOpacity>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
             </View>
         )
