@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, Text, View, ScrollView,  Image, TextInput, Picker,
-    TouchableHighlight
+    TouchableOpacity
 } from 'react-native'
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
@@ -55,13 +55,12 @@ class AddPet extends Component {
     }
 
     render() {
-        const {} = this.props.navigation;
         return (
-            <View style={styles.mainer}>
+            <View style={styles.mainView}>
                 <View style={styles.imageView}>
-                    <TouchableHighlight onPress = {this.selectPhotoTapped.bind(this)}>
+                    <TouchableOpacity onPress = {this.selectPhotoTapped.bind(this)}>
                         <Image style={styles.image} source={this.state.avatarSource}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.inputView}>
                     <Text style={styles.text}>宠物名字</Text>
@@ -70,16 +69,7 @@ class AddPet extends Component {
                 </View>
                 <View style={styles.sex}>
                     <Text style={styles.text}>宠物性别</Text>
-                    <Picker
-                        itemStyle={{color:'blue', width: 50}}
-                        prompt='Picker'
-                        mode = 'dropdown'
-                        style={{width: 90}}
-                        selectedValue={this.state.sex}
-                        onValueChange={(lang,position) => this.setState({sex: lang,position:position})}>
-                        <Picker.Item label="GG" value="male" />
-                        <Picker.Item label="MM" value="female" />
-                    </Picker>
+
                 </View>
                 <View style= {styles.inputView}>
                     <Text style= {styles.text}>宠物生日</Text>
@@ -114,16 +104,9 @@ class AddPet extends Component {
                 </View>
                 <View style={styles.inputView}>
                     <Text style={styles.text}>宠物品种</Text>
-                    <Picker
-                        itemStyle={{color:'blue', width: 50}}
-                        prompt='Picker'
-                        mode = 'dropdown'
-                        style={{width: 90}}
-                        selectedValue={this.state.type}
-                        onValueChange={(lang,position) => this.setState({type: lang,position:position})}>
-                        <Picker.Item label="GG" value="male" />
-                        <Picker.Item label="MM" value="female" />
-                    </Picker>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('PetType',{name: '1'})}>
+                        <Text>123</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center',}}>
                     <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> alert('添加成功')} title={'保存'}/>
@@ -136,7 +119,7 @@ class AddPet extends Component {
 export {AddPet}
 const styles = StyleSheet.create(
     {
-        mainer: {
+        mainView: {
             flex: 1,
             backgroundColor: 'white'
         },
@@ -154,6 +137,7 @@ const styles = StyleSheet.create(
         inputView: {
             flexDirection: 'row',
             justifyContent: 'space-between',
+            alignItems: 'center',
             marginTop: 20,
             marginLeft: 15,
             marginRight: 15,
@@ -166,8 +150,6 @@ const styles = StyleSheet.create(
             padding: 0,
         },
         text: {
-            textAlign: 'center',
-            textAlignVertical: 'center',
             fontSize: 16,
             includeFontPadding: false
         },

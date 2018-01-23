@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Button, WebView, StyleSheet, ScrollView, Image, TouchableNativeFeedback
+    View, Text, Button, WebView, StyleSheet, ScrollView, Image, TouchableOpacity
 } from 'react-native';
 
 class ProductDetailScreen extends Component {
@@ -44,9 +44,9 @@ class ProductDetailScreen extends Component {
                     <Text>{params.item.created_at}</Text>
                 </View>
                 <View>
-                    <TouchableNativeFeedback onPress={() => this.addToCar(params.item)}>
+                    <TouchableOpacity onPress={() => this.addToCar(params.item)}>
                         <Text>加入购物车</Text>
-                    </TouchableNativeFeedback>
+                    </TouchableOpacity>
                 </View>
             </View>
         );

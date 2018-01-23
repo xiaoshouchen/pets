@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
-import {StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity} from 'react-native';
 import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -43,37 +43,37 @@ class ProfileScreen extends Component {
     _renderItemComponent = ({item}) => {
 
         return (
-            <TouchableHighlight onPress={() => this.props.navigation.navigate(item.screen, {name: '1'})}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate(item.screen, {name: '1'})}>
                 <View style={{backgroundColor:'white',flexDirection:'row',alignItems:'center',height:44}}>
                     <Image style={{height:20,width:20,marginLeft:15}} source={item.icon}/>
                     <Text style={{marginLeft:5,color:'#333',fontSize:14}}>{item.title}</Text>
                     <Image style={{position:'absolute',top:15,right:15,height:15,width:15}} source={require('../../image/gift_wall_lettle_white_arrow_msg.png')}/>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     };
 
     render() {
         return (
             <View style={{backgroundColor: 'white'}}>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Personal', {name: '1'})}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal', {name: '1'})}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image style={styles.avatar} source={{uri:'http://123.207.217.225/img/tx.jpg'}}/>
                         <Text style={styles.userName}>管理员</Text>
                         <Image style={styles.male} />
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
 
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', alignItems: 'center', height: 80}}>
                     {itemList.proFile.map((list) => {
                         return(
-                            <TouchableHighlight onPress={() => this.props.navigation.navigate(list.screen, {name: '1'})}>
+                            <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate(list.screen, {name: '1'})}>
                                 <View style={{alignItems: 'center', flex: 1}}>
                                     <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>{list.val}</Text>
                                     <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>{list.name}</Text>
                                 </View>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         )
                     })}
                 </View>
