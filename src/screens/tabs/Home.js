@@ -8,11 +8,13 @@ import { TabNavigator, TabBarTop } from 'react-navigation'
 import { ShowScreen } from './Home/Show'
 import { ArticleScreen } from './Home/Article'
 import App from '../../utils/app.core'
+import {FollowScreen} from "./Home/Follow";
 
 
 const HomeTabs = TabNavigator({
-    Show: { screen: ShowScreen },
     Article: { screen: ArticleScreen },
+    Show: { screen: ShowScreen },
+    Follow: { screen: FollowScreen}
 },
     {
         tabBarOptions: {
