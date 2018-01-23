@@ -44,11 +44,11 @@ class SelectionScreen extends Component {
                 <View style={styles.functionArea}>
                     <Text style={styles.smallTitle}>专属推荐</Text>
                     <View style={styles.item_list}>
-                        <View style={styles.itemLeft}>
+                        <TouchableOpacity style={styles.itemLeft} onPress={()=>navigate('PrivateRecommends')}>
                             <Image source={require('../../image/f-0.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>饮食搭配</Text>
-                        </View>
+                        </TouchableOpacity>
                         <View style={styles.item}>
                             <Image source={require('../../image/f-2.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />

@@ -20,6 +20,7 @@ import { PersonalScreen } from "../screens/details/profile/Personal";
 import { PersonalInfoChangeScreen } from "../screens/details/profile/PersonalInfoChange";
 import { RegisterScreen } from '../screens/Register'
 import { ProductDetailScreen } from '../screens/details/store/ProductDetail'
+import { PrivateRecommendScreen } from '../screens/details/forum/mypets/PrivateRecomends'
 
 const CollectionTabs = TabNavigator({
     Collection: { screen: CollectionScreen },
@@ -79,6 +80,7 @@ const RootNavigator = StackNavigator({
     PersonalInfoChange: { screen: PersonalInfoChangeScreen },
     Register: { screen: RegisterScreen },
     ProductDetail: { screen: ProductDetailScreen },
+    PrivateRecommends: { screen: PrivateRecommendScreen },
 });
 
 export default RootNavigator;
