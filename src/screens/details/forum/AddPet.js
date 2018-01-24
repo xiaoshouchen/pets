@@ -13,8 +13,12 @@ class AddPet extends Component {
         this.state = {
             avatarSource: {uri:'http://123.207.217.225/img/1/tx.jpg'},
             time: new Date(),
-            checked: false
+            checked: false,
+            type: '选择宠物种类'
         }
+    }
+    callBack(type){
+        this.setState({type: type})
     }
     static navigationOptions= {
         title: '添加宠物',
@@ -56,6 +60,8 @@ class AddPet extends Component {
     }
 
     render() {
+        const { state, navigate } = this.props.navigation;
+        const {params}=this.props.navigation.state;
         return (
             <View style={styles.photoView}>
                 <View style={styles.imageView}>
@@ -75,20 +81,22 @@ class AddPet extends Component {
                         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                             <CheckBox
                                 right
-                                title='GG'
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
+                                containerStyle={{ marginRight: -30, borderColor: 'white', width: 45 }}
                                 checked={!this.state.checked}
-                                onpress={() => this.setState({checked: !this.state.checked})}
+                                onPress={() => this.setState({checked: false})}
                             />
+                            <Image style={{marginTop:20, marginRight: 20}} source={require('../../../image/male.png')}/>
                             <CheckBox
                                 right
-                                title='MM'
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
+                                containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'white', width: 45 }}
                                 checked={this.state.checked}
-                                onpress={() => this.setState({checked: !this.state.checked})}
+                                onPress={() => this.setState({checked: true})}
                             />
+                            <Image style={{marginTop: 20}} source={require('../../../image/female.png')}/>
                         </View>
                     </View>
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
@@ -126,13 +134,13 @@ class AddPet extends Component {
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
                     <View style={styles.inputView}>
                         <Text style={styles.text}>宠物品种</Text>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PetType',{name: '1'})}>
-                            <Text>123</Text>
+                        <TouchableOpacity onPress={() => navigate('PetType',{callBack: (type)=> this.callBack(type)})}>
+                            <Text>{this.state.type}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center',}}>
-                    <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> alert(this.state.date)} title={'保存'}/>
+                    <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> alert(params.type)} title={'保存'}/>
                 </View>
             </View>
         );
@@ -192,6 +200,6 @@ const styles = StyleSheet.create(
             marginLeft: 15,
             marginRight: 15,
             height: 50
-        }
+        },
     }
 )

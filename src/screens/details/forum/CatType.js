@@ -44,13 +44,15 @@ class CatTypeScreen extends Component{
     }
 
     render(){
+        const { state, goBack } = this.props.navigation;
+        const params = state.params;
         return(
             <View>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) =>
-                        <TouchableOpacity onPress={() => alert(1)}>
+                        <TouchableOpacity onPress={() => {state.params.callBack(item.name);goBack(null)}}>
                             <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                     <Text>{item.name}</Text>
                             </View>
