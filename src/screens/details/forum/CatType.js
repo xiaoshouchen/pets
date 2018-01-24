@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Text from "react-native-elements/src/text/Text";
 import {FlatList, TouchableOpacity, View} from "react-native";
+import {GET_CAT_TYPES} from "../../../config/api";
 class CatTypeScreen extends Component{
     constructor(props) {
         super(props);
@@ -16,7 +17,7 @@ class CatTypeScreen extends Component{
     }
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/pets/type/cat')
+        return fetch(GET_CAT_TYPES)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -45,14 +46,13 @@ class CatTypeScreen extends Component{
 
     render(){
         const { state, goBack } = this.props.navigation;
-        const params = state.params;
         return(
             <View>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) =>
-                        <TouchableOpacity onPress={() => {state.params.callBack(item.name);goBack(null)}}>
+                        <TouchableOpacity onPress={() => {state.params.callBack(item);goBack(null)}}>
                             <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                     <Text>{item.name}</Text>
                             </View>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Text from "react-native-elements/src/text/Text";
-import {FlatList, View} from "react-native";
+import {FlatList, TouchableOpacity, View} from "react-native";
+import {GET_DOG_TYPES} from "../../../config/api";
 class DogTypeScreen extends Component{
     constructor(props) {
         super(props);
@@ -18,7 +19,7 @@ class DogTypeScreen extends Component{
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/pets/type/dog')
+        return fetch(GET_DOG_TYPES)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -46,15 +47,18 @@ class DogTypeScreen extends Component{
     }
 
     render(){
+        const { state, goBack } = this.props.navigation;
         return(
             <View>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) => (
-                        <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                            <Text>{item.name}</Text>
-                        </View>)
+                        <TouchableOpacity onPress={() => {state.params.callBack(item);goBack(null);goBack(null)}}>
+                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                                <Text>{item.name}</Text>
+                            </View>
+                        </TouchableOpacity>)
                     }
                     keyExtractor={(item, index) => index}
                 />

@@ -6,6 +6,7 @@ import {
 import {TabNavigator, StackNavigator} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Feather';
 import ItemList from '../../config/ItemList'
+import {GET_PRODUCTS} from "../../config/api";
 
 class StoreScreen extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class StoreScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/products')
+        return fetch(GET_PRODUCTS)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

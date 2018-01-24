@@ -6,6 +6,7 @@ import {
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
 import {Button, CheckBox} from "react-native-elements";
+import {ADD_PETS} from "../../../config/api";
 
 class AddPet extends Component {
     constructor(props) {
@@ -14,11 +15,15 @@ class AddPet extends Component {
             avatarSource: {uri:'http://123.207.217.225/img/1/tx.jpg'},
             time: new Date(),
             checked: false,
-            type: '选择宠物种类'
+            typeName: '选择宠物种类',
+            sex: 1
         }
     }
-    callBack(type){
-        this.setState({type: type})
+    callBack(item){
+        this.setState({
+            typeName: item.name,
+            typeId: item.id
+        })
     }
     static navigationOptions= {
         title: '添加宠物',
@@ -31,7 +36,11 @@ class AddPet extends Component {
             maxHeight: 500,
             storageOptions: {
                 skipBackup: true
-            }
+            },
+            title: '选择一张照片',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '手机相册选取',
         };
 
         ImagePicker.showImagePicker(options, (response) => {
@@ -58,7 +67,27 @@ class AddPet extends Component {
             }
         });
     }
+    post(){
+        fetch(ADD_PETS, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                birthday: this.state.date,
+                sex: this.state.sex,
+                name: this.state.name,
+                small_type_id: this.state.typeId,
+                avatar: ''
 
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                // this.props.navigation.navigate('PetList');
+                alert(responseJson)
+            });
+    }
     render() {
         const { state, navigate } = this.props.navigation;
         const {params}=this.props.navigation.state;
@@ -72,7 +101,14 @@ class AddPet extends Component {
                 <View style={styles.mainView}>
                     <View style={styles.inputView}>
                         <Text style={styles.text}>宠物名字</Text>
-                        <TextInput underlineColorAndroid={'transparent'} style={styles.input} placeholder ={'设置宠物名称'}/>
+                        <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
+                            placeholder ={'设置宠物名称'}
+                            onChangeText={(text) => this.setState({
+                                name: text
+                            })}
+                        />
 
                     </View>
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
@@ -85,7 +121,7 @@ class AddPet extends Component {
                                 uncheckedIcon='circle-o'
                                 containerStyle={{ marginRight: -30, borderColor: 'white', width: 45 }}
                                 checked={!this.state.checked}
-                                onPress={() => this.setState({checked: false})}
+                                onPress={() => this.setState({checked: false, sex: 1})}
                             />
                             <Image style={{marginTop:20, marginRight: 20}} source={require('../../../image/male.png')}/>
                             <CheckBox
@@ -94,7 +130,7 @@ class AddPet extends Component {
                                 uncheckedIcon='circle-o'
                                 containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'white', width: 45 }}
                                 checked={this.state.checked}
-                                onPress={() => this.setState({checked: true})}
+                                onPress={() => this.setState({checked: true, sex: 0})}
                             />
                             <Image style={{marginTop: 20}} source={require('../../../image/female.png')}/>
                         </View>
@@ -134,13 +170,13 @@ class AddPet extends Component {
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
                     <View style={styles.inputView}>
                         <Text style={styles.text}>宠物品种</Text>
-                        <TouchableOpacity onPress={() => navigate('PetType',{callBack: (type)=> this.callBack(type)})}>
-                            <Text>{this.state.type}</Text>
+                        <TouchableOpacity onPress={() => navigate('PetType',{callBack: (item)=> this.callBack(item)})}>
+                            <Text>{this.state.typeName}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center',}}>
-                    <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> alert(params.type)} title={'保存'}/>
+                    <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> this.post()} title={'保存'}/>
                 </View>
             </View>
         );

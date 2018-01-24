@@ -6,6 +6,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation'
 import App from '../../../utils/app.core'
+import {GET_ARTICLES} from "../../../config/api";
 
 class ArticleScreen extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class ArticleScreen extends Component {
     })
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/articles')
+        return fetch(GET_ARTICLES)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

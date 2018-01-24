@@ -1,14 +1,43 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View, ScrollView, Button, Image,FlatList} from 'react-native'
+import {GET_PETS} from "../../../config/api";
 
 class PetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: [{key :'fdsfsd'}]
+
         }
     }
 
+    componentDidMount() {
+
+        return fetch(GET_PETS)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isLoading: false,
+                    dataSource: responseJson
+                }, function () {
+                    // In this block you can do something with new state.
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    FlatListItemSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: "100%",
+                    backgroundColor: "#d9d7e8",
+                }}
+            />
+        );
+    }
 
     render() {
         const {navigate}=this.props.navigation;
@@ -16,12 +45,12 @@ class PetList extends Component {
             <View style={styles.container}>
                 <FlatList
                     data={this.state.dataSource}
-                    ItemSeparatorComponent={this.separator}
+                    ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) => (
                         <View style={styles.itemView}>
-                            <Image style={styles.itemImage} source={{uri:''}} />
+                            <Image style={styles.avatar} source={{uri: item.avatar}} />
                             <View>
-                            <Text>{item.key}</Text>
+                                <Text>{item.name}</Text>
                             </View>
                         </View>
                     )}
@@ -35,6 +64,15 @@ class PetList extends Component {
 
 const styles=StyleSheet.create(
     {
+        avatar: {
+            marginLeft: 5,
+            marginTop: 5,
+            marginRight: 15,
+            height: 40,
+            width: 40,
+            borderRadius: 20,
+            marginBottom: 5
+        },
         container:{
             backgroundColor:'white'
         },
