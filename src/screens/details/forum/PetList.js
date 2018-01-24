@@ -12,7 +12,7 @@ class PetList extends Component {
 
     componentDidMount() {
 
-        return fetch(GET_PETS)
+        return fetch(GET_PETS + '/?user_id=2')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

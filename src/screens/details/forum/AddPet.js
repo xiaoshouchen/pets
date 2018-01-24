@@ -16,7 +16,8 @@ class AddPet extends Component {
             time: new Date(),
             checked: false,
             typeName: '选择宠物种类',
-            sex: 1
+            sex: 1,
+            userId: 2
         }
     }
     callBack(item){
@@ -68,24 +69,26 @@ class AddPet extends Component {
         });
     }
     post(){
+        let formData = new FormData();
+        let file = {uri: 'http://123.207.217.225/img/1/tx.jpg', type:'multipart/form-data', name: 'a.jpg'}
+        formData.append('birthday',this.state.date)
+        formData.append('sex',this.state.sex)
+        formData.append('name',this.state.name)
+        formData.append('small_type_id',this.state.typeId)
+        formData.append('avatar',file)
+        formData.append('user_id',this.state.userId)
         fetch(ADD_PETS, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
-            body: JSON.stringify({
-                birthday: this.state.date,
-                sex: this.state.sex,
-                name: this.state.name,
-                small_type_id: this.state.typeId,
-                avatar: ''
-
-            }),
-        }).then((response) => response.json())
+            body: formData,
+        }).then((response) => response.text())
             .then((responseJson) => {
                 // this.props.navigation.navigate('PetList');
                 alert(responseJson)
+                // this.props.navigation.goBack(null);
             });
     }
     render() {
