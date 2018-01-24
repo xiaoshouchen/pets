@@ -21,6 +21,9 @@ import { PersonalInfoChangeScreen } from "../screens/details/profile/PersonalInf
 import { RegisterScreen } from '../screens/Register'
 import { ProductDetailScreen } from '../screens/details/store/ProductDetail'
 import { PrivateRecommendScreen } from '../screens/details/forum/mypets/PrivateRecomends'
+import {DogTypeScreen} from "../screens/details/forum/DogType";
+import {CatTypeScreen} from "../screens/details/forum/CatType";
+import {OtherTypeScreen} from "../screens/details/forum/OtherType";
 
 
 const CollectionTabs = TabNavigator({
@@ -41,6 +44,18 @@ const CollectionTabs = TabNavigator({
                 backgroundColor: 'white',
             },
         }
+
+    })
+
+const PetTypeTabs = TabNavigator({
+        CatType: { screen: CatTypeScreen},
+        DogType: { screen: DogTypeScreen},
+        OtherType: { screen: OtherTypeScreen},
+    },
+    {
+        tabBarComponent: TabBarTop,
+        tabBarPosition: 'top',
+        swipeEnabled: true,
 
     })
 
@@ -82,7 +97,7 @@ const RootNavigator = StackNavigator({
     Register: { screen: RegisterScreen },
     ProductDetail: { screen: ProductDetailScreen },
     PrivateRecommends: { screen: PrivateRecommendScreen },
-
+    PetType: {screen: PetTypeTabs}
 });
 
 export default RootNavigator;

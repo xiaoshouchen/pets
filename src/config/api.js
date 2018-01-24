@@ -4,9 +4,9 @@ const BASE_URL = 'http://123.207.217.225';
 //pets
 export const GET_PETS = BASE_URL + '/api/pets';
 export const GET_PETS_BY_ID = BASE_URL + '/api/pets/';
-export const ADD_PETS = BASE_URL + '/api/pets/add';
-export const UPDATE_PETS = BASE_URL + '/api/pets/update';
-export const DELETE_PETS = BASE_URL + '/api/pets/delete';
+export const ADD_PETS = BASE_URL + '/api/pet/add';
+export const UPDATE_PETS = BASE_URL + '/api/pet/update';
+export const DELETE_PETS = BASE_URL + '/api/pet/delete';
 export const GET_CAT_TYPES = BASE_URL + '/api/pets/type/cat';
 export const GET_DOG_TYPES = BASE_URL + '/api/pets/type/dog';
 export const GET_OTHER_TYPES = BASE_URL + '/api/pets/type/other';

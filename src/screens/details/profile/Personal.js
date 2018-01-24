@@ -28,8 +28,7 @@ class PersonalScreen extends Component{
 
         return(
             <View>
-                <Text>{params.item.name}</Text>
-                <Text>{params.item.created_at}</Text>
+                <Text>1</Text>
             </View>
         )
     }
