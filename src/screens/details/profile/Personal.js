@@ -24,9 +24,12 @@ class PersonalScreen extends Component{
             />
     })
     render(){
+        const {params} = this.props.navigation.state;
+
         return(
             <View>
-                <Text>1</Text>
+                <Text>{params.item.name}</Text>
+                <Text>{params.item.created_at}</Text>
             </View>
         )
     }
