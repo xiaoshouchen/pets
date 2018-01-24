@@ -60,7 +60,6 @@ class AddArticle extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput onChangeText={(text)=>{this.setState({'title':text})}}/>
         <RichEditor ref={(ref) => this.editor = ref}/>
         <KeyboardSpacer/>
       </View>
@@ -73,6 +72,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#ffffff',
   },
 });
