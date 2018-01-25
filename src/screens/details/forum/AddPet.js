@@ -70,7 +70,7 @@ class AddPet extends Component {
     }
     post(){
         let formData = new FormData();
-        let file = {uri: 'http://123.207.217.225/img/1/tx.jpg', type:'multipart/form-data', name: 'a.jpg'}
+        let file = {uri:this.state.avatarSource.uri, type:'multipart/form-data', name: 'a.jpg'}
         formData.append('birthday',this.state.date)
         formData.append('sex',this.state.sex)
         formData.append('name',this.state.name)
@@ -84,7 +84,8 @@ class AddPet extends Component {
                 'Content-Type': 'multipart/form-data',
             },
             body: formData,
-        }).then((response) => response.text())
+        }).then(
+            (response) => response.text())
             .then((responseJson) => {
                 // this.props.navigation.navigate('PetList');
                 alert(responseJson)
