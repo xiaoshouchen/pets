@@ -1,18 +1,18 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, ScrollView, Button, Image,FlatList} from 'react-native'
+import {StyleSheet, Text, View, ScrollView, Button, Image, FlatList, ActivityIndicator} from 'react-native'
 import {GET_PETS} from "../../../config/api";
 
 class PetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            isLoading: true
         }
     }
 
     componentDidMount() {
 
-        return fetch(GET_PETS + '/?user_id=2')
+        return fetch(GET_PETS + '?user_id=2')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -40,6 +40,13 @@ class PetList extends Component {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return (
+                <View style={{ flex: 1, paddingTop: 20 }}>
+                    <ActivityIndicator />
+                </View>
+            );
+        }
         const {navigate}=this.props.navigation;
         return (
             <View style={styles.container}>
