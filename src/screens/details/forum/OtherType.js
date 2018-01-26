@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Text from "react-native-elements/src/text/Text";
-import {FlatList, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, FlatList, TouchableOpacity, View} from "react-native";
 class OtherTypeScreen extends Component{
     constructor(props) {
         super(props);
@@ -46,6 +46,13 @@ class OtherTypeScreen extends Component{
     }
 
     render(){
+        if (this.state.isLoading) {
+            return (
+                <View style={{ flex: 1, paddingTop: 20 }}>
+                    <ActivityIndicator />
+                </View>
+            );
+        }
         const { state, goBack } = this.props.navigation;
         return(
             <View>

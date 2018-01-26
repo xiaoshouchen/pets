@@ -1,29 +1,21 @@
 import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
-import {StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity} from 'react-native';
+import {
+    StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity, Slider, FlatList,
+    ActivityIndicator
+} from 'react-native';
 import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
+import {Button} from "react-native-elements";
+import {GET_PETS} from "../../config/api";
 
-const sectonDatas = {
-    section1:[
-        {title:'购物车',icon:require('../../image/home_contribute.png'),screen: 'ShoppingCart'}
-    ],
-    section2:[
-        {title:'我的收藏',icon:require('../../image/home_video_icon.png'),screen: 'Collection'},
-        {title:'浏览记录',icon:require('../../image/home_watch_record_icon.png'),screen: 'BrowsingHistory'},
-    ],
-    section3:[
-        {title:'收益',icon:require('../../image/home_harvest_icon.png')},
-        {title:'账户',icon:require('../../image/home_account_icon.png')},
-        {title:'等级',icon:require('../../image/home_level_icon.png')},
-        {title:'实名认证',icon:require('../../image/home_certify_icon.png')},
-        {title:'邀请好友',icon:require('../../image/home_invite_friend_icon.png')}
-    ],
-    section4:[
-        {title:'设置',icon:require('../../image/home_setting_icon.png')}
-    ],
-}
 class ProfileScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
     static navigationOptions = {
         tabBarLabel: "我的",
         headerTitleStyle: {color: '#fff'},
@@ -37,62 +29,176 @@ class ProfileScreen extends Component {
                 color={tintColor}
             />
         ),
-    }
-    _keyExtractor = (item, index) => `${index}${item.id}`;
-
-    _renderItemComponent = ({item}) => {
-
-        return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate(item.screen, {name: '1'})}>
-                <View style={{backgroundColor:'white',flexDirection:'row',alignItems:'center',height:44}}>
-                    <Image style={{height:20,width:20,marginLeft:15}} source={item.icon}/>
-                    <Text style={{marginLeft:5,color:'#333',fontSize:14}}>{item.title}</Text>
-                    <Image style={{position:'absolute',top:15,right:15,height:15,width:15}} source={require('../../image/gift_wall_lettle_white_arrow_msg.png')}/>
-                </View>
-            </TouchableOpacity>
-        );
+        headerRight:
+            <Icon
+                name='bell'
+                size={30}
+                type="MaterialIcons"
+                color="white"
+                style={{paddingRight:5,}}
+            />
     };
+    componentDidMount() {
+
+        return fetch(GET_PETS + '?user_id=1')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isLoading: false,
+                    dataSource: responseJson
+                }, function () {
+                    // In this block you can do something with new state.
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    FlatListItemSeparator = () => {
+        return (
+            <View
+                style={{
+                    backgroundColor: "#d9d7e8",
+                }}
+            />
+        );
+    }
 
     render() {
-        return (
-            <View style={{backgroundColor: 'white'}}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal', {name: '1'})}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image style={styles.avatar} source={{uri:'http://123.207.217.225/img/tx.jpg'}}/>
-                        <Text style={styles.userName}>管理员</Text>
-                        <Image style={styles.male} />
-                    </View>
-                </TouchableOpacity>
-                <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
-
-                <View style={{flexDirection: 'row', alignItems: 'center', height: 80}}>
-                    {itemList.proFile.map((list) => {
-                        return(
-                            <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate(list.screen, {name: '1'})}>
-                                <View style={{alignItems: 'center', flex: 1}}>
-                                    <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>{list.val}</Text>
-                                    <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>{list.name}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    })}
+        if (this.state.isLoading) {
+            return (
+                <View style={{ flex: 1, paddingTop: 20 }}>
+                    <ActivityIndicator />
                 </View>
-
-                <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
-                <SectionList
-                    keyExtractor={this._keyExtractor}
-                    ItemSeparatorComponent={()=><View style={{height:1,backgroundColor:'#f5f5f9'}}/>}
-                    SectionSeparatorComponent={()=><View style={{height:10,backgroundColor:'#f5f5f9'}}/>}
-                    ListHeaderComponent={this._renderHeaderComponent}
-                    renderItem={this._renderItemComponent}
-                    contentContainerStyle={{paddingBottom:20}}
-                    sections={[
-                        {data: sectonDatas.section1, key:'s1'},
-                        {data: sectonDatas.section2, key:'s2'},
-                        {data: sectonDatas.section3, key:'s3'},
-                        {data: sectonDatas.section4, key:'s4'},
-                    ]}
-                />
+            );
+        }
+        return (
+            <View style={styles.mainView}>
+                <View style={styles.body}>
+                    <View style={styles.top}>
+                        <View style={styles.topLeft}>
+                            <Image style={styles.image} source={{ uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58' }}></Image>
+                        </View>
+                        <View style={styles.topRight}>
+                            <View style={{justifyContent:'space-around', marginLeft: 15}}>
+                                <Text>姓名</Text>
+                                <Text>个性签名</Text>
+                            </View>
+                            <View style={{alignItems: 'flex-end', justifyContent: 'flex-start'}}>
+                                <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, width: 60, height: 20, fontSize: 10}} title={'签到'}/>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{height: 12, backgroundColor: '#f5f5f9'}}/>
+                    <View style={styles.blockView}>
+                        <View>
+                            <Text>123</Text>
+                            <Text>积分</Text>
+                        </View>
+                        <View>
+                            <Text>123</Text>
+                            <Text>优惠券</Text>
+                        </View>
+                        <View>
+                            <Text>123</Text>
+                            <Text>购物车</Text>
+                        </View>
+                    </View>
+                    <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
+                    <View style={styles.petView}>
+                        <View style={styles.littleTitle}>
+                            <Text>
+                                我的宠物
+                            </Text>
+                        </View>
+                        <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
+                        <View style={{height: 50, borderColor: 'black'}}>
+                            <FlatList
+                                data={this.state.dataSource}
+                                horizontal= {true}
+                                ItemSeparatorComponent={this.FlatListItemSeparator}
+                                renderItem={({item}) => (
+                                    <View style={styles.itemView}>
+                                        <Image style={styles.avatar} source={{uri: item.avatar}} />
+                                        <View style={{justifyContent: 'space-around'}}>
+                                            <Text style={{fontSize: 15}}>{item.name}</Text>
+                                            <Text style={{fontSize: 10}}>{item.small_type_id} {item.sex} {item.birthday}</Text>
+                                        </View>
+                                    </View>
+                                )}
+                            />
+                        </View>
+                    </View>
+                    <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
+                    <View style={styles.menuView}>
+                        <View style={styles.littleTitle}>
+                            <Text>
+                                社区管理
+                            </Text>
+                            <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
+                        </View>
+                        <View style={styles.blockView}>
+                            <View>
+                                <Image source={require('../../image/post.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>帖子</Text>
+                            </View>
+                            <View>
+                                <Image source={require('../../image/collection.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>收藏</Text>
+                            </View>
+                            <View>
+                                <Image source={require('../../image/follow.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>关注</Text>
+                            </View>
+                            <View>
+                                <Image source={require('../../image/fan.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>粉丝</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
+                    <View style={styles.menuView}>
+                        <View style={styles.littleTitle}>
+                            <Text>
+                                商场管理
+                            </Text>
+                            <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
+                        </View>
+                        <View style={styles.blockView}>
+                            <View>
+                                <Image source={require('../../image/shopingCart.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>购物车</Text>
+                            </View>
+                            <View>
+                                <Image source={require('../../image/shopingList.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>订单</Text>
+                            </View>
+                            <View>
+                                <Image source={require('../../image/service.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>售后</Text>
+                            </View>
+                            <View style={{alignItems: 'center'}}>
+                                <Image source={require('../../image/adress.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>收货地址</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
+                    <View style={styles.menuView}>
+                        <View style={styles.littleTitle}>
+                            <Text>
+                                其他
+                            </Text>
+                            <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
+                        </View>
+                        <View style={{height: 50, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+                            <View style={{marginLeft: 30}}>
+                                <Image source={require('../../image/setting.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
+                                <Text>设置</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
             </View>
 
         )
@@ -102,23 +208,60 @@ class ProfileScreen extends Component {
 
 export {ProfileScreen}
 const styles = StyleSheet.create({
+    mainView: {
+        flex: 1,
+        backgroundColor: 'white'
+    },
+    body: {
+        marginLeft: 15,
+        marginRight: 15
+    },
+    top: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 10
+    },
+    image: {
+        width: 90,
+        height: 90,
+        borderRadius: 45,
+    },
+    topLeft: {
 
-    avatar:{
-        marginLeft:15,
-        marginTop:15,
-        height:60,
-        width:60,
-        borderRadius:30,
-        marginBottom:15
     },
-    userName:{
-        marginLeft:15,
-        fontSize:20,
-        color:'#333'
+    topRight: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
-    male:{
-        marginLeft:5,
-        height:15,
-        width:15
+    petView: {
+
     },
-})
+    menuView: {
+
+    },
+
+    littleTitle: {
+        height: 30,
+        justifyContent: 'center'
+    },
+    blockView:{
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    itemView: {
+        flexDirection: 'row',
+        marginLeft: 0,
+    },
+    avatar: {
+        marginLeft: 5,
+        marginTop: 5,
+        marginRight: 15,
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        marginBottom: 5
+    },
+});

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Text from "react-native-elements/src/text/Text";
-import {FlatList, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, FlatList, TouchableOpacity, View} from "react-native";
 import {GET_CAT_TYPES} from "../../../config/api";
 class CatTypeScreen extends Component{
     constructor(props) {
@@ -45,6 +45,13 @@ class CatTypeScreen extends Component{
     }
 
     render(){
+        if (this.state.isLoading) {
+            return (
+                <View style={{ flex: 1, paddingTop: 20 }}>
+                    <ActivityIndicator />
+                </View>
+            );
+        }
         const { state, goBack } = this.props.navigation;
         return(
             <View>
