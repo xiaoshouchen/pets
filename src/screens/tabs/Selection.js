@@ -32,7 +32,7 @@ class SelectionScreen extends Component {
                     <View style={styles.petImageView}>
                         <View>
                             <Image style={styles.petImage} source={{ uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58' }}></Image>
-                            <Text style={{ textAlign: 'center' }}>二狗</Text>
+                            <Text style={{ textAlign: 'center',backgroundColor: 'rgba(0,0,0,0)' }}>二狗</Text>
                         </View>
                     </View>
                     <TouchableOpacity style={styles.buttonRight} onPress={(navigation) => {
