@@ -37,7 +37,7 @@ class AddArticle extends Component {
     ),
   });
   post(){
-    //alert(this.editor);
+    alert(this.editor.state.editorHtml);
     fetch('http://192.168.123.170/pets/index.php/api/article', {
       method: 'POST',
       headers: {
@@ -47,7 +47,7 @@ class AddArticle extends Component {
       body: JSON.stringify({
         firstParam: 'yourValue',
         token:'123456',
-        content: this.editor.props.editorHtml,
+        content: this.editor.state.editorHtml,
       }),
     }).then((response) => response.json())
     .then((responseJson) => {
