@@ -12,7 +12,9 @@ import {GET_PETS} from "../../config/api";
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            info:{name:"您的昵称",desc:"您的简单介绍",score:0,discount:0,cart:0}
+        }
     }
 
     static navigationOptions = {
@@ -45,7 +47,7 @@ class ProfileScreen extends Component {
             .then((responseJson) => {
                 this.setState({
                     isLoading: false,
-                    dataSource: responseJson
+                    dataSource: responseJson,
                 }, function () {
                     // In this block you can do something with new state.
                 });
@@ -83,8 +85,8 @@ class ProfileScreen extends Component {
                         </View>
                         <View style={styles.topRight}>
                             <View style={{justifyContent: 'space-around', marginLeft: 15}}>
-                                <Text>姓名</Text>
-                                <Text>个性签名</Text>
+                                <Text>{this.state.info.name}</Text>
+                                <Text>{this.state.info.desc}</Text>
                             </View>
                             <View style={{alignItems: 'flex-end', justifyContent: 'flex-start'}}>
                                 <Button buttonStyle={{
@@ -107,15 +109,15 @@ class ProfileScreen extends Component {
                         marginRight: 15
                     }}>
                         <View>
-                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.score}</Text>
                             <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
                         </View>
                         <View>
-                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.discount}</Text>
                             <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>优惠券</Text>
                         </View>
                         <View>
-                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.cart}</Text>
                             <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>购物车</Text>
                         </View>
                     </View>
@@ -139,8 +141,7 @@ class ProfileScreen extends Component {
                                             <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                             <View style={{justifyContent: 'space-around'}}>
                                                 <Text style={{fontSize: 15}}>{item.name}</Text>
-                                                <Text
-                                                    style={{fontSize: 10}}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} {item.birthday}</Text>
+                                                <Text style={{fontSize: 10,marginRight:20}}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
                                             </View>
                                         </View>
                                     </TouchableOpacity>
