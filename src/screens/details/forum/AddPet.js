@@ -17,7 +17,8 @@ class AddPet extends Component {
             checked: false,
             typeName: '选择宠物种类',
             sex: 1,
-            userId: 2
+            userId: 2,
+            isLoading: true
         }
     }
     callBack(item){
@@ -27,7 +28,7 @@ class AddPet extends Component {
         })
     }
     static navigationOptions= {
-        title: '添加宠物',
+        title: '宠物资料',
     }
 
     selectPhotoTapped() {
@@ -95,6 +96,19 @@ class AddPet extends Component {
     render() {
         const { state, navigate } = this.props.navigation;
         const {params}=this.props.navigation.state;
+        if(this.state.isLoading){
+            if(params!=undefined){
+                this.setState({
+                    name: params.item.name,
+                    sex: params.item.sex,
+                    checked: params.item.sex==0?true:false,
+                    date: params.item.birthday,
+                    typeId: params.item.small_type_id,
+                    avatarSource: {uri: params.item.avatar},
+                    isLoading: false
+                })
+            }
+        }
         return (
             <View style={styles.photoView}>
                 <View style={styles.imageView}>

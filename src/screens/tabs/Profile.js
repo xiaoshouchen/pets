@@ -90,18 +90,18 @@ class ProfileScreen extends Component {
                         </View>
                     </View>
                     <View style={{height: 12, backgroundColor: '#f5f5f9'}}/>
-                    <View style={styles.blockView}>
+                    <View style={{height: 50, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginLeft: 15, marginRight: 15}}>
                         <View>
-                            <Text>123</Text>
-                            <Text>积分</Text>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
+                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
                         </View>
                         <View>
-                            <Text>123</Text>
-                            <Text>优惠券</Text>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
+                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>优惠券</Text>
                         </View>
                         <View>
-                            <Text>123</Text>
-                            <Text>购物车</Text>
+                            <Text style={{color: '#333', fontSize: 16, marginTop: 10}}>123</Text>
+                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>购物车</Text>
                         </View>
                     </View>
                     <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
@@ -111,20 +111,22 @@ class ProfileScreen extends Component {
                                 我的宠物
                             </Text>
                         </View>
-                        <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
-                        <View style={{height: 50, borderColor: 'black'}}>
+                        <View style={{marginLeft: -15, marginRight: -15 ,height: 2, backgroundColor: '#f5f5f9'}}/>
+                        <View style={{height: 50, marginLeft: 15}}>
                             <FlatList
                                 data={this.state.dataSource}
                                 horizontal= {true}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
                                 renderItem={({item}) => (
-                                    <View style={styles.itemView}>
-                                        <Image style={styles.avatar} source={{uri: item.avatar}} />
-                                        <View style={{justifyContent: 'space-around'}}>
-                                            <Text style={{fontSize: 15}}>{item.name}</Text>
-                                            <Text style={{fontSize: 10}}>{item.small_type_id} {item.sex} {item.birthday}</Text>
+                                    <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddPet',{item: item})}>
+                                        <View style={styles.itemView}>
+                                            <Image style={styles.avatar} source={{uri: item.avatar}} />
+                                            <View style={{justifyContent: 'space-around'}}>
+                                                <Text style={{fontSize: 15}}>{item.name}</Text>
+                                                <Text style={{fontSize: 10}}>{item.small_type_id} {item.sex == 0? '母' : '公'} {item.birthday}</Text>
+                                            </View>
                                         </View>
-                                    </View>
+                                    </TouchableOpacity>
                                 )}
                             />
                         </View>
@@ -135,22 +137,22 @@ class ProfileScreen extends Component {
                             <Text>
                                 社区管理
                             </Text>
-                            <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         </View>
+                        <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/post.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>帖子</Text>
                             </View>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/collection.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>收藏</Text>
                             </View>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/follow.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>关注</Text>
                             </View>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/fan.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>粉丝</Text>
                             </View>
@@ -162,22 +164,22 @@ class ProfileScreen extends Component {
                             <Text>
                                 商场管理
                             </Text>
-                            <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         </View>
+                        <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/shopingCart.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>购物车</Text>
                             </View>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/shopingList.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>订单</Text>
                             </View>
-                            <View>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/service.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>售后</Text>
                             </View>
-                            <View style={{alignItems: 'center'}}>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/adress.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>收货地址</Text>
                             </View>
@@ -189,10 +191,10 @@ class ProfileScreen extends Component {
                             <Text>
                                 其他
                             </Text>
-                            <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         </View>
-                        <View style={{height: 50, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                            <View style={{marginLeft: 30}}>
+                        <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
+                        <View style={styles.blockView}>
+                            <View style={styles.blockItem}>
                                 <Image source={require('../../image/setting.png')} style={{ width: 30, height: 30, marginBottom: 5 }}/>
                                 <Text>设置</Text>
                             </View>
@@ -213,13 +215,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     body: {
-        marginLeft: 15,
-        marginRight: 15
+
     },
     top: {
         flexDirection: 'row',
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        marginLeft: 15,
+        marginRight: 15
     },
     image: {
         width: 90,
@@ -235,7 +238,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     petView: {
-
     },
     menuView: {
 
@@ -243,13 +245,17 @@ const styles = StyleSheet.create({
 
     littleTitle: {
         height: 30,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: 15,
+        marginRight: 15
     },
     blockView:{
         height: 50,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginLeft: 15,
+        marginRight: 15
     },
     itemView: {
         flexDirection: 'row',
@@ -264,4 +270,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 5
     },
+    blockItem: {
+        width: '25%',
+        alignItems: 'center'
+    }
 });
