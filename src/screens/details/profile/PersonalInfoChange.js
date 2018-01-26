@@ -15,7 +15,7 @@ class PersonalInfoChangeScreen extends Component{
         title: '修改',
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerStyle: {backgroundColor: '#44a3ff'},
     })
 
     selectPhotoTapped() {

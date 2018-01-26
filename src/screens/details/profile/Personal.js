@@ -15,7 +15,7 @@ class PersonalScreen extends Component{
         title: '个人信息',
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerStyle: {backgroundColor: '#44a3ff'},
         headerRight:
             <Button title={'修改'} onPress = {
                 () => {

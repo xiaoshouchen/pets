@@ -18,7 +18,7 @@ class OtherTypeScreen extends Component{
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/pets/type/cat')
+        return fetch('http://123.207.217.225/api/pets/type/other')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
