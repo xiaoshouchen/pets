@@ -76,7 +76,7 @@ class ArticleScreen extends Component {
                     renderItem={({ item }) => (
                         <View style={styles.item}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal', {item: item})}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('PrivateInformation', {item: item})}>
                                     <Image source={{ uri: item.avatar_img }} style={styles.avatar} />
                                 </TouchableOpacity>
                                 <View>

@@ -45,27 +45,27 @@ class SelectionScreen extends Component {
                     <Text style={styles.smallTitle}>专属推荐</Text>
                     <View style={styles.item_list}>
                         <TouchableOpacity style={styles.itemLeft} onPress={()=>navigate('PrivateRecommends')}>
-                            <Image source={require('../../image/f-0.png')}
+                            <Image source={require('../../image/list-1.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>饮食搭配</Text>
                         </TouchableOpacity>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-2.png')}
+                            <Image source={require('../../image/list-2.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>医疗卫生</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/dog_train.png')}
+                            <Image source={require('../../image/list-3.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>训练交流</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-6.png')}
+                            <Image source={require('../../image/list-4.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>美容清洁</Text>
                         </View>
                         <View style={styles.itemRight}>
-                            <Image source={require('../../image/f-4.png')}
+                            <Image source={require('../../image/list-5.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>玩具用品</Text>
                         </View>
@@ -75,27 +75,27 @@ class SelectionScreen extends Component {
                     <Text style={styles.smallTitle}>常用功能</Text>
                     <View style={styles.item_list}>
                         <View style={styles.itemLeft}>
-                            <Image source={require('../../image/diary.png')}
+                            <Image source={require('../../image/list1.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>宠物日记</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/dog_house.png')}
+                            <Image source={require('../../image/list2.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>领养发布</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-7.png')}
+                            <Image source={require('../../image/list3.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>宠物配对</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-8.png')}
+                            <Image source={require('../../image/list4.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>宠物百科</Text>
                         </View>
                         <View style={styles.itemRight}>
-                            <Image source={require('../../image/f-1.png')}
+                            <Image source={require('../../image/list5.png')}
                                 style={{ width: 48, height: 48, marginBottom: 5 }} />
                             <Text style={styles.itemText}>专家问答</Text>
                         </View>

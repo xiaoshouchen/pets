@@ -24,6 +24,7 @@ import { PrivateRecommendScreen } from '../screens/details/forum/mypets/PrivateR
 import {DogTypeScreen} from "../screens/details/forum/DogType";
 import {CatTypeScreen} from "../screens/details/forum/CatType";
 import {OtherTypeScreen} from "../screens/details/forum/OtherType";
+import {InformationScreen} from "../screens/details/profile/PrivateInformation";
 
 
 const CollectionTabs = TabNavigator({
@@ -97,7 +98,8 @@ const RootNavigator = StackNavigator({
     Register: { screen: RegisterScreen },
     ProductDetail: { screen: ProductDetailScreen },
     PrivateRecommends: { screen: PrivateRecommendScreen },
-    PetType: {screen: PetTypeTabs}
+    PetType: {screen: PetTypeTabs},
+    PrivateInformation: {screen: InformationScreen}
 });
 
 export default RootNavigator;
