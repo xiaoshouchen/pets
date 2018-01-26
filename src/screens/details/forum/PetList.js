@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, ScrollView, Button, Image, FlatList, ActivityIndicator} from 'react-native'
+import {StyleSheet, Text, View, Button, Image, ActivityIndicator} from 'react-native'
 import {GET_PETS} from "../../../config/api";
+import {SwipeListView} from "react-native-swipe-list-view";
 
 class PetList extends Component {
     constructor(props) {
@@ -27,18 +28,6 @@ class PetList extends Component {
             });
     }
 
-    FlatListItemSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: "#d9d7e8",
-                }}
-            />
-        );
-    }
-
     render() {
         if (this.state.isLoading) {
             return (
@@ -50,17 +39,28 @@ class PetList extends Component {
         const {navigate}=this.props.navigation;
         return (
             <View style={styles.container}>
-                <FlatList
+                <SwipeListView
+                    useFlatList = {true}
+                    closeOnRowPress = {true}
+                    closeOnScroll = {true}
+                    closeOnRowBeginSwipe = {true}
                     data={this.state.dataSource}
-                    ItemSeparatorComponent={this.FlatListItemSeparator}
-                    renderItem={({item}) => (
-                        <View style={styles.itemView}>
-                            <Image style={styles.avatar} source={{uri: item.avatar}} />
+                    renderItem={ (data, rowMap) => (
+                        <View style={styles.rowFront}>
+                            <Image style={styles.avatar} source={{uri: data.item.avatar}} />
                             <View>
-                                <Text>{item.name}</Text>
+                                <Text>{data.item.name}</Text>
                             </View>
                         </View>
                     )}
+                    renderHiddenItem={ (data, rowMap) => (
+                        <View style={styles.rowBack}>
+                            <Text style={{backgroundColor: 'green'}}>修改</Text>
+                            <Text style={{backgroundColor: 'red',marginLeft: 30}}>删除</Text>
+                        </View>
+                    )}
+                    leftOpenValue={75}
+                    rightOpenValue={-75}
                 />
                 <Button onPress={()=>navigate('AddPet')} title={'添加宠物'}/>
             </View>
@@ -85,7 +85,24 @@ const styles=StyleSheet.create(
         },
         itemView:{
           flexDirection:'row'
-        }
+        },
+        rowFront: {
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderBottomColor: '#CCC',
+            borderBottomWidth: 1,
+            height: 50,
+        },
+        rowBack: {
+            alignItems: 'center',
+            backgroundColor: '#DDD',
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            paddingLeft: 15,
+        },
     }
 )
 

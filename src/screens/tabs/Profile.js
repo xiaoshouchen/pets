@@ -108,18 +108,24 @@ class ProfileScreen extends Component {
                         marginLeft: 15,
                         marginRight: 15
                     }}>
-                        <View>
-                            <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.score}</Text>
-                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
-                        </View>
-                        <View>
-                            <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.discount}</Text>
-                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>优惠券</Text>
-                        </View>
-                        <View>
-                            <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.cart}</Text>
-                            <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>购物车</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Score')}>
+                            <View>
+                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.score}</Text>
+                                <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Score')}>
+                            <View>
+                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.discount}</Text>
+                                <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>优惠券</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ShoppingCart')}>
+                            <View>
+                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.cart}</Text>
+                                <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>购物车</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
                     <View style={styles.petView}>
