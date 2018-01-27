@@ -83,17 +83,19 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 40,
     },
-    top:{
+    top: {
         flexDirection: 'row',
     },
     avatarBack: {
-        flex:1,
+        flex: 1,
         paddingTop: 12,
         paddingBottom: 12,
         paddingLeft: 12
     },
     smallButton: {
-        flex:1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flex: 1
     },
     name: {
         marginTop: 16,
@@ -104,11 +106,14 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     profile: {
-        flex:2,
+        flex: 2,
         marginLeft: 10
     },
-    function:{
-        backgroundColor: "#01ffc9"
+    function: {
+        backgroundColor: "#ff7c50",
+        marginRight: 10,
+        color:"white",
+        marginTop:20
     }
 })
 export {InformationScreen}

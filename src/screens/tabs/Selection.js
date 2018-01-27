@@ -1,15 +1,24 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const data = [{key: 'a'}, {key: 'b'}];
+
 class SelectionScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            clickSelected: ""
+        }
+    }
+
     static navigationOptions = {
         tabBarLabel: "萌宠",
         title: '我的萌宠',
-        headerTitleStyle: { color: '#fff' },
+        headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: { backgroundColor: '#44a3ff' },
-        tabBarIcon: ({ tintColor, focused }) => (
+        headerStyle: {backgroundColor: '#44a3ff'},
+        tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='pets'
                 size={30}
@@ -19,11 +28,11 @@ class SelectionScreen extends Component {
     };
 
     render() {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         return (
-            <View style={{ backgroundColor: 'white' }}>
-                <View style={{ height: 180 }}>
-                    <Image source={require('../../image/back.jpg')} style={{ width: null, height: 180 }} />
+            <View style={{backgroundColor: 'white'}}>
+                <View style={{height: 180}}>
+                    <Image source={require('../../image/back.jpg')} style={{width: null, height: 180}}/>
                 </View>
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.buttonLeft} onPress={() => navigate('PetList')}>
@@ -31,8 +40,9 @@ class SelectionScreen extends Component {
                     </TouchableOpacity>
                     <View style={styles.petImageView}>
                         <View>
-                            <Image style={styles.petImage} source={{ uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58' }}></Image>
-                            <Text style={{ textAlign: 'center',backgroundColor: 'rgba(0,0,0,0)' }}>二狗</Text>
+                            <Image style={styles.petImage}
+                                   source={{uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58'}}></Image>
+                            <Text style={{textAlign: 'center', backgroundColor: 'rgba(0,0,0,0)'}}>二狗</Text>
                         </View>
                     </View>
                     <TouchableOpacity style={styles.buttonRight} onPress={(navigation) => {
@@ -44,29 +54,29 @@ class SelectionScreen extends Component {
                 <View style={styles.functionArea}>
                     <Text style={styles.smallTitle}>专属推荐</Text>
                     <View style={styles.item_list}>
-                        <TouchableOpacity style={styles.itemLeft} onPress={()=>navigate('PrivateRecommends')}>
+                        <TouchableOpacity style={styles.itemLeft} onPress={() => navigate('PrivateRecommends')}>
                             <Image source={require('../../image/list-1.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>饮食搭配</Text>
                         </TouchableOpacity>
                         <View style={styles.item}>
                             <Image source={require('../../image/list-2.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>医疗卫生</Text>
                         </View>
                         <View style={styles.item}>
                             <Image source={require('../../image/list-3.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>训练交流</Text>
                         </View>
                         <View style={styles.item}>
                             <Image source={require('../../image/list-4.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>美容清洁</Text>
                         </View>
                         <View style={styles.itemRight}>
                             <Image source={require('../../image/list-5.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>玩具用品</Text>
                         </View>
                     </View>
@@ -76,42 +86,50 @@ class SelectionScreen extends Component {
                     <View style={styles.item_list}>
                         <View style={styles.itemLeft}>
                             <Image source={require('../../image/list1.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>宠物日记</Text>
                         </View>
                         <View style={styles.item}>
                             <Image source={require('../../image/list2.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>领养发布</Text>
                         </View>
                         <View style={styles.item}>
                             <Image source={require('../../image/list3.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>宠物配对</Text>
                         </View>
                         <View style={styles.item}>
                             <Image source={require('../../image/list4.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>宠物百科</Text>
                         </View>
                         <View style={styles.itemRight}>
                             <Image source={require('../../image/list5.png')}
-                                style={{ width: 48, height: 48, marginBottom: 5 }} />
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>专家问答</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{backgroundColor:'#eeeeee',height:10}}></View>
+                <View style={{backgroundColor: '#eeeeee', height: 10}}></View>
                 <View style={styles.scroll}>
-                    <TouchableOpacity style={{flex:1}}>
-                        <Text style={{textAlign:'center',fontSize:16}}>养宠必读</Text>
+                    <TouchableOpacity style={{flex: 1}}>
+                        <Text style={{textAlign: 'center', fontSize: 16}}>养宠必读</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex:1}}>
-                        <Text style={{textAlign:'center',fontSize:16}}>提醒事项</Text>
+                    <TouchableOpacity style={{flex: 1}}>
+                        <Text style={{textAlign: 'center', fontSize: 16}}>提醒事项</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex:1}}>
-                        <Text style={{textAlign:'center',fontSize:16}}>商品推荐</Text>
+                    <TouchableOpacity style={{flex: 1}}>
+                        <Text style={{textAlign: 'center', fontSize: 16}}>商品推荐</Text>
                     </TouchableOpacity>
+                </View>
+                <View style={{flex: 1}}>
+                    <FlatList
+                        data={data}
+                        renderItem={({item}) => {
+                            <Text>{item.key}</Text>
+                        }}
+                    />
                 </View>
 
             </View>
@@ -120,7 +138,7 @@ class SelectionScreen extends Component {
     }
 }
 
-export { SelectionScreen }
+export {SelectionScreen}
 
 const styles = StyleSheet.create(
     {
@@ -201,7 +219,9 @@ const styles = StyleSheet.create(
         },
         scroll: {
             flexDirection: 'row',
-            height:40
+            height: 40,
+            alignItems: 'center',
+            justifyContent: 'center',
         }
     }
 )

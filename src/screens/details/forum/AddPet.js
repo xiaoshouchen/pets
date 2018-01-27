@@ -95,7 +95,7 @@ class AddPet extends Component {
     }
     render() {
         const { state, navigate } = this.props.navigation;
-        const {params}=this.props.navigation.state;
+        const { params }=this.props.navigation.state;
         if(this.state.isLoading){
             if(params!=undefined){
                 this.setState({

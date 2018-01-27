@@ -29,14 +29,6 @@ class AddArticle extends Component {
 
         ,
         title: '分享您的经验或故事',
-        tabBarIcon: ({tintColor, focused}) => (
-            <Icon
-                name='bell'
-                size={20}
-                type='font-awesome'
-                color={tintColor}
-            />
-        ),
     });
 
     post() {
@@ -66,8 +58,10 @@ class AddArticle extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.titleView}>
-                    <TextInput style={{placeholder: '输入文章标题'}}/>
+                    <Text>给您的分享加个标题</Text>
+                    <TextInput style={{placeholder: '输入文章标题',border:1}}/>
                 </View>
+                <Text>输入您要分享的内容</Text>
                 <RichEditor ref={(ref) => this.editor = ref}/>
                 <KeyboardSpacer/>
             </View>
@@ -79,12 +73,9 @@ export {AddArticle};
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#ffffff',
     },
     titleView: {
-        justifyContent: 'flex-start',
         alignItems: 'flex-start',
 
     }

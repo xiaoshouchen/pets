@@ -10,8 +10,8 @@ class PrivateRecommendScreen extends Component {
         super(props);
         this.state = {
             isLoading: true,
-            petType:'',
-            petYear:''
+            petType: '',
+            petYear: ''
         }
     }
 
@@ -73,8 +73,8 @@ class PrivateRecommendScreen extends Component {
                         <Text>{this.state.petType}</Text>
                     </View>
                     <View>
-                    <Text>您的宠物年龄为：</Text>
-                    <Text>{this.state.petYear}</Text>
+                        <Text>您的宠物年龄为：</Text>
+                        <Text>{this.state.petYear}</Text>
                     </View>
                     <Text>您的宠物可以使用以下食物：</Text>
                 </View>
@@ -126,6 +126,7 @@ class PrivateRecommendScreen extends Component {
 const styles = StyleSheet.create({
     MainContainer: {
         backgroundColor: 'white',
+        flex: 1
     },
     item: {
         borderRadius: 5,

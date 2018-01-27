@@ -21,10 +21,12 @@ class CatTypeScreen extends Component{
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    isLoading: false,
                     dataSource: responseJson
                 }, function () {
                     // In this block you can do something with new state.
+                    this.setState({
+                        isLoading: false,
+                    })
                 });
             })
             .catch((error) => {
