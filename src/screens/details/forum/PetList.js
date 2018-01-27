@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, Button, Image, ActivityIndicator} from 'react-native'
+import {
+    StyleSheet, Text, View, ScrollView, Image, FlatList, ActivityIndicator,
+    TouchableOpacity
+} from 'react-native'
+import {Button} from "react-native-elements";
 import {GET_PETS} from "../../../config/api";
-import {SwipeListView} from "react-native-swipe-list-view";
 
 class PetList extends Component {
     constructor(props) {
@@ -28,81 +31,91 @@ class PetList extends Component {
             });
     }
 
+    FlatListItemSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: 10,
+                    width: "100%",
+                    backgroundColor: "#f5f5f9",
+                }}
+            />
+        );
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
-        const {navigate}=this.props.navigation;
+        const {navigate} = this.props.navigation;
         return (
-            <View style={styles.container}>
-                <SwipeListView
-                    useFlatList = {true}
-                    closeOnRowPress = {true}
-                    closeOnScroll = {true}
-                    closeOnRowBeginSwipe = {true}
-                    data={this.state.dataSource}
-                    renderItem={ (data, rowMap) => (
-                        <View style={styles.rowFront}>
-                            <Image style={styles.avatar} source={{uri: data.item.avatar}} />
-                            <View>
-                                <Text>{data.item.name}</Text>
-                            </View>
-                        </View>
-                    )}
-                    renderHiddenItem={ (data, rowMap) => (
-                        <View style={styles.rowBack}>
-                            <Text style={{backgroundColor: 'green'}}>修改</Text>
-                            <Text style={{backgroundColor: 'red',marginLeft: 30}}>删除</Text>
-                        </View>
-                    )}
-                    leftOpenValue={75}
-                    rightOpenValue={-75}
-                />
-                <Button onPress={()=>navigate('AddPet')} title={'添加宠物'}/>
-            </View>
+            <ScrollView>
+                <View style={styles.container}>
+                    <FlatList
+                        data={this.state.dataSource}
+                        ItemSeparatorComponent={this.FlatListItemSeparator}
+                        renderItem={({item}) => (
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
+                                <View style={styles.itemView}>
+                                    <View style={styles.itemView}>
+                                        <Image style={styles.avatar} source={{uri: item.avatar}}/>
+                                        <View style={{justifyContent: 'space-around'}}>
+                                            <Text style={{fontSize: 16, fontColor: '#333'}}>{item.name}</Text>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                marginRight: 20,
+                                                fontColor: '#999'
+                                            }}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginRight: 15}}>
+                                        <Image source={require('../../../image/edit.png')}
+                                               style={{width: 30, height: 30}}/>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+                </View>
+                <Button buttonStyle={{
+                    backgroundColor: '#44a3ff',
+                    borderRadius: 10,
+                    marginTop: 40,
+                    marginBottom: 40,
+                    width: 350
+                }}
+                        onPress={() => navigate('AddPet')} title={'添加宠物'}/>
+            </ScrollView>
         )
             ;
     }
 }
 
-const styles=StyleSheet.create(
+const styles = StyleSheet.create(
     {
         avatar: {
-            marginLeft: 5,
+            marginLeft: 20,
             marginTop: 5,
-            marginRight: 15,
+            marginRight: 20,
             height: 40,
             width: 40,
             borderRadius: 20,
             marginBottom: 5
         },
-        container:{
-            backgroundColor:'white'
+        container: {
+            backgroundColor: 'white'
         },
-        itemView:{
-          flexDirection:'row'
-        },
-        rowFront: {
+        itemView: {
             flexDirection: 'row',
-            justifyContent: 'flex-start',
             alignItems: 'center',
-            backgroundColor: 'white',
-            borderBottomColor: '#CCC',
-            borderBottomWidth: 1,
-            height: 50,
-        },
-        rowBack: {
-            alignItems: 'center',
-            backgroundColor: '#DDD',
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            paddingLeft: 15,
-        },
+            justifyContent: 'space-between',
+            height: 60
+        }
     }
 )
 
