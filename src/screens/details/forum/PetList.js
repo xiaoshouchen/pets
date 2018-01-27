@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, ScrollView, Button, Image, FlatList, ActivityIndicator} from 'react-native'
+import {
+    StyleSheet, Text, View, ScrollView, Image, FlatList, ActivityIndicator,
+    TouchableOpacity
+} from 'react-native'
+import {Button} from "react-native-elements";
 import {GET_PETS} from "../../../config/api";
 
 class PetList extends Component {
@@ -31,9 +35,9 @@ class PetList extends Component {
         return (
             <View
                 style={{
-                    height: 1,
+                    height: 10,
                     width: "100%",
-                    backgroundColor: "#d9d7e8",
+                    backgroundColor: "#f5f5f9",
                 }}
             />
         );
@@ -42,49 +46,75 @@ class PetList extends Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
-        const {navigate}=this.props.navigation;
+        const {navigate} = this.props.navigation;
         return (
-            <View style={styles.container}>
-                <FlatList
-                    data={this.state.dataSource}
-                    ItemSeparatorComponent={this.FlatListItemSeparator}
-                    renderItem={({item}) => (
-                        <View style={styles.itemView}>
-                            <Image style={styles.avatar} source={{uri: item.avatar}} />
-                            <View>
-                                <Text>{item.name}</Text>
-                            </View>
-                        </View>
-                    )}
-                />
-                <Button onPress={()=>navigate('AddPet')} title={'添加宠物'}/>
-            </View>
+            <ScrollView>
+                <View style={styles.container}>
+                    <FlatList
+                        data={this.state.dataSource}
+                        ItemSeparatorComponent={this.FlatListItemSeparator}
+                        renderItem={({item}) => (
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
+                                <View style={styles.itemView}>
+                                    <View style={styles.itemView}>
+                                        <Image style={styles.avatar} source={{uri: item.avatar}}/>
+                                        <View style={{justifyContent: 'space-around'}}>
+                                            <Text style={{fontSize: 16, fontColor: '#333'}}>{item.name}</Text>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                marginRight: 20,
+                                                fontColor: '#999'
+                                            }}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginRight: 15}}>
+                                        <Image source={require('../../../image/edit.png')}
+                                               style={{width: 30, height: 30}}/>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+                </View>
+                <Button buttonStyle={{
+                    backgroundColor: '#44a3ff',
+                    borderRadius: 10,
+                    marginTop: 40,
+                    marginBottom: 40,
+                    width: 350
+                }}
+                        onPress={() => navigate('AddPet')} title={'添加宠物'}/>
+            </ScrollView>
         )
             ;
     }
 }
 
-const styles=StyleSheet.create(
+const styles = StyleSheet.create(
     {
         avatar: {
-            marginLeft: 5,
+            marginLeft: 20,
             marginTop: 5,
-            marginRight: 15,
+            marginRight: 20,
             height: 40,
             width: 40,
             borderRadius: 20,
             marginBottom: 5
         },
-        container:{
-            backgroundColor:'white'
+        container: {
+            backgroundColor: 'white'
         },
-        itemView:{
-          flexDirection:'row'
+        itemView: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 60
         }
     }
 )

@@ -123,6 +123,7 @@ class AddPet extends Component {
                             underlineColorAndroid={'transparent'}
                             style={styles.input}
                             placeholder ={'设置宠物名称'}
+                            value={this.state.name}
                             onChangeText={(text) => this.setState({
                                 name: text
                             })}
