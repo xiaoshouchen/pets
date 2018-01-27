@@ -138,7 +138,7 @@ class AddPet extends Component {
                                 right
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
-                                containerStyle={{ marginRight: -30, borderColor: 'white', width: 45 }}
+                                containerStyle={{ marginRight: -30, borderColor: 'rgba(0,0,0,0)', width: 45, backgroundColor: 'rgba(0,0,0,0)' }}
                                 checked={!this.state.checked}
                                 onPress={() => this.setState({checked: false, sex: 1})}
                             />
@@ -147,7 +147,7 @@ class AddPet extends Component {
                                 right
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
-                                containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'white', width: 45 }}
+                                containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'rgba(0,0,0,0)', width: 45, backgroundColor: 'rgba(0,0,0,0)' }}
                                 checked={this.state.checked}
                                 onPress={() => this.setState({checked: true, sex: 0})}
                             />
