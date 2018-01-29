@@ -44,31 +44,37 @@ class CatTypeScreen extends Component{
         );
     }
 
-    render(){
+    render() {
+        const {state, goBack} = this.props.navigation;
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
-        const { state, goBack } = this.props.navigation;
-        return(
-            <View>
-                <FlatList
-                    data={this.state.dataSource}
-                    ItemSeparatorComponent={this.FlatListItemSeparator}
-                    renderItem={({item}) =>
-                        <TouchableOpacity onPress={() => {state.params.callBack(item);goBack(null)}}>
-                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+        else {
+            return (
+                <View>
+                    <FlatList
+                        data={this.state.dataSource}
+                        ItemSeparatorComponent={this.FlatListItemSeparator}
+                        renderItem={({item}) =>
+                            <TouchableOpacity onPress={() => {
+                                state.params.callBack(item);
+                                goBack(null)
+                            }}>
+                                <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                     <Text>{item.name}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    }
-                    keyExtractor={(item, index) => index}
-                />
-            </View>
-        )
+                                </View>
+                            </TouchableOpacity>
+                        }
+                        keyExtractor={(item, index) => index}
+                    />
+                </View>
+            )
+        }
+
     }
 
 }
