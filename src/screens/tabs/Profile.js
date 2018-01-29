@@ -46,10 +46,12 @@ class ProfileScreen extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    isLoading: false,
                     dataSource: responseJson,
                 }, function () {
                     // In this block you can do something with new state.
+                    this.setState({
+                        isLoading: false
+                    })
                 });
             })
             .catch((error) => {
@@ -65,6 +67,9 @@ class ProfileScreen extends Component {
                 }}
             />
         );
+    }
+    ExtraUniqueKey(item ,index){
+        return "index"+index+item;
     }
 
     render() {
@@ -93,8 +98,7 @@ class ProfileScreen extends Component {
                                     backgroundColor: '#44a3ff',
                                     borderRadius: 10,
                                     width: 60,
-                                    height: 20,
-                                    fontSize: 10
+                                    height: 20
                                 }} title={'签到'}/>
                             </View>
                         </View>
@@ -140,6 +144,7 @@ class ProfileScreen extends Component {
                                 data={this.state.dataSource}
                                 horizontal={true}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
+                                keyExtractor = {this.ExtraUniqueKey}
                                 renderItem={({item}) => (
                                     <TouchableOpacity
                                         onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
@@ -147,7 +152,7 @@ class ProfileScreen extends Component {
                                             <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                             <View style={{justifyContent: 'space-around'}}>
                                                 <Text style={{fontSize: 15}}>{item.name}</Text>
-                                                <Text style={{fontSize: 10,marginRight:20}}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
+                                                <Text style={{fontSize: 10,marginRight:20}}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
                                             </View>
                                         </View>
                                     </TouchableOpacity>

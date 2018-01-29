@@ -18,7 +18,8 @@ class AddPet extends Component {
             typeName: '选择宠物种类',
             sex: 1,
             userId: 2,
-            isLoading: true
+            isLoading: true,
+            isClickAble: true
         }
     }
     callBack(item){
@@ -70,31 +71,37 @@ class AddPet extends Component {
         });
     }
     post(){
-        let formData = new FormData();
-        let file = {uri:this.state.avatarSource.uri, type:'multipart/form-data', name: 'a.jpg'}
-        formData.append('birthday',this.state.date)
-        formData.append('sex',this.state.sex)
-        formData.append('name',this.state.name)
-        formData.append('small_type_id',this.state.typeId)
-        formData.append('avatar',file)
-        formData.append('user_id',this.state.userId)
-        fetch(ADD_PETS, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formData,
-        }).then(
-            (response) => response.text())
-            .then((responseJson) => {
-                // this.props.navigation.navigate('PetList');
-                alert(responseJson)
-                // this.props.navigation.goBack(null);
-            });
+        if(this.state.isClickAble){
+            this.setState({
+                isClickAble: false
+            })
+            let formData = new FormData();
+            let file = {uri:this.state.avatarSource.uri, type:'multipart/form-data', name: 'a.jpg'}
+            formData.append('birthday',this.state.date)
+            formData.append('sex',this.state.sex)
+            formData.append('name',this.state.name)
+            formData.append('small_type_id',this.state.typeId)
+            formData.append('avatar',file)
+            formData.append('user_id',this.state.userId)
+            fetch(ADD_PETS, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+                body: formData,
+            }).then(
+                (response) => response.text())
+                .then((responseJson) => {
+                    // this.props.navigation.navigate('PetList');
+                    alert(responseJson)
+                    // this.props.navigation.goBack(null);
+                });
+        }else {
+            alert('请勿重复点击')
+        }
     }
-    render() {
-        const { state, navigate } = this.props.navigation;
+    componentDidMount(){
         const { params }=this.props.navigation.state;
         if(this.state.isLoading){
             if(params!=undefined){
@@ -105,10 +112,14 @@ class AddPet extends Component {
                     date: params.item.birthday,
                     typeId: params.item.small_type_id,
                     avatarSource: {uri: params.item.avatar},
+                    typeName: params.item.typename,
                     isLoading: false
                 })
             }
         }
+    }
+    render() {
+        const { state, navigate } = this.props.navigation;
         return (
             <View style={styles.photoView}>
                 <View style={styles.imageView}>
@@ -195,7 +206,7 @@ class AddPet extends Component {
                     </View>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center',}}>
-                    <Button buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> this.post()} title={'保存'}/>
+                    <Button disabled={!this.state.isClickAble} buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> this.post()} title={'保存'}/>
                 </View>
             </View>
         );
