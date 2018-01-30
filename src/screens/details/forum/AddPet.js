@@ -6,7 +6,7 @@ import {
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
 import {Button, CheckBox} from "react-native-elements";
-import {ADD_PETS} from "../../../config/api";
+import {ADD_PETS, DELETE_PETS} from "../../../config/api";
 
 class AddPet extends Component {
     constructor(props) {
@@ -21,6 +21,7 @@ class AddPet extends Component {
             isLoading: true,
             isClickAble: true
         }
+        this.deletePet=this.deletePet.bind(this);
     }
     callBack(item){
         this.setState({
@@ -28,14 +29,33 @@ class AddPet extends Component {
             typeId: item.id
         })
     }
-    static navigationOptions= {
+
+    deletePet(){
+        let formData = new FormData();
+        formData.append('user_id',2);
+        formData.append('pet_id',this.state.petId);
+        fetch(DELETE_PETS, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
+            },
+            body: formData,
+        }).then(
+            (response) => response.json())
+            .then((responseJson) => {
+                this.props.navigation.goBack(null)
+            });
+    }
+
+    static navigationOptions=({navigation}) => ({
         title: '宠物资料',
         headerRight:
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.state.params.deletePet()}>
             <Text style={{marginRight: 15}}>删除</Text>
         </TouchableOpacity>
 
-    }
+    })
     selectPhotoTapped() {
         const options = {
             quality: 1.0,
@@ -100,10 +120,7 @@ class AddPet extends Component {
                 }).then(
                     (response) => response.json())
                     .then((responseJson) => {
-                        alert(responseJson.message)
-                            .then(
-                                this.props.navigation.goBack(null)
-                            )
+                        this.props.navigation.goBack(null)
                     });
             }
         }else {
@@ -112,6 +129,9 @@ class AddPet extends Component {
     }
     componentDidMount(){
         const { params }=this.props.navigation.state;
+        this.props.navigation.setParams({
+            deletePet: this.deletePet,
+        });
         if(this.state.isLoading){
             if(params!=undefined){
                 this.setState({
@@ -122,7 +142,8 @@ class AddPet extends Component {
                     typeId: params.item.small_type_id,
                     avatarSource: {uri: params.item.avatar},
                     typeName: params.item.typename,
-                    isLoading: false
+                    isLoading: false,
+                    petId: params.item.id
                 })
             }
         }
