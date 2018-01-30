@@ -25,6 +25,13 @@ import {DogTypeScreen} from "../screens/details/forum/DogType";
 import {CatTypeScreen} from "../screens/details/forum/CatType";
 import {OtherTypeScreen} from "../screens/details/forum/OtherType";
 import {InformationScreen} from "../screens/details/profile/PrivateInformation";
+import {AdoptListScreen} from "../screens/details/forum/AdoptList";
+import {AdoptScreen} from "../screens/details/forum/Adopt";
+import {PairListScreen} from "../screens/details/forum/PairList";
+import {PairScreen} from "../screens/details/forum/Pair";
+import {PairItemScreen} from "../screens/details/forum/PairItem";
+import {AdoptInfoScreen} from "../screens/details/forum/AdoptInfo";
+import {PairInfoScreen} from "../screens/details/forum/PairInfo";
 
 
 const CollectionTabs = TabNavigator({
@@ -99,7 +106,14 @@ const RootNavigator = StackNavigator({
     ProductDetail: { screen: ProductDetailScreen },
     PrivateRecommends: { screen: PrivateRecommendScreen },
     PetType: {screen: PetTypeTabs},
-    PrivateInformation: {screen: InformationScreen}
+    PrivateInformation: {screen: InformationScreen},
+    AdoptList: {screen: AdoptListScreen},
+    Adopt: {screen: AdoptScreen},
+    AdoptInfo: {screen: AdoptInfoScreen},
+    PairList: {screen: PairListScreen},
+    PairItem: {screen: PairItemScreen},
+    Pair: {screen: PairScreen},
+    PairInfo: {screen: PairInfoScreen}
 });
 
 export default RootNavigator;
