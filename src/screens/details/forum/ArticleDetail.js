@@ -4,8 +4,8 @@ import {GET_ARTICLES_BY_ID} from "../../../config/api";
 
 class ArticleDetail extends Component {
     static navigationOptions= {
-        tabBarLabel: "分享您的经验或故事",
-        title: '分享您的经验或故事',
+        tabBarLabel: "",
+        title: '',
       }
     render() {
         const {params}=this.props.navigation.state;

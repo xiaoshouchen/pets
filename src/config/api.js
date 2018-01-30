@@ -21,7 +21,7 @@ export const UPDATE_PRODUCTS = BASE_URL + '/api/products/update';
 export const DELETE_PRODUCTS = BASE_URL + '/api/products/delete';
 
 //article
-export const GET_ARTICLES = BASE_URL + '/api/articles';
+export const GET_ARTICLES = BASE_URL + '/api/articles?pageNo=';
 export const GET_ARTICLES_BY_ID = BASE_URL + '/api/article/';
 export const ADD_ARTICLE = BASE_URL + '/api/article/add';
 export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';

@@ -1,23 +1,30 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation'
+import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
 import App from '../../../utils/app.core'
 import {GET_ARTICLES} from "../../../config/api";
 
+let pageNo = 1;//当前第几页
+let totalPage = 5;//总的页数
+let itemNo = 0;//item的个数
 class ArticleScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            dataSource: [],
+            showFoot: 0
         }
     }
-    static navigationOptions = ({ navigation }) => ({
+
+    static navigationOptions = ({navigation}) => ({
         title: '文章分享',
     })
+
     componentDidMount() {
 
         return fetch(GET_ARTICLES)
@@ -25,7 +32,7 @@ class ArticleScreen extends Component {
             .then((responseJson) => {
                 this.setState({
                     isLoading: false,
-                    dataSource: responseJson
+                    dataSource: this.state.dataSource.concat(responseJson)
                 }, function () {
                     // In this block you can do something with new state.
                 });
@@ -53,12 +60,41 @@ class ArticleScreen extends Component {
 
     }
 
+    _onEndReached() {
+        //如果是正在加载中或没有更多数据了，则返回
+        if (this.state.showFoot != 0) {
+            return;
+        }
+        //如果当前页大于或等于总页数，那就是到最后一页了，返回
+        if ((pageNo != 1) && (pageNo >= totalPage)) {
+            return;
+        } else {
+            pageNo++;
+        }
+        //底部显示正在加载更多数据
+        //this.setState({showFoot: 2});
+        //获取数据
+        fetch(GET_ARTICLES + pageNo)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isLoading: false,
+                    dataSource: this.state.dataSource.concat(responseJson)
+                }, function () {
+                    // In this block you can do something with new state.
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     render() {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
@@ -73,11 +109,12 @@ class ArticleScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({ item }) => (
+                    renderItem={({item}) => (
                         <View style={styles.item}>
-                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('PrivateInformation', {item: item})}>
-                                    <Image source={{ uri: item.avatar_img }} style={styles.avatar} />
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <TouchableOpacity
+                                    onPress={() => this.props.navigation.navigate('PrivateInformation', {item: item})}>
+                                    <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
                                 </TouchableOpacity>
                                 <View>
                                     <Text style={styles.name}>{item.name}</Text>
@@ -85,24 +122,24 @@ class ArticleScreen extends Component {
                                 </View>
                             </View>
                             <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', { id: item.id })
+                                () => navigate('ArticleDetail', {id: item.id})
                             }>
                                 {item.type == undefined ? '【分享】' : item.type}{item.title}
                             </Text>
                             <Text style={styles.content}>{item.content}</Text>
-                            <View style={{flexDirection:'row',flex:1}}>
+                            <View style={{flexDirection: 'row', flex: 1}}>
                                 <TouchableOpacity>
                                     <Icon
                                         name='star'
-                                        size={16} 
+                                        size={16}
                                         color='yellow'
-                                        />
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>)
 
                     }
-
+                    onEndReached={this._onEndReached.bind(this)}
                     keyExtractor={(item, index) => index}
 
                 />
@@ -156,4 +193,4 @@ const styles = StyleSheet.create({
 
 });
 
-export { ArticleScreen }
+export {ArticleScreen}
