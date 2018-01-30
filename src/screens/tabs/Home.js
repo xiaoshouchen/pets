@@ -9,6 +9,7 @@ import { ShowScreen } from './Home/Show'
 import { ArticleScreen } from './Home/Article'
 import App from '../../utils/app.core'
 import {FollowScreen} from "./Home/Follow";
+import {SearchModal as screenProps, SearchModal} from "./Home/Search";
 
 
 const HomeTabs = TabNavigator({
@@ -36,7 +37,9 @@ class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            showSearch: false,
+            modalVisible: false,
         }
     }
 
@@ -52,6 +55,7 @@ class HomeScreen extends Component {
                 type="MaterialIcons"
                 color="white"
                 style={{paddingRight:5,}}
+                onPress={()=>this.setModalVisible.bind(this,!this.state.modalVisible)}
             />
         ,
         tabBarLabel: '主页',
@@ -64,11 +68,18 @@ class HomeScreen extends Component {
             />
         ),
     })
-
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+    }
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible)
+                }}>
+                    <Text>打开</Text>
+                </TouchableOpacity>
+                <SearchModal modalVisible={this.state.modalVisible}/>
                 <HomeTabs navigation={this.props.navigation} />
             </View>
         );

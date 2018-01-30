@@ -18,7 +18,7 @@ class PetList extends Component {
 
         return fetch(GET_PETS + '?user_id=2')
             .then((response) => response.json())
-            .then((responseJson) => {
+            .then((responseJson,key) => {
                 this.setState({
                     isLoading: false,
                     dataSource: responseJson
@@ -43,6 +43,10 @@ class PetList extends Component {
         );
     }
 
+    ExtraUniqueKey(item ,index){
+        return "index"+index+item;
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -58,6 +62,7 @@ class PetList extends Component {
                     <FlatList
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
+                        keyExtractor = {this.ExtraUniqueKey}
                         renderItem={({item}) => (
                             <TouchableOpacity
                                 onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
@@ -65,11 +70,8 @@ class PetList extends Component {
                                     <View style={styles.itemView}>
                                         <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                         <View style={{justifyContent: 'space-around'}}>
-                                            <Text style={{fontSize: 16, fontColor: '#333'}}>{item.name}</Text>
-                                            <Text style={{
-                                                fontSize: 14,
-                                                marginRight: 20,
-                                                fontColor: '#999'
+                                            <Text style={{fontSize: 16}}>{item.name}</Text>
+                                            <Text style={{fontSize: 14, marginRight: 20
                                             }}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
                                         </View>
                                     </View>
