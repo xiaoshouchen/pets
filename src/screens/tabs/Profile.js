@@ -2,18 +2,19 @@ import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
 import {
     StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity, Slider, FlatList,
-    ActivityIndicator
+    ActivityIndicator, AsyncStorage
 } from 'react-native';
 import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
 import {Button} from "react-native-elements";
 import {GET_PETS} from "../../config/api";
+import App from "../../utils/app.core"
 
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            info:{name:"您的昵称",desc:"您的简单介绍",score:0,discount:0,cart:0}
+            info: {name: "您的昵称", desc: "您的简单介绍", score: 0, discount: 0, cart: 0}
         }
     }
 
@@ -55,6 +56,10 @@ class ProfileScreen extends Component {
             .catch((error) => {
                 console.error(error);
             });
+    }
+
+    componentWillMount() {
+
     }
 
     FlatListItemSeparator = () => {
@@ -110,19 +115,34 @@ class ProfileScreen extends Component {
                     }}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Score')}>
                             <View>
-                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.score}</Text>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 16,
+                                    marginTop: 10,
+                                    textAlign: 'center'
+                                }}>{this.state.info.score}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Score')}>
                             <View>
-                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.discount}</Text>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 16,
+                                    marginTop: 10,
+                                    textAlign: 'center'
+                                }}>{this.state.info.discount}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>优惠券</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('ShoppingCart')}>
                             <View>
-                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.cart}</Text>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 16,
+                                    marginTop: 10,
+                                    textAlign: 'center'
+                                }}>{this.state.info.cart}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>购物车</Text>
                             </View>
                         </TouchableOpacity>
@@ -147,7 +167,10 @@ class ProfileScreen extends Component {
                                             <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                             <View style={{justifyContent: 'space-around'}}>
                                                 <Text style={{fontSize: 15}}>{item.name}</Text>
-                                                <Text style={{fontSize: 10,marginRight:20}}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
+                                                <Text style={{
+                                                    fontSize: 10,
+                                                    marginRight: 20
+                                                }}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
                                             </View>
                                         </View>
                                     </TouchableOpacity>
