@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { TabNavigator, TabBarTop } from 'react-navigation'
-import { ShowScreen } from './Home/Show'
-import { ArticleScreen } from './Home/Article'
-import App from '../../utils/app.core'
+import {TabNavigator, TabBarTop} from 'react-navigation'
+import {ShowScreen} from './Home/Show'
+import {ArticleScreen} from './Home/Article'
 import {FollowScreen} from "./Home/Follow";
-import {SearchModal as screenProps, SearchModal} from "./Home/Search";
+import {SearchModal} from "./Home/Search";
 
 
 const HomeTabs = TabNavigator({
-    Article: { screen: ArticleScreen },
-    Show: { screen: ShowScreen },
-    Follow: { screen: FollowScreen}
-},
+        Article: {screen: ArticleScreen},
+        Show: {screen: ShowScreen},
+        Follow: {screen: FollowScreen}
+    },
     {
         tabBarOptions: {
             activeTintColor: '#374341',
@@ -33,6 +32,7 @@ const HomeTabs = TabNavigator({
         swipeEnabled: true,
         lazyLoad: false,
     })
+
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
@@ -41,25 +41,26 @@ class HomeScreen extends Component {
             showSearch: false,
             modalVisible: false,
         }
+        this.setModalVisible=this.setModalVisible.bind(this);
     }
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({navigation}) => ({
         title: '小宠乐园',
-        headerTitleStyle: { color: '#fff' },
+        headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: { backgroundColor: '#44a3ff' },
+        headerStyle: {backgroundColor: '#44a3ff'},
         headerRight:
             <Icon
                 name='search'
                 size={30}
                 type="MaterialIcons"
                 color="white"
-                style={{paddingRight:5,}}
-                onPress={()=>this.setModalVisible.bind(this,!this.state.modalVisible)}
+                style={{paddingRight: 5,}}
+                onPress={() =>navigation.state.params.setModalVisible(!navigation.state.params.modalVisible)}
             />
         ,
         tabBarLabel: '主页',
-        tabBarIcon: ({ tintColor, focused }) => (
+        tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='home'
                 size={30}
@@ -68,23 +69,31 @@ class HomeScreen extends Component {
             />
         ),
     })
+
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
+        this.props.navigation.setParams({
+            modalVisible: !this.state.modalVisible
+        });
     }
+    componentDidMount()
+    {
+        this.props.navigation.setParams({
+            setModalVisible: this.setModalVisible,
+            modalVisible: this.state.modalVisible
+        });
+    }
+
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <TouchableOpacity onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible)
-                }}>
-                    <Text>打开</Text>
-                </TouchableOpacity>
+            <View style={{flex: 1}}>
                 <SearchModal modalVisible={this.state.modalVisible}/>
-                <HomeTabs navigation={this.props.navigation} />
+                <HomeTabs navigation={this.props.navigation}/>
             </View>
         );
     }
 }
+
 HomeScreen.router = HomeTabs.router;
 const styles = StyleSheet.create({
     MainContainer: {
@@ -128,4 +137,4 @@ const styles = StyleSheet.create({
 
 });
 
-export { HomeScreen }
+export {HomeScreen}
