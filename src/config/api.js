@@ -1,5 +1,7 @@
 //base
-const BASE_URL = 'http://123.207.217.225';
+// const BASE_URL = 'http://123.207.217.225';
+const BASE_URL = 'http://192.168.17.10';
+
 
 //pets
 export const GET_PETS = BASE_URL + '/api/pets';

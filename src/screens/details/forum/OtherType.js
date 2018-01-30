@@ -62,7 +62,7 @@ class OtherTypeScreen extends Component{
                     renderItem={({item}) => (
                         <TouchableOpacity onPress={() => {state.params.callBack(item);goBack(null);goBack(null)}}>
                             <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                                <Text>{item.name}</Text>
+                                <Text style={{flexDirection: 'row', backgroundColor: 'white', height: 25, alignItems: 'center'}}>{item.name}</Text>
                             </View>
                         </TouchableOpacity>)
                     }

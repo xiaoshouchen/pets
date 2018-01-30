@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import Text from "react-native-elements/src/text/Text";
-import {ActivityIndicator, FlatList, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, FlatList, TouchableOpacity, View, Text} from "react-native";
 import {GET_CAT_TYPES} from "../../../config/api";
 class CatTypeScreen extends Component{
     constructor(props) {
@@ -61,17 +60,22 @@ class CatTypeScreen extends Component{
                     <FlatList
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
+                        keyExtractor={(item, index) => index}
+                        getItemLayout={(data, index) => (
+                            // 120 是被渲染 item 的高度 ITEM_HEIGHT。
+                            {length: 26, offset: 26 * index, index}
+                        )}
+                        initialNumToRender={50}
                         renderItem={({item}) =>
                             <TouchableOpacity onPress={() => {
                                 state.params.callBack(item);
                                 goBack(null)
                             }}>
-                                <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                                <View style={{flexDirection: 'row', backgroundColor: 'white', height: 25, alignItems: 'center'}}>
                                     <Text>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         }
-                        keyExtractor={(item, index) => index}
                     />
                 </View>
             )

@@ -30,8 +30,12 @@ class AddPet extends Component {
     }
     static navigationOptions= {
         title: '宠物资料',
-    }
+        headerRight:
+        <TouchableOpacity>
+            <Text style={{marginRight: 15}}>删除</Text>
+        </TouchableOpacity>
 
+    }
     selectPhotoTapped() {
         const options = {
             quality: 1.0,
@@ -72,31 +76,36 @@ class AddPet extends Component {
     }
     post(){
         if(this.state.isClickAble){
-            this.setState({
-                isClickAble: false
-            })
-            let formData = new FormData();
-            let file = {uri:this.state.avatarSource.uri, type:'multipart/form-data', name: 'a.jpg'}
-            formData.append('birthday',this.state.date)
-            formData.append('sex',this.state.sex)
-            formData.append('name',this.state.name)
-            formData.append('small_type_id',this.state.typeId)
-            formData.append('avatar',file)
-            formData.append('user_id',this.state.userId)
-            fetch(ADD_PETS, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                },
-                body: formData,
-            }).then(
-                (response) => response.text())
-                .then((responseJson) => {
-                    // this.props.navigation.navigate('PetList');
-                    alert(responseJson)
-                    // this.props.navigation.goBack(null);
-                });
+            if(this.state.name == '' || this.state.typeName == '选择宠物种类' || this.state.date == null){
+                alert('请填全宠物信息')
+            }else {
+                this.setState({
+                    isClickAble: false
+                })
+                let formData = new FormData();
+                let file = {uri: this.state.avatarSource.uri, type: 'multipart/form-data', name: 'a.jpg'}
+                formData.append('birthday', this.state.date)
+                formData.append('sex', this.state.sex)
+                formData.append('name', this.state.name)
+                formData.append('small_type_id', this.state.typeId)
+                formData.append('avatar', file)
+                formData.append('user_id', this.state.userId)
+                fetch(ADD_PETS, {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    body: formData,
+                }).then(
+                    (response) => response.json())
+                    .then((responseJson) => {
+                        alert(responseJson.message)
+                            .then(
+                                this.props.navigation.goBack(null)
+                            )
+                    });
+            }
         }else {
             alert('请勿重复点击')
         }
