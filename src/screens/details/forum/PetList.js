@@ -10,7 +10,8 @@ class PetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            refreshing: false
         }
     }
 
@@ -46,6 +47,22 @@ class PetList extends Component {
     ExtraUniqueKey(item ,index){
         return "index"+index+item;
     }
+    onRefresh = () => {
+        this.setState({
+            refreshing: true,
+        });
+        const timer = setTimeout(() => {
+            clearTimeout(timer);
+            this.setState({
+                refreshing: false,
+            });
+        }, 100);
+        this.componentDidMount();
+    };
+
+    callBack(){
+        this.componentDidMount();
+    }
 
     render() {
         if (this.state.isLoading) {
@@ -63,16 +80,18 @@ class PetList extends Component {
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
                         keyExtractor = {this.ExtraUniqueKey}
+                        onRefresh={this.onRefresh}
+                        refreshing={this.state.refreshing}
                         renderItem={({item}) => (
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
+                                onPress={() => this.props.navigation.navigate('AddPet', {item: item,callBack: ()=> this.callBack()})}>
                                 <View style={styles.itemView}>
                                     <View style={styles.itemView}>
                                         <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                         <View style={{justifyContent: 'space-around'}}>
                                             <Text style={{fontSize: 16}}>{item.name}</Text>
                                             <Text style={{fontSize: 14, marginRight: 20
-                                            }}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
+                                            }}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
                                         </View>
                                     </View>
                                     <View style={{marginRight: 15}}>
@@ -89,9 +108,11 @@ class PetList extends Component {
                     borderRadius: 10,
                     marginTop: 40,
                     marginBottom: 40,
-                    width: 350
+                    flex: 1,
+                    marginRight: 10,
+                    marginLeft: 10
                 }}
-                        onPress={() => navigate('AddPet')} title={'添加宠物'}/>
+                        onPress={() => navigate('AddPet',{callBack: ()=> this.callBack()})} title={'添加宠物'}/>
             </ScrollView>
         )
             ;
