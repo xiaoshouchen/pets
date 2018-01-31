@@ -19,6 +19,7 @@ class ArticleScreen extends Component {
             dataSource: [],
             showFoot: 0
         }
+        this._getData = this._getData.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -27,19 +28,7 @@ class ArticleScreen extends Component {
 
     componentDidMount() {
 
-        return fetch(GET_ARTICLES)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: this.state.dataSource.concat(responseJson)
-                }, function () {
-                    // In this block you can do something with new state.
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        return this._getData();
     }
 
     FlatListItemSeparator = () => {
@@ -54,10 +43,20 @@ class ArticleScreen extends Component {
         );
     }
 
-    GetFlatListItem(fruit_name) {
-
-        Alert.alert(fruit_name);
-
+    _getData(_pageNo) {
+        fetch(GET_ARTICLES + _pageNo)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isLoading: false,
+                    dataSource: _pageNo == 1 ? responseJson : this.state.dataSource.concat(responseJson)
+                }, function () {
+                    // In this block you can do something with new state.
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     _onEndReached() {
@@ -74,15 +73,25 @@ class ArticleScreen extends Component {
         //底部显示正在加载更多数据
         //this.setState({showFoot: 2});
         //获取数据
-        fetch(GET_ARTICLES + pageNo)
+        this._getData(pageNo);
+    }
+
+    _onRefresh() {
+        this.articles.refreshing = true;
+        fetch(GET_ARTICLES + 1)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: this.state.dataSource.concat(responseJson)
-                }, function () {
-                    // In this block you can do something with new state.
-                });
+                //alert(responseJson[0].id+"    "+this.state.dataSource[0].id);
+                //alert();
+                if (responseJson[0].id == this.state.dataSource[0].id) {
+                    this.articles.refreshing = false;
+                    return;
+                } else {
+                    this.articles.refreshing = false;
+                    //alert(1111);
+                    return this._getData(1);
+
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -98,7 +107,6 @@ class ArticleScreen extends Component {
                 </View>
             );
         }
-
         return (
 
             <View style={styles.MainContainer}>
@@ -140,7 +148,10 @@ class ArticleScreen extends Component {
 
                     }
                     onEndReached={this._onEndReached.bind(this)}
+                    onRefresh={this._onRefresh.bind(this)}
                     keyExtractor={(item, index) => index}
+                    refreshing={false}
+                    ref={(ref) => this.articles = ref}
 
                 />
 
