@@ -114,16 +114,20 @@ class SelectionScreen extends Component {
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>宠物日记</Text>
                         </View>
-                        <View style={styles.item}>
-                            <Image source={require('../../image/list2.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>领养发布</Text>
-                        </View>
-                        <View style={styles.item}>
-                            <Image source={require('../../image/list3.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物配对</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AdoptList')}>
+                            <View style={styles.item}>
+                                <Image source={require('../../image/list2.png')}
+                                       style={{width: 48, height: 48, marginBottom: 5}}/>
+                                <Text style={styles.itemText}>领养发布</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PairList')}>
+                            <View style={styles.item}>
+                                <Image source={require('../../image/list3.png')}
+                                       style={{width: 48, height: 48, marginBottom: 5}}/>
+                                <Text style={styles.itemText}>宠物配对</Text>
+                            </View>
+                        </TouchableOpacity>
                         <View style={styles.item}>
                             <Image source={require('../../image/list4.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
