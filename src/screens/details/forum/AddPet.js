@@ -1,27 +1,27 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, Text, View, ScrollView, Image, TextInput, Picker,
-    TouchableOpacity
+    TouchableOpacity, Modal
 } from 'react-native'
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
 import {Button, CheckBox} from "react-native-elements";
 import {ADD_PETS, DELETE_PETS} from "../../../config/api";
-
 class AddPet extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatarSource: {uri:'http://123.207.217.225/img/1/tx.jpg'},
+            avatarSource: require('../../../image/default_pet_avatar.png'),
             time: new Date(),
             checked: false,
             typeName: '选择宠物种类',
             sex: 1,
             userId: 2,
             isLoading: true,
-            isClickAble: true
+            isClickAble: true,
+            visibility: false
         }
-        this.deletePet=this.deletePet.bind(this);
+        this.confirm=this.confirm.bind(this);
     }
     callBack(item){
         this.setState({
@@ -32,6 +32,7 @@ class AddPet extends Component {
 
     deletePet(){
         let formData = new FormData();
+        const {state, goBack} = this.props.navigation;
         formData.append('user_id',2);
         formData.append('pet_id',this.state.petId);
         fetch(DELETE_PETS, {
@@ -44,6 +45,7 @@ class AddPet extends Component {
         }).then(
             (response) => response.json())
             .then((responseJson) => {
+                state.params.callBack();
                 this.props.navigation.goBack(null)
             });
     }
@@ -51,11 +53,16 @@ class AddPet extends Component {
     static navigationOptions=({navigation}) => ({
         title: '宠物资料',
         headerRight:
-        <TouchableOpacity onPress={() => navigation.state.params.deletePet()}>
+        <TouchableOpacity onPress={() => navigation.state.params.confirm()}>
             <Text style={{marginRight: 15}}>删除</Text>
         </TouchableOpacity>
 
     })
+    confirm(){
+        this.setState({
+            visibility: true
+        })
+    }
     selectPhotoTapped() {
         const options = {
             quality: 1.0,
@@ -96,12 +103,17 @@ class AddPet extends Component {
     }
     post(){
         if(this.state.isClickAble){
-            if(this.state.name == '' || this.state.typeName == '选择宠物种类' || this.state.date == null){
-                alert('请填全宠物信息')
+            if(this.state.name == '' || this.state.typeName == '选择宠物种类' || this.state.date == null || this.state.avatarSource == require('../../../image/default_pet_avatar.png')){
+                let a = this.state.name != null ? '' : '宠物姓名\n';
+                let b = this.state.typeName != '选择宠物种类' ? '' : '宠物种类\n';
+                let c = this.state.date != null ? '' : '宠物生日\n';
+                let d = this.state.avatarSource !=  require('../../../image/default_pet_avatar.png') ? '' : '头像\n';
+                alert(`请填写\n${a}${b}${c}${d}`)
             }else {
                 this.setState({
                     isClickAble: false
                 })
+                const {state, goBack} = this.props.navigation;
                 let formData = new FormData();
                 let file = {uri: this.state.avatarSource.uri, type: 'multipart/form-data', name: 'a.jpg'}
                 formData.append('birthday', this.state.date)
@@ -120,20 +132,21 @@ class AddPet extends Component {
                 }).then(
                     (response) => response.json())
                     .then((responseJson) => {
+                        state.params.callBack();
                         this.props.navigation.goBack(null)
                     });
             }
         }else {
-            alert('请勿重复点击')
+
         }
     }
     componentDidMount(){
         const { params }=this.props.navigation.state;
         this.props.navigation.setParams({
-            deletePet: this.deletePet,
+            confirm: this.confirm,
         });
         if(this.state.isLoading){
-            if(params!=undefined){
+            if(params.item!=undefined){
                 this.setState({
                     name: params.item.name,
                     sex: params.item.sex,
@@ -152,6 +165,23 @@ class AddPet extends Component {
         const { state, navigate } = this.props.navigation;
         return (
             <View style={styles.photoView}>
+                <Modal
+                    animationType={"slide"}
+                    visible={this.state.visibility}
+                    transparent={true}
+                >
+                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{backgroundColor: 'black', width: 200, height: 100, marginTop: 300}}>
+                            <View style={{justifyContent: 'center', alignItems: 'center', height: 50}}>
+                                <Text style={{color: 'white'}}>是否删除该宠物</Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                                <Button title={'是'} buttonStyle={{width: 70}} onPress={() => this.deletePet()}/>
+                                <Button title={'否'} buttonStyle={{width: 70}} onPress={() => this.setState({visibility: false})}/>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.imageView}>
                     <TouchableOpacity onPress = {this.selectPhotoTapped.bind(this)}>
                         <Image style={styles.image} source={this.state.avatarSource}/>
@@ -179,7 +209,7 @@ class AddPet extends Component {
                                 right
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
-                                containerStyle={{ marginRight: -30, borderColor: 'rgba(0,0,0,0)', width: 45, backgroundColor: 'rgba(0,0,0,0)' }}
+                                containerStyle={{ marginRight: -30, borderColor: 'rgba(0,0,0,0)', width: 60, backgroundColor: 'rgba(0,0,0,0)' }}
                                 checked={!this.state.checked}
                                 onPress={() => this.setState({checked: false, sex: 1})}
                             />
@@ -188,7 +218,7 @@ class AddPet extends Component {
                                 right
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
-                                containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'rgba(0,0,0,0)', width: 45, backgroundColor: 'rgba(0,0,0,0)' }}
+                                containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'rgba(0,0,0,0)', width: 60, backgroundColor: 'rgba(0,0,0,0)' }}
                                 checked={this.state.checked}
                                 onPress={() => this.setState({checked: true, sex: 0})}
                             />
