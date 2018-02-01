@@ -10,12 +10,13 @@ import {
 
 import RichEditor from 'react-native-webview-richeditor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import TextField from '../../../components/TextField'
 
 class AddArticle extends Component {
     constructor(props) {
         super(props);
-        this, state = {
-            title: '',
+        this.state = {
+            title: '测试',
             html: '',
             type: '',//文章的类型
         }
@@ -23,27 +24,28 @@ class AddArticle extends Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        tabBarLabel: "分享您的经验或故事",
+        tabBarLabel: "",
         headerRight:
-            <Button title="Save" onPress={() => navigation.state.params.postArticle()}/>
-
-        ,
-        title: '分享您的经验或故事',
+            <Button title="保存" onPress={() => navigation.state.params.postArticle()}/>,
+        title: '发布',
     });
 
     post() {
-        alert(this.editor.state.editorHtml);
-        fetch('http://192.168.123.170/pets/index.php/api/article', {
+        //alert('fsd');
+        let formData = new FormData();
+        formData.append('title', this.state.title);
+        formData.append('user_id', 1);
+        formData.append('content', this.editor.state.editorHtml);
+        formData.append('category', 2);
+        formData.append('tags', 'tags');
+        formData.append('type', 1);
+        formData.append('visit', 0);
+        fetch('http://192.168.17.10/api/article/add', {
             method: 'POST',
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
-            body: JSON.stringify({
-                firstParam: 'yourValue',
-                token: '123456',
-                content: this.editor.state.editorHtml,
-            }),
+            body: formData,
         }).then((response) => response.json())
             .then((responseJson) => {
                 this.props.navigation.navigate('Home');
@@ -57,10 +59,10 @@ class AddArticle extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.titleView}>
-                    <Text>给您的分享加个标题</Text>
-                    <TextInput style={{placeholder: '输入文章标题',border:1}}/>
-                </View>
+                <TextField
+                    label='标题'
+                    onChange={(text) => this.setState({title: text})}
+                />
                 <Text>输入您要分享的内容</Text>
                 <RichEditor ref={(ref) => this.editor = ref}/>
                 <KeyboardSpacer/>
@@ -74,9 +76,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
+        paddingHorizontal: 16,
     },
-    titleView: {
-        alignItems: 'flex-start',
-
-    }
 });

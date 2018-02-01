@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
 import {
     StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity, Slider, FlatList,
-    ActivityIndicator
+    ActivityIndicator, AsyncStorage
 } from 'react-native';
 import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
@@ -12,9 +12,13 @@ import {GET_PETS} from "../../config/api";
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
+        AsyncStorage.setItem('xiaozhen', 'shuai');
         this.state = {
-            info:{name:"您的昵称",desc:"您的简单介绍",score:0,discount:0,cart:0}
+            info: {name: "您的昵称", desc: "您的简单介绍", score: 0, discount: 0, cart: 0},
+            desc: '',
+            login: ''
         }
+        this._getData = this._getData.bind(this);
     }
 
     static navigationOptions = {
@@ -40,9 +44,26 @@ class ProfileScreen extends Component {
             />
     };
 
-    componentDidMount() {
+    componentWillMount() {
+        AsyncStorage.getItem('login').then((result) => {
+            //alert(result);
+            if (result == null) {
+                //return this.props.navigation.navigate('Login');
+                //alert(null);
+                this.setState({login: {token: '', user_id: ''}})
+            }
+            else {
+                //alert(result)
+                this.setState({login: result.json()});
+            }
 
-        return fetch(GET_PETS + '?user_id=1')
+        }).catch((e) => {
+
+        })
+    }
+
+    _getData() {
+        return fetch(GET_PETS + this.state.login.user)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -52,27 +73,34 @@ class ProfileScreen extends Component {
                     this.setState({
                         isLoading: false
                     })
+                    AsyncStorage.getItem('xiaozhen').then((result) => {
+                        this.setState({desc: result})
+                    });
                 });
             })
             .catch((error) => {
                 console.error(error);
             });
+
+    }
+
+    componentDidMount() {
+
+
     }
 
     FlatListItemSeparator = () => {
-        return (
-            <View
-                style={{
-                    backgroundColor: "#d9d7e8",
-                }}
-            />
-        );
+        return (<View style={{backgroundColor: "#d9d7e8",}}/>);
     }
-    ExtraUniqueKey(item ,index){
-        return "index"+index+item;
+
+    ExtraUniqueKey(item, index) {
+        return "index" + index + item;
     }
 
     render() {
+        if (this.state.login.token == '') {
+            return <Button title='请登陆' onPress={() => this.props.navigation.navigate('Login')}/>
+        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
@@ -91,7 +119,7 @@ class ProfileScreen extends Component {
                         <View style={styles.topRight}>
                             <View style={{justifyContent: 'space-around', marginLeft: 15}}>
                                 <Text>{this.state.info.name}</Text>
-                                <Text>{this.state.info.desc}</Text>
+                                <Text>{this.state.desc}</Text>
                             </View>
                             <View style={{alignItems: 'flex-end', justifyContent: 'flex-start'}}>
                                 <Button buttonStyle={{
@@ -114,19 +142,34 @@ class ProfileScreen extends Component {
                     }}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Score')}>
                             <View>
-                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.score}</Text>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 16,
+                                    marginTop: 10,
+                                    textAlign: 'center'
+                                }}>{this.state.info.score}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Score')}>
                             <View>
-                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.discount}</Text>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 16,
+                                    marginTop: 10,
+                                    textAlign: 'center'
+                                }}>{this.state.info.discount}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>优惠券</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('ShoppingCart')}>
                             <View>
-                                <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>{this.state.info.cart}</Text>
+                                <Text style={{
+                                    color: '#333',
+                                    fontSize: 16,
+                                    marginTop: 10,
+                                    textAlign: 'center'
+                                }}>{this.state.info.cart}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>购物车</Text>
                             </View>
                         </TouchableOpacity>
@@ -144,7 +187,7 @@ class ProfileScreen extends Component {
                                 data={this.state.dataSource}
                                 horizontal={true}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
-                                keyExtractor = {this.ExtraUniqueKey}
+                                keyExtractor={this.ExtraUniqueKey}
                                 renderItem={({item}) => (
                                     <TouchableOpacity
                                         onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
@@ -152,7 +195,10 @@ class ProfileScreen extends Component {
                                             <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                             <View style={{justifyContent: 'space-around'}}>
                                                 <Text style={{fontSize: 15}}>{item.name}</Text>
-                                                <Text style={{fontSize: 10,marginRight:20}}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
+                                                <Text style={{
+                                                    fontSize: 10,
+                                                    marginRight: 20
+                                                }}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
                                             </View>
                                         </View>
                                     </TouchableOpacity>

@@ -19,13 +19,14 @@ class RegisterScreen extends Component {
     }
 
     static navigationOptions = () => ({
-        title: '注册',
+        title: '注册小宠乐园',
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerStyle: {backgroundColor: '#44a3ff'},
     })
 
     handleClick() {
+        return alert(this.state.phone);
         let data = {
             phone: this.state.phone,
             password: this.state.password
