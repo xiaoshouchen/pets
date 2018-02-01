@@ -8,10 +8,30 @@ import {Button} from "react-native-elements";
 class InformationScreen extends Component {
     constructor(props) {
         super(props);
+        this.state={
+        }
     }
 
     componentDidMount(){
 
+    }
+
+    noData = () => {
+        return(
+            <View style={{height: 40}}>
+                <Text>最近没有动态</Text>
+            </View>
+        )
+    }
+    haveData = () => {
+        return(
+            <FlatList></FlatList>
+        )
+    }
+
+    show(){
+        let show = this.state.dataSource == undefined ? this.noData() : this.haveData;
+        return show
     }
 
     render() {
@@ -56,11 +76,7 @@ class InformationScreen extends Component {
                 </View>
                 <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                 <View style={{backgroundColor: 'white', flex: 1,justifyContent: 'center',alignItems:'center',height: 1}}>
-                    <View style={{height: 40}}>
-                        <Text>最近没有动态</Text>
-                    </View>
-                    {/*<FlatList>*/}
-                    {/*</FlatList>*/}
+                    <View>{this.show()}</View>
                 </View>
 
             </View>)
