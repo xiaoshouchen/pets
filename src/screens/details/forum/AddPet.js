@@ -6,7 +6,7 @@ import {
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
 import {Button, CheckBox} from "react-native-elements";
-import {ADD_PETS, DELETE_PETS} from "../../../config/api";
+import {ADD_PETS, DELETE_PETS, UPDATE_PETS} from "../../../config/api";
 class AddPet extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +19,8 @@ class AddPet extends Component {
             userId: 2,
             isLoading: true,
             isClickAble: true,
-            visibility: false
+            visibility: false,
+            showDelete: ''
         }
         this.confirm=this.confirm.bind(this);
     }
@@ -53,9 +54,9 @@ class AddPet extends Component {
     static navigationOptions=({navigation}) => ({
         title: '宠物资料',
         headerRight:
-        <TouchableOpacity onPress={() => navigation.state.params.confirm()}>
-            <Text style={{marginRight: 15}}>删除</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.state.params.confirm()}>
+                <Text style={{marginRight: 15}}>{navigation.state.params.showDelete}</Text>
+            </TouchableOpacity>
 
     })
     confirm(){
@@ -122,19 +123,36 @@ class AddPet extends Component {
                 formData.append('small_type_id', this.state.typeId)
                 formData.append('avatar', file)
                 formData.append('user_id', this.state.userId)
-                fetch(ADD_PETS, {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'multipart/form-data',
-                    },
-                    body: formData,
-                }).then(
-                    (response) => response.json())
-                    .then((responseJson) => {
-                        state.params.callBack();
-                        this.props.navigation.goBack(null)
-                    });
+                const { params }=this.props.navigation.state;
+                if(params.item!=undefined){
+                    fetch(UPDATE_PETS, {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'multipart/form-data',
+                        },
+                        body: formData,
+                    }).then(
+                        (response) => response.json())
+                        .then((responseJson) => {
+                            state.params.callBack();
+                            this.props.navigation.goBack(null)
+                        });
+                }else {
+                    fetch(ADD_PETS, {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'multipart/form-data',
+                        },
+                        body: formData,
+                    }).then(
+                        (response) => response.json())
+                        .then((responseJson) => {
+                            state.params.callBack();
+                            this.props.navigation.goBack(null)
+                        });
+                }
             }
         }else {
 
@@ -142,9 +160,6 @@ class AddPet extends Component {
     }
     componentDidMount(){
         const { params }=this.props.navigation.state;
-        this.props.navigation.setParams({
-            confirm: this.confirm,
-        });
         if(this.state.isLoading){
             if(params.item!=undefined){
                 this.setState({
@@ -156,8 +171,16 @@ class AddPet extends Component {
                     avatarSource: {uri: params.item.avatar},
                     typeName: params.item.typename,
                     isLoading: false,
-                    petId: params.item.id
+                    petId: params.item.id,
+                    showDelete: '删除'
+                },
+                    () => this.props.navigation.setParams({
+                    confirm: this.confirm,
+                    showDelete: this.state.showDelete
                 })
+                )
+
+
             }
         }
     }
@@ -169,6 +192,7 @@ class AddPet extends Component {
                     animationType={"slide"}
                     visible={this.state.visibility}
                     transparent={true}
+                    onRequestClose={() => this.setState({visibility: false})}
                 >
                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
                         <View style={{backgroundColor: 'black', width: 200, height: 100, marginTop: 300}}>
