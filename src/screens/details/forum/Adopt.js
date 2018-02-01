@@ -13,7 +13,8 @@ class AdoptScreen extends Component {
         super(props);
         this.state = {
             modalVisible: false,
-            typeName: '选择种类'
+            typeName: '选择种类',
+            location: '选择地区'
         }
     }
 
@@ -47,7 +48,7 @@ class AdoptScreen extends Component {
                                 containerStyle={{
                                     marginRight: -30,
                                     borderColor: 'rgba(0,0,0,0)',
-                                    width: 45,
+                                    width: 60,
                                     backgroundColor: 'rgba(0,0,0,0)'
                                 }}
                                 checked={!this.state.checked}
@@ -63,7 +64,7 @@ class AdoptScreen extends Component {
                                     marginRight: -30,
                                     marginLeft: 0,
                                     borderColor: 'rgba(0,0,0,0)',
-                                    width: 45,
+                                    width: 60,
                                     backgroundColor: 'rgba(0,0,0,0)'
                                 }}
                                 checked={this.state.checked}
@@ -104,8 +105,8 @@ class AdoptScreen extends Component {
                     <View style={styles.inputView}>
                         <Text style={styles.text}>所在地</Text>
                         <TouchableOpacity
-                            onPress={() => navigate('PetType', {callBack: (item) => this.callBack(item)})}>
-                            <Text>{this.state.typeName}</Text>
+                            onPress={() => navigate('Location', {callBack: (item) => this.callBack(item)})}>
+                            <Text>{this.state.location}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
@@ -114,6 +115,7 @@ class AdoptScreen extends Component {
                     </View>
                     <View style={styles.longInputView}>
                         <TextInput
+                            multiline={true}
                             underlineColorAndroid={'transparent'}
                             style={styles.longInput}
                             placeholder ={'填写要求'}
@@ -129,6 +131,7 @@ class AdoptScreen extends Component {
                     </View>
                     <View style={styles.longInputView}>
                         <TextInput
+                            multiline={true}
                             underlineColorAndroid={'transparent'}
                             style={styles.longInput}
                             placeholder ={'填写其他信息'}

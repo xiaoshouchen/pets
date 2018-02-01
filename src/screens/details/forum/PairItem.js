@@ -72,7 +72,7 @@ class PairItemScreen extends Component {
                                         <View style={{justifyContent: 'space-around'}}>
                                             <Text style={{fontSize: 16}}>{item.name}</Text>
                                             <Text style={{fontSize: 14, marginRight: 20
-                                            }}>{item.small_type_id} {item.sex == 0 ? '母' : '公'} </Text>
+                                            }}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
                                         </View>
                                     </View>
                                     <View style={{marginRight: 15}}>
@@ -89,7 +89,9 @@ class PairItemScreen extends Component {
                     borderRadius: 10,
                     marginTop: 40,
                     marginBottom: 40,
-                    width: 350
+                    flex: 1,
+                    marginRight: 10,
+                    marginLeft: 10
                 }}
                         onPress={() => navigate('AddPet')} title={'添加宠物'}/>
             </ScrollView>
