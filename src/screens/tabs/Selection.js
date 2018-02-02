@@ -54,7 +54,7 @@ class SelectionScreen extends Component {
                 <View style={styles.functionArea}>
                     <Text style={styles.smallTitle}>专属推荐</Text>
                     <View style={styles.item_list}>
-                        <TouchableOpacity style={styles.itemLeft} onPress={() => navigate('PrivateRecommends', {
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
                             pet_id: 1,
                             article_type: 'food',
                             petYear: 1,
@@ -62,7 +62,7 @@ class SelectionScreen extends Component {
                         })}>
                             <Image source={require('../../image/list-1.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>饮食搭配</Text>
+                            <Text style={styles.itemText}>饮食</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
                             pet_id: 1,
@@ -72,7 +72,7 @@ class SelectionScreen extends Component {
                         })}>
                             <Image source={require('../../image/list-2.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>医疗卫生</Text>
+                            <Text style={styles.itemText}>医疗</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
                             pet_id: 1,
@@ -82,7 +82,7 @@ class SelectionScreen extends Component {
                         })}>
                             <Image source={require('../../image/list-3.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>训练交流</Text>
+                            <Text style={styles.itemText}>训练</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
                             pet_id: 1,
@@ -92,9 +92,9 @@ class SelectionScreen extends Component {
                         })}>
                             <Image source={require('../../image/list-4.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>美容清洁</Text>
+                            <Text style={styles.itemText}>美容</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemRight} onPress={() => navigate('PrivateRecommends', {
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
                             pet_id: 1,
                             article_type: 'food',
                             petYear: 1,
@@ -102,41 +102,41 @@ class SelectionScreen extends Component {
                         })}>
                             <Image source={require('../../image/list-5.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>玩具用品</Text>
+                            <Text style={styles.itemText}>用品</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View>
                     <Text style={styles.smallTitle}>常用功能</Text>
                     <View style={styles.item_list}>
-                        <View style={styles.itemLeft}>
+                        <View style={styles.item}>
                             <Image source={require('../../image/list1.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物日记</Text>
+                            <Text style={styles.itemText}>日记</Text>
                         </View>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('AdoptList')}>
                             <View style={styles.item}>
                                 <Image source={require('../../image/list2.png')}
                                        style={{width: 48, height: 48, marginBottom: 5}}/>
-                                <Text style={styles.itemText}>领养发布</Text>
+                                <Text style={styles.itemText}>领养</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('PairList')}>
                             <View style={styles.item}>
                                 <Image source={require('../../image/list3.png')}
                                        style={{width: 48, height: 48, marginBottom: 5}}/>
-                                <Text style={styles.itemText}>宠物配对</Text>
+                                <Text style={styles.itemText}>配对</Text>
                             </View>
                         </TouchableOpacity>
                         <View style={styles.item}>
                             <Image source={require('../../image/list4.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物百科</Text>
+                            <Text style={styles.itemText}>百科</Text>
                         </View>
-                        <View style={styles.itemRight}>
+                        <View style={styles.item}>
                             <Image source={require('../../image/list5.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>专家问答</Text>
+                            <Text style={styles.itemText}>问答</Text>
                         </View>
                     </View>
                 </View>
@@ -174,7 +174,6 @@ const styles = StyleSheet.create(
         item: {
             marginTop: 10,
             marginBottom: 10,
-            paddingLeft: 10
         },
         itemText: {
             textAlign: 'center'
@@ -192,7 +191,7 @@ const styles = StyleSheet.create(
         item_list: {
             flexDirection: 'row',
             backgroundColor: 'white',
-            justifyContent: 'space-between'
+            justifyContent: 'space-around'
         },
         top: {
             flexDirection: 'row',
