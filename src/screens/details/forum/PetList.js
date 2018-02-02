@@ -90,8 +90,7 @@ class PetList extends Component {
                                         <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                         <View style={{justifyContent: 'space-around'}}>
                                             <Text style={{fontSize: 16}}>{item.name}</Text>
-                                            <Text style={{fontSize: 14, marginRight: 20
-                                            }}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
+                                            <Text style={{fontSize: 12}}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
                                         </View>
                                     </View>
                                     <View style={{marginRight: 15}}>

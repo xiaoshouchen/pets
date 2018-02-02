@@ -12,7 +12,7 @@ class RegisterScreen extends Component {
             phone: '',
             password: '',
             disableButton: true,
-            count: 10,
+            count: 60,
             liked: true,
             flag: true
         }
@@ -55,9 +55,9 @@ class RegisterScreen extends Component {
                 count -= 1;
                 if (count < 1) {
                     this.setState({
-                        liked: true
+                        liked: true,
                     });
-
+                    count = 60;
                     clearInterval(this.timer);
                 }
                 this.setState({
@@ -70,9 +70,9 @@ class RegisterScreen extends Component {
     emailRegister = () => {
         let text = this.state.liked ? '获取验证码' : this.state.count + '秒后重发';
         return (
-            <View>
-                <View style={{marginLeft: 10, alignItems: 'flex-start', marginTop: 80}}>
-                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{alignItems: 'center'}}>
+                <View style={{alignItems: 'center', marginTop: 80}}>
+                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 15}}>
                         <Text style={styles.title}>邮箱：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -88,7 +88,7 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 15}}>
                         <Text style={styles.title}>密码：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -104,7 +104,7 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 15}}>
                         <Text style={styles.title}>确认密码：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -120,7 +120,7 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50}}>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50, marginLeft: 15}}>
                         <Text style={styles.title}>验证码：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -128,7 +128,7 @@ class RegisterScreen extends Component {
                             ref="form2"
                             containerRef="containerRefYOYO"
                             textInputRef="textInputRef"
-                            placeholder="请输入邮箱验证码"
+                            placeholder="邮箱验证码"
                             secureTextEntry={true}
                             maxLength={16}
                             onChangeText={(text) => {
@@ -149,7 +149,7 @@ class RegisterScreen extends Component {
                         this.handleClick()
                     }}
                     title="注册"
-                    buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 300}}
+                    buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 300,marginBottom: 30}}
                 />
                 <TouchableOpacity onPress={() => {
                     this.setState({flag: !this.state.flag})
@@ -165,9 +165,9 @@ class RegisterScreen extends Component {
     phoneNumberRegister = () => {
         let text = this.state.liked ? '获取验证码' : this.state.count + '秒后重发';
         return (
-            <View>
-                <View style={{marginLeft: 10, alignItems: 'flex-start', marginTop: 80}}>
-                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{alignItems: 'center'}}>
+                <View style={{alignItems: 'center', marginTop: 80}}>
+                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 15}}>
                         <Text style={styles.title}>手机号：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -188,7 +188,7 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 15}}>
                         <Text style={styles.title}>密码：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -211,7 +211,7 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 15}}>
                         <Text style={styles.title}>确认密码：</Text>
                         <TextInput
                             underlineColorAndroid={'transparent'}
@@ -234,38 +234,27 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={{flexDirection: 'row', flex: 1, alignItems: 'center', height: 50}}>
-                            <Text style={styles.title}>验证码：</Text>
-                            <TextInput
-                                underlineColorAndroid={'transparent'}
-                                style={styles.input}
-                                ref="form2"
-                                containerRef="containerRefYOYO"
-                                textInputRef="textInputRef"
-                                placeholder="请输入手机验证码"
-                                secureTextEntry={true}
-                                maxLength={16}
-                                onChangeText={(text) => {
-                                    this.setState({password: {text}.text});
-                                    if (this.state.phone.length == 11 && this.state.password.length >= 6) {
-                                        this.setState({disableButton: false});
-                                    }
-                                    else {
-                                        this.setState({disableButton: true});
-                                    }
-
-                                }}
-                            />
-                        </View>
-                        <View>
-                            <Button
-                                title={text}
-                                onPress={() => {
-                                    this.clickTimer()
-                                }}
-                            />
-                        </View>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50, marginLeft: 15}}>
+                        <Text style={styles.title}>验证码：</Text>
+                        <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
+                            ref="form2"
+                            containerRef="containerRefYOYO"
+                            textInputRef="textInputRef"
+                            placeholder="手机验证码"
+                            secureTextEntry={true}
+                            maxLength={16}
+                            onChangeText={(text) => {
+                                this.setState({email: {text}.text})
+                            }}
+                        />
+                        <Button
+                            title={text}
+                            onPress={() => {
+                                this.clickTimer()
+                            }}
+                        />
                     </View>
                 </View>
                 <Button
@@ -274,7 +263,7 @@ class RegisterScreen extends Component {
                         this.handleClick()
                     }}
                     title="注册"
-                    buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 300}}
+                    buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 300, marginBottom: 30}}
                 />
                 <TouchableOpacity onPress={() => {
                     this.setState({flag: !this.state.flag})
@@ -294,9 +283,7 @@ class RegisterScreen extends Component {
 
     render() {
         return (
-            <View style={{backgroundColor: "white", flex: 1, alignItems: 'center'}}>
-                <View>{this.show()}</View>
-            </View>
+            <View>{this.show()}</View>
         )
     }
 
