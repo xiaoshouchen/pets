@@ -21,19 +21,7 @@ class PairScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    inputView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginLeft: 15,
-        marginRight: 15,
-        height: 50
-    },
-    text: {
-        fontSize: 16,
-        includeFontPadding: false,
-        justifyContent: 'center'
-    },
+
 })
 
 export {PairScreen}

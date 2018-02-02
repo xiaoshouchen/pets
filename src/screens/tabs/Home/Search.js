@@ -24,7 +24,7 @@ export class SearchModal extends Component {
                 transparent={false}
                 visible={this.props.modalVisible == true ? this.state.modalVisible : !this.state.modalVisible}
                 onRequestClose={() => {
-                    alert("Modal has been closed.")
+                    this.setModalVisible(!this.state.modalVisible)
                 }}
             >
                 <View style={{marginTop: 22}}>

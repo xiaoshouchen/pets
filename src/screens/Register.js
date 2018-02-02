@@ -75,6 +75,8 @@ class RegisterScreen extends Component {
                     <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.title}>邮箱：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form1"
                             textInputRef="textInputRef"
                             placeholder="请输入您的邮箱"
@@ -89,6 +91,8 @@ class RegisterScreen extends Component {
                     <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.title}>密码：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form2"
                             containerRef="containerRefYOYO"
                             textInputRef="textInputRef"
@@ -103,6 +107,8 @@ class RegisterScreen extends Component {
                     <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.title}>确认密码：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form2"
                             containerRef="containerRefYOYO"
                             textInputRef="textInputRef"
@@ -117,6 +123,8 @@ class RegisterScreen extends Component {
                     <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50}}>
                         <Text style={styles.title}>验证码：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form2"
                             containerRef="containerRefYOYO"
                             textInputRef="textInputRef"
@@ -148,7 +156,7 @@ class RegisterScreen extends Component {
                     this.show()
                 }
                 }>
-                    <Text style={{fontColor: 'blue'}}>使用手机注册</Text>
+                    <Text style={{color: 'blue'}}>使用手机注册</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -162,6 +170,8 @@ class RegisterScreen extends Component {
                     <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.title}>手机号：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form1"
                             textInputRef="textInputRef"
                             placeholder="请输入您的手机号"
@@ -181,6 +191,8 @@ class RegisterScreen extends Component {
                     <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.title}>密码：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form2"
                             containerRef="containerRefYOYO"
                             textInputRef="textInputRef"
@@ -202,6 +214,8 @@ class RegisterScreen extends Component {
                     <View style={{height: 50, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={styles.title}>确认密码：</Text>
                         <TextInput
+                            underlineColorAndroid={'transparent'}
+                            style={styles.input}
                             ref="form2"
                             containerRef="containerRefYOYO"
                             textInputRef="textInputRef"
@@ -220,32 +234,38 @@ class RegisterScreen extends Component {
                             }}
                         />
                     </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50}}>
-                        <Text style={styles.title}>验证码：</Text>
-                        <TextInput
-                            ref="form2"
-                            containerRef="containerRefYOYO"
-                            textInputRef="textInputRef"
-                            placeholder="请输入手机验证码"
-                            secureTextEntry={true}
-                            maxLength={16}
-                            onChangeText={(text) => {
-                                this.setState({password: {text}.text});
-                                if (this.state.phone.length == 11 && this.state.password.length >= 6) {
-                                    this.setState({disableButton: false});
-                                }
-                                else {
-                                    this.setState({disableButton: true});
-                                }
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={{flexDirection: 'row', flex: 1, alignItems: 'center', height: 50}}>
+                            <Text style={styles.title}>验证码：</Text>
+                            <TextInput
+                                underlineColorAndroid={'transparent'}
+                                style={styles.input}
+                                ref="form2"
+                                containerRef="containerRefYOYO"
+                                textInputRef="textInputRef"
+                                placeholder="请输入手机验证码"
+                                secureTextEntry={true}
+                                maxLength={16}
+                                onChangeText={(text) => {
+                                    this.setState({password: {text}.text});
+                                    if (this.state.phone.length == 11 && this.state.password.length >= 6) {
+                                        this.setState({disableButton: false});
+                                    }
+                                    else {
+                                        this.setState({disableButton: true});
+                                    }
 
-                            }}
-                        />
-                        <Button
-                            title={text}
-                            onPress={() => {
-                                this.clickTimer()
-                            }}
-                        />
+                                }}
+                            />
+                        </View>
+                        <View>
+                            <Button
+                                title={text}
+                                onPress={() => {
+                                    this.clickTimer()
+                                }}
+                            />
+                        </View>
                     </View>
                 </View>
                 <Button
@@ -261,7 +281,7 @@ class RegisterScreen extends Component {
                     this.show()
                 }
                 }>
-                    <Text style={{fontColor: 'blue'}}>使用邮箱注册</Text>
+                    <Text style={{color: 'blue'}}>使用邮箱注册</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -299,6 +319,10 @@ const styles = StyleSheet.create({
     },
     title: {
         width: 80
+    },
+    input: {
+        flex: 1,
+        height: 40,
     }
 });
 
