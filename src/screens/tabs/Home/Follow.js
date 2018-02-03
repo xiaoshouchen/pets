@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation'
+import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
 import App from '../../../utils/app.core'
+import {GET_ARTICLES} from "../../../config/api";
 
 class FollowScreen extends Component {
     constructor(props) {
@@ -14,12 +15,14 @@ class FollowScreen extends Component {
             isLoading: true
         }
     }
-    static navigationOptions = ({ navigation }) => ({
+
+    static navigationOptions = ({navigation}) => ({
         title: '关注',
     })
+
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/articles')
+        return fetch(GET_ARTICLES + 1)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -53,11 +56,11 @@ class FollowScreen extends Component {
     }
 
     render() {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
@@ -72,22 +75,22 @@ class FollowScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({ item }) => (
+                    renderItem={({item}) => (
                         <View style={styles.item}>
-                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <Image source={{ uri: item.avatar_img }} style={styles.avatar} />
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
                                 <View>
                                     <Text style={styles.name}>{item.name}</Text>
                                     <Text style={styles.date}>{item.created_at}</Text>
                                 </View>
                             </View>
                             <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', { id: item.id })
+                                () => navigate('ArticleDetail', {id: item.id})
                             }>
                                 {item.type == undefined ? '【分享】' : item.type}{item.title}
                             </Text>
                             <Text style={styles.content}>{item.content}</Text>
-                            <View style={{flexDirection:'row',flex:1}}>
+                            <View style={{flexDirection: 'row', flex: 1}}>
                                 <TouchableOpacity>
                                     <Icon
                                         name='star'
@@ -153,4 +156,4 @@ const styles = StyleSheet.create({
 
 });
 
-export { FollowScreen }
+export {FollowScreen}

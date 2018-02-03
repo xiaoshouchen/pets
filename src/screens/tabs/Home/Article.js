@@ -28,7 +28,7 @@ class ArticleScreen extends Component {
 
     componentDidMount() {
 
-        return this._getData();
+        return this._getData(1);
     }
 
     FlatListItemSeparator = () => {

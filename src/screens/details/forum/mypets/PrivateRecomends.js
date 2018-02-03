@@ -21,7 +21,7 @@ class PrivateRecommendScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/articles')
+        return fetch('http://123.207.217.225/api/articles?pageNo=1')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

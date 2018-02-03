@@ -80,7 +80,7 @@ const Tabs = TabNavigator({
         lazyLoad: false,
         swipeEnabled: false,
         animationEnabled: false,
-        lazy: true,
+        //lazy: true,
     })
 
 const RootNavigator = StackNavigator({
