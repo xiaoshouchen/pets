@@ -16,7 +16,8 @@ class ProfileScreen extends Component {
         this.state = {
             info: {name: "您的昵称", desc: "您的简单介绍", score: 0, discount: 0, cart: 0},
             desc: '',
-            login: ''
+            login: {token: '', user_id: ''},
+            ProfileIsLoading: true,
         }
         this._getData = this._getData.bind(this);
     }
@@ -48,34 +49,40 @@ class ProfileScreen extends Component {
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
             if (result == null) {
-                //return this.props.navigation.navigate('Login');
-                //alert(null);
                 this.setState({login: {token: '', user_id: ''}})
             }
             else {
-                //alert(result)
-                this.setState({login: result.json()});
+                this.setState({login: result}, function () {
+                    let json = JSON.parse(this.state.login);
+                    this._getData(json.user_id);
+                });
             }
 
         }).catch((e) => {
-
+            alert(e);
         })
     }
 
-    _getData() {
-        return fetch(GET_PETS + this.state.login.user)
+    _getData(user_id) {
+        if (user_id == '' || user_id == null) {
+            user_id = this.state.login.user_id;
+            //this._getData(user_id);
+        }
+        fetch(GET_PETS + '?user_id=' + user_id)
             .then((response) => response.json())
             .then((responseJson) => {
+                //alert(this.state.login);
+                //alert(user_id + "测试返回来的json数据为" + responseJson);
                 this.setState({
-                    dataSource: responseJson,
+                    PetsDataSource: responseJson,
                 }, function () {
                     // In this block you can do something with new state.
                     this.setState({
-                        isLoading: false
+                        ProfileIsLoading: false
                     })
-                    AsyncStorage.getItem('xiaozhen').then((result) => {
-                        this.setState({desc: result})
-                    });
+                    /*AsyncStorage.getItem('login').then((result) => {
+                        this.setState({login: result})
+                    });*/
                 });
             })
             .catch((error) => {
@@ -85,7 +92,7 @@ class ProfileScreen extends Component {
     }
 
     componentDidMount() {
-
+        //this._getData(this.state.login.user_id);
 
     }
 
@@ -101,7 +108,7 @@ class ProfileScreen extends Component {
         if (this.state.login.token == '') {
             return <Button title='请登陆' onPress={() => this.props.navigation.navigate('Login')}/>
         }
-        if (this.state.isLoading) {
+        if (this.state.ProfileIsLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
                     <ActivityIndicator/>
@@ -184,7 +191,7 @@ class ProfileScreen extends Component {
                         <View style={{marginLeft: -15, marginRight: -15, height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={{height: 60, marginLeft: 15}}>
                             <FlatList
-                                data={this.state.dataSource}
+                                data={this.state.PetsDataSource}
                                 horizontal={true}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
                                 keyExtractor={this.ExtraUniqueKey}

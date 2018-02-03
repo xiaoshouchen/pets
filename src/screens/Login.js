@@ -11,6 +11,11 @@ class LoginScreen extends Component {
             password: '',
             disableButton: true
         }
+        this._login = this._login.bind(this);
+    }
+
+    _login() {
+
     }
 
     render() {
@@ -65,16 +70,16 @@ class LoginScreen extends Component {
 
                 <Button
                     disabled={this.state.disableButton}
-                    onPress={() => {
-                        AsyncStorage.setItem('login', {"token": 123, "user_id": 1, "client_id": "android"})
-                        //navigate('Home');
-                    }}
+                    onPress={() =>
+                        AsyncStorage.setItem("login", "{\"token\":\"123123\",\"user_id\":1}")
+                            .then(() => this.props.navigation.navigate('Profile')).catch((error) => alert('error'))
+                    }
                     buttonStyle={{marginTop: 15}}
                     title="登陆"
                 />
 
-                <View style={{height:40,backgroundColor:'#eeeeee'}}/>
-                <Button title='注册' onPress={()=>this.props.navigation.navigate('Register')}/>
+                <View style={{height: 40, backgroundColor: '#eeeeee'}}/>
+                <Button title='注册' onPress={() => navigate('Register')}/>
             </View>
         );
     }
