@@ -3,7 +3,7 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import {GET_ARTICLES} from "../../../config/api";
 import Dimensions from 'Dimensions'
 
@@ -147,21 +147,50 @@ class ArticleScreen extends Component {
                                         <Text style={styles.date}>{item.created_at}</Text>
                                     </View>
                                 </View>
-                                <Text style={styles.title} onPress={
+                                <TouchableOpacity onPress={
                                     () => navigate('ArticleDetail', {id: item.id})
                                 }>
-                                    {item.type == undefined ? '【分享】' : item.type}{item.title}
-                                </Text>
-                                <Text style={styles.content}>{item.content}</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    {images}
-                                </View>
-                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.title}>
+                                        {item.type == undefined ? '【分享】' : item.type}{item.title}
+                                    </Text>
+                                    <Text style={styles.content}>{item.content}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        {images}
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    flex: 1,
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center',
+                                    height: 40
+                                }}>
                                     <TouchableOpacity>
                                         <Icon
+                                            style={{marginRight: 10}}
+                                            name='heart'
+                                            size={24}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                        <Icon
+                                            style={{marginRight: 10}}
                                             name='star'
-                                            size={16}
-                                            color='yellow'
+                                            size={24}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                        <Icon
+                                            style={{marginRight: 10}}
+                                            name='comment'
+                                            size={24}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                        <Icon
+                                            style={{marginRight: 10}}
+                                            name='share-apple'
+                                            size={24}
                                         />
                                     </TouchableOpacity>
                                 </View>
