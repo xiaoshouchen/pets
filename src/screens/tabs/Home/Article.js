@@ -4,9 +4,8 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
-import App from '../../../utils/app.core'
 import {GET_ARTICLES} from "../../../config/api";
+import Dimensions from 'Dimensions'
 
 let pageNo = 1;//当前第几页
 let totalPage = 5;//总的页数
@@ -98,6 +97,12 @@ class ArticleScreen extends Component {
             });
     }
 
+    _getImage(images) {
+        if (images.size() > 0) {
+
+        }
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
@@ -117,34 +122,51 @@ class ArticleScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({item}) => (
-                        <View style={styles.item}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate('PrivateInformation', {item: item})}>
-                                    <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
-                                </TouchableOpacity>
-                                <View>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.date}>{item.created_at}</Text>
+                    renderItem={({item}) => {
+                        let images = [];
+                        let windowWidth = Dimensions.get('window').width;
+                        let [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 3, windowWidth / 3, 15];
+                        if (item.img.length > 2) {
+                            [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 10 * 3, windowWidth / 10 * 3, windowWidth / 35];
+                        }
+                        for (let i = 0; i < 3; i++) {
+                            images.push(
+                                <Image source={{uri: item.img[i]}}
+                                       style={{width: ImgWidth, height: ImgHeight, marginRight: MarginRight}}/>
+                            );
+                        }
+                        return (
+                            <View style={styles.item}>
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <TouchableOpacity
+                                        onPress={() => this.props.navigation.navigate('PrivateInformation', {item: item})}>
+                                        <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
+                                    </TouchableOpacity>
+                                    <View>
+                                        <Text style={styles.name}>{item.name}</Text>
+                                        <Text style={styles.date}>{item.created_at}</Text>
+                                    </View>
                                 </View>
-                            </View>
-                            <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', {id: item.id})
-                            }>
-                                {item.type == undefined ? '【分享】' : item.type}{item.title}
-                            </Text>
-                            <Text style={styles.content}>{item.content}</Text>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <TouchableOpacity>
-                                    <Icon
-                                        name='star'
-                                        size={16}
-                                        color='yellow'
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>)
+                                <Text style={styles.title} onPress={
+                                    () => navigate('ArticleDetail', {id: item.id})
+                                }>
+                                    {item.type == undefined ? '【分享】' : item.type}{item.title}
+                                </Text>
+                                <Text style={styles.content}>{item.content}</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    {images}
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <TouchableOpacity>
+                                        <Icon
+                                            name='star'
+                                            size={16}
+                                            color='yellow'
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>)
+                    }
 
                     }
                     onEndReached={this._onEndReached.bind(this)}

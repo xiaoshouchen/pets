@@ -78,7 +78,7 @@ class LoginScreen extends Component {
                     title="登陆"
                 />
 
-                <View style={{height: 40, backgroundColor: '#eeeeee'}}/>
+                <View style={{height: 40, backgroundColor: 'white'}}/>
                 <Button title='注册' onPress={() => navigate('Register')}/>
             </View>
         );
