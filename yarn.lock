@@ -3487,9 +3487,9 @@ react-native-vector-icons@^4.4.2:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-react-native-webview-richeditor@^1.0.0:
+"react-native-webview-richeditor@https://github.com/wwlxz22/react-native-webview-richeditor.git":
   version "1.0.0"
-  resolved "http://registry.npm.taobao.org/react-native-webview-richeditor/download/react-native-webview-richeditor-1.0.0.tgz#8e8ea65260f12bdfde2a554f9dfe0a682f2b9297"
+  resolved "https://github.com/wwlxz22/react-native-webview-richeditor.git#43b8a9c57aca5f75248349dcd08fff114bc389b3"
 
 react-native@0.51.0:
   version "0.51.0"

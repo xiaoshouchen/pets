@@ -88,7 +88,12 @@ class StoreScreen extends Component {
             <View style={styles.MainContainer}>
                 <Swiper style={styles.wrapper} showsButtons={false} height={Dimensions.get('window').width / 3}>
                     <View style={styles.slide1}>
-                        <Text style={styles.text}>Hello Swiper</Text>
+                        <Image
+                            source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
+                            style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').width / 3 + 50
+                            }}/>
                     </View>
                     <View style={styles.slide2}>
                         <Text style={styles.text}>Beautiful</Text>

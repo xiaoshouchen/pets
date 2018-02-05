@@ -11,6 +11,7 @@ import {
 import RichEditor from 'react-native-webview-richeditor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TextField from '../../../components/TextField'
+import {ADD_ARTICLE} from "../../../config/api";
 
 class AddArticle extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class AddArticle extends Component {
         formData.append('tags', 'tags');
         formData.append('type', 1);
         formData.append('visit', 0);
-        fetch('http://192.168.17.10/api/article/add', {
+        fetch(ADD_ARTICLE, {
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',

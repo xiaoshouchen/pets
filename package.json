@@ -23,7 +23,7 @@
 		"react-native-scrollable-tab-view": "^0.8.0",
 		"react-native-swiper": "^1.5.13",
 		"react-native-vector-icons": "^4.4.2",
-		"react-native-webview-richeditor": "^1.0.0",
+		"react-native-webview-richeditor": "https://github.com/wwlxz22/react-native-webview-richeditor.git",
 		"react-navigation": "^1.0.0-beta.21"
 	},
 	"devDependencies": {

@@ -44,12 +44,6 @@ class LoginScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <View style={{backgroundColor: "white", flex: 1}}>
-                <FormLabel
-                    textInputRef="textInputRef"
-                    containerStyle={styles.labelContainerStyle}
-                >
-                    手机号
-                </FormLabel>
                 <TextInput
                     ref="form1"
                     textInputRef="textInputRef"
@@ -66,9 +60,6 @@ class LoginScreen extends Component {
                         }
                     }}
                 />
-                <FormLabel containerStyle={styles.labelContainerStyle}>
-                    密码
-                </FormLabel>
                 <TextInput
                     ref="form2"
                     containerRef="containerRefYOYO"
