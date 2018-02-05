@@ -212,6 +212,7 @@ class ProfileScreen extends Component {
                         <View style={{marginLeft: -15, marginRight: -15, height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={{height: 60, marginLeft: 15}}>
                             <FlatList
+                                showsHorizontalScrollIndicator={false}
                                 data={this.state.PetsDataSource}
                                 horizontal={true}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -244,24 +245,32 @@ class ProfileScreen extends Component {
                         <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')}>
                                 <Image source={require('../../image/article.png')}
                                        style={{width: 30, height: 30, marginBottom: 5}}/>
                                 <Text>文章</Text>
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Collection')}>
                                 <Image source={require('../../image/restore.png')}
                                        style={{width: 30, height: 30, marginBottom: 5}}/>
                                 <Text>收藏</Text>
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowPeople')}>
                                 <Image source={require('../../image/follow.png')}
                                        style={{width: 30, height: 30, marginBottom: 5}}/>
                                 <Text>关注</Text>
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Fan')}>
                                 <Image source={require('../../image/fans.png')}
                                        style={{width: 30, height: 30, marginBottom: 5}}/>
                                 <Text>粉丝</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -306,9 +315,11 @@ class ProfileScreen extends Component {
                         <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Setting')}>
                                 <Image source={require('../../image/setting.png')}
                                        style={{width: 30, height: 30, marginBottom: 5}}/>
                                 <Text>设置</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>

@@ -21,17 +21,20 @@ import { PersonalInfoChangeScreen } from "../screens/details/profile/PersonalInf
 import { RegisterScreen } from '../screens/Register'
 import { ProductDetailScreen } from '../screens/details/store/ProductDetail'
 import { PrivateRecommendScreen } from '../screens/details/forum/mypets/PrivateRecomends'
-import {DogTypeScreen} from "../screens/details/forum/DogType";
-import {CatTypeScreen} from "../screens/details/forum/CatType";
-import {OtherTypeScreen} from "../screens/details/forum/OtherType";
-import {InformationScreen} from "../screens/details/profile/PrivateInformation";
-import {AdoptListScreen} from "../screens/details/forum/AdoptList";
-import {AdoptScreen} from "../screens/details/forum/Adopt";
-import {PairListScreen} from "../screens/details/forum/PairList";
-import {PairScreen} from "../screens/details/forum/Pair";
-import {PairItemScreen} from "../screens/details/forum/PairItem";
-import {AdoptInfoScreen} from "../screens/details/forum/AdoptInfo";
-import {PairInfoScreen} from "../screens/details/forum/PairInfo";
+import { DogTypeScreen } from "../screens/details/forum/DogType";
+import { CatTypeScreen } from "../screens/details/forum/CatType";
+import { OtherTypeScreen } from "../screens/details/forum/OtherType";
+import { InformationScreen } from "../screens/details/profile/PrivateInformation";
+import { AdoptListScreen } from "../screens/details/forum/AdoptList";
+import { AdoptScreen } from "../screens/details/forum/Adopt";
+import { PairListScreen } from "../screens/details/forum/PairList";
+import { PairScreen } from "../screens/details/forum/Pair";
+import { PairItemScreen } from "../screens/details/forum/PairItem";
+import { AdoptInfoScreen } from "../screens/details/forum/AdoptInfo";
+import { PairInfoScreen } from "../screens/details/forum/PairInfo";
+import { FollowPeopleScreen } from "../screens/details/profile/FollowPeople";
+import {FanScreen} from "../screens/details/profile/Fan";
+import {SettingScreen} from "../screens/details/profile/Setting";
 
 
 const CollectionTabs = TabNavigator({
@@ -114,7 +117,10 @@ const RootNavigator = StackNavigator({
     PairList: {screen: PairListScreen},
     PairItem: {screen: PairItemScreen},
     Pair: {screen: PairScreen},
-    PairInfo: {screen: PairInfoScreen}
+    PairInfo: {screen: PairInfoScreen},
+    FollowPeople: {screen: FollowPeopleScreen},
+    Fan: {screen: FanScreen},
+    Setting: {screen: SettingScreen}
 });
 
 export default RootNavigator;
