@@ -8,6 +8,8 @@ import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
 import {Button} from "react-native-elements";
 import {GET_PETS} from "../../config/api";
+import Dimensions from 'Dimensions'
+
 
 class ProfileScreen extends Component {
     constructor(props) {
@@ -106,7 +108,26 @@ class ProfileScreen extends Component {
 
     render() {
         if (this.state.login.token == '') {
-            return <Button title='请登陆' onPress={() => this.props.navigation.navigate('Login')}/>
+            return (
+                <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    paddingTop: Dimensions.get('window').height / 4
+                }}>
+                    <Image source={require('../../image/banner.png')}
+                           style={{
+                               width: Dimensions.get('window').width / 2,
+                               height: Dimensions.get('window').width / 2,
+                               justifyContent: 'center',
+                           }}/>
+                    <Button title='请登陆' onPress={() => this.props.navigation.navigate('Login')}
+                            buttonStyle={{
+                                backgroundColor: '#44a3ff',
+                                borderRadius: 10,
+                                width: Dimensions.get('window').width / 3 * 2,
+                            }}/>
+                </View>
+            );
         }
         if (this.state.ProfileIsLoading) {
             return (

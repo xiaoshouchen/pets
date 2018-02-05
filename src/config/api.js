@@ -26,3 +26,7 @@ export const GET_ARTICLES_BY_ID = BASE_URL + '/api/article/';
 export const ADD_ARTICLE = BASE_URL + '/api/article/add';
 export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
+
+//login
+
+export const LOGIN=`${BASE_URL}/api/login`;
