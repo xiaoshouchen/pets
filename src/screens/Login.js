@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, AsyncStorage} from 'react-native';
 import {Card, PricingCard, ListItem, Button, Tile, FormLabel, FormInput} from 'react-native-elements';
 import App from '../utils/app.core'
+import {LOGIN} from '../config/api'
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -15,7 +16,28 @@ class LoginScreen extends Component {
     }
 
     _login() {
+        let formData = new FormData();
+        //alert(LOGIN);
+        formData.append('account', this.state.phone);
+        formData.append('password', this.state.password);
+        fetch(LOGIN, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            body: formData,
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.code == 200) {
+                    let user_id = responseJson.user_id;
+                    let token = `{"token":"123123","user_id":${user_id}}`;
 
+                    AsyncStorage.setItem("login", token)
+                        .then(() => this.props.navigation.navigate('Profile')).catch((error) => alert('error'))
+                }
+
+                this.props.navigation.navigate('Home');
+            }).catch((error) => alert("网络加载错误"));
     }
 
     render() {
@@ -71,8 +93,7 @@ class LoginScreen extends Component {
                 <Button
                     disabled={this.state.disableButton}
                     onPress={() =>
-                        AsyncStorage.setItem("login", "{\"token\":\"123123\",\"user_id\":1}")
-                            .then(() => this.props.navigation.navigate('Profile')).catch((error) => alert('error'))
+                        this._login()
                     }
                     buttonStyle={{marginTop: 15}}
                     title="登陆"

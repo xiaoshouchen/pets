@@ -7,6 +7,8 @@ import {TabNavigator, StackNavigator} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Feather';
 import ItemList from '../../config/ItemList'
 import {GET_PRODUCTS} from "../../config/api";
+import Swiper from 'react-native-swiper';
+import Dimensions from 'Dimensions'
 
 class StoreScreen extends Component {
     constructor(props) {
@@ -52,7 +54,6 @@ class StoreScreen extends Component {
     }
 
 
-
     static navigationOptions = {
         tabBarLabel: "商城",
         headerTitleStyle: {color: '#fff'},
@@ -83,13 +84,23 @@ class StoreScreen extends Component {
                 </View>
             );
         }
-
         return (
             <View style={styles.MainContainer}>
+                <Swiper style={styles.wrapper} showsButtons={false} height={Dimensions.get('window').width / 3}>
+                    <View style={styles.slide1}>
+                        <Text style={styles.text}>Hello Swiper</Text>
+                    </View>
+                    <View style={styles.slide2}>
+                        <Text style={styles.text}>Beautiful</Text>
+                    </View>
+                    <View style={styles.slide3}>
+                        <Text style={styles.text}>And simple</Text>
+                    </View>
+                </Swiper>
                 <View style={styles.item_list}>
                     <View style={styles.itemLeft}>
                         <Image source={require('../../image/f-0.png')}
-                             style={{width: 48, height: 48, marginBottom: 5}}/>
+                               style={{width: 48, height: 48, marginBottom: 5}}/>
                         <Text style={styles.itemText}>宠物零食</Text>
                     </View>
                     <View style={styles.item}>
@@ -112,15 +123,16 @@ class StoreScreen extends Component {
                                style={{width: 48, height: 48, marginBottom: 5}}/>
                         <Text style={styles.itemText}>宠物零食</Text>
                     </View>
-                   
+
                 </View>
                 <View style={styles.goods}>
-                    <Text style={{margin:10}}>为您推荐</Text>
+                    <Text style={{margin: 10}}>为您推荐</Text>
                     <FlatList
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
                         renderItem={({item}) => (
-                            <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail',{item: item})}>
+                            <TouchableHighlight
+                                onPress={() => this.props.navigation.navigate('ProductDetail', {item: item})}>
                                 <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                     <Image source={{uri: item.img1}} style={styles.product_img}/>
                                     <View>
@@ -173,7 +185,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     goods: {
-        flex: 1
+        flex: 2
     },
     product_img: {
         width: 100,
@@ -194,6 +206,30 @@ const styles = StyleSheet.create({
         paddingTop: 6,
         fontSize: 12,
     },
+    wrapper: {},
+    slide1: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#9DD6EB',
+    },
+    slide2: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#97CAE5',
+    },
+    slide3: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#92BBD9',
+    },
+    text: {
+        color: '#fff',
+        fontSize: 30,
+        fontWeight: 'bold',
+    }
 
 });
 
