@@ -4,7 +4,9 @@ import {
     StyleSheet, TextInput, TouchableOpacity, View
 } from 'react-native';
 import ImagePicker from "react-native-image-picker";
+import Dimensions from 'Dimensions'
 
+const windowWidth = Dimensions.get('window').width;
 class PairScreen extends Component {
 
     constructor(props) {
@@ -112,8 +114,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     image: {
-        width: 80,
-        height: 80,
+        width: windowWidth/5,
+        height: windowWidth/5,
     }
 })
 

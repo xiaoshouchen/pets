@@ -92,7 +92,7 @@ class PairItemScreen extends Component {
                     marginRight: 10,
                     marginLeft: 10
                 }}
-                        onPress={() => navigate('AddPet')} title={'添加宠物'}/>
+                        onPress={() => navigate('AddPet',{callBack: ()=> this.callBack()})} title={'添加宠物'}/>
             </ScrollView>
         )
             ;

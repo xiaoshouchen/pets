@@ -56,6 +56,7 @@ class ProfileScreen extends Component {
             else {
                 this.setState({login: result}, function () {
                     let json = JSON.parse(this.state.login);
+                    console.log(json)
                     this._getData(json.user_id);
                 });
             }
@@ -141,8 +142,10 @@ class ProfileScreen extends Component {
                 <View style={styles.body}>
                     <View style={styles.top}>
                         <View style={styles.topLeft}>
-                            <Image style={styles.image}
-                                   source={{uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58'}}></Image>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal')}>
+                                <Image style={styles.image}
+                                       source={{uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58'}}></Image>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.topRight}>
                             <View style={{justifyContent: 'space-around', marginLeft: 15}}>

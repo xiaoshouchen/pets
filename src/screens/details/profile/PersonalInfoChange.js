@@ -25,7 +25,11 @@ class PersonalInfoChangeScreen extends Component{
             maxHeight: 500,
             storageOptions: {
                 skipBackup: true
-            }
+            },
+            title: '选择一张照片',
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照',
+            chooseFromLibraryButtonTitle: '手机相册选取'
         };
 
         ImagePicker.showImagePicker(options, (response) => {
