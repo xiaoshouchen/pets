@@ -17,7 +17,7 @@ class PostScreen extends Component {
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: '个人资料',
         headerStyle: {backgroundColor: '#44a3ff'},
-        title: '帖子',
+        title: '文章',
     }
 
     componentDidMount() {
