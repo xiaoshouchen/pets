@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, AsyncStorage} from 'react-native';
+import {StyleSheet, Text, View, TextInput, AsyncStorage, Alert} from 'react-native';
 import {Card, PricingCard, ListItem, Button, Tile, FormLabel, FormInput} from 'react-native-elements';
 import App from '../utils/app.core'
 import {LOGIN} from '../config/api'
@@ -13,6 +13,7 @@ class LoginScreen extends Component {
             disableButton: true
         }
         this._login = this._login.bind(this);
+
     }
 
     _login() {
@@ -33,10 +34,17 @@ class LoginScreen extends Component {
                     let token = `{"token":"123123","user_id":${user_id}}`;
 
                     AsyncStorage.setItem("login", token)
-                        .then(() => this.props.navigation.navigate('Profile')).catch((error) => alert('error'))
+                        .then(() => {
+                            this.props.navigation.state.params.checkIsLogin();
+                            this.props.navigation.goBack(null)
+                        }).catch((error) => alert('error'))
+                }
+                else {
+                    Alert.alert(
+                        '登陆失败',
+                        '账号或密码错误，请重新登陆');
                 }
 
-                this.props.navigation.navigate('Home');
             }).catch((error) => alert("网络加载错误"));
     }
 

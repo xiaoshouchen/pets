@@ -10,7 +10,6 @@ import {
 
 import RichEditor from 'react-native-webview-richeditor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import TextField from '../../../components/TextField'
 import {ADD_ARTICLE} from "../../../config/api";
 
 class AddArticle extends Component {
@@ -60,11 +59,15 @@ class AddArticle extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextField
-                    label='标题'
-                    onChange={(text) => this.setState({title: text})}
+                <Text style={styles.text}>请输入您的标题</Text>
+                <TextInput
+                    autoFocus={true}
+                    underlineColorAndroid='transparent'
+                    style={styles.input}
+                    placeholder="标题"
+                    onChangeText={(text) => this.setState({title: text})}
                 />
-                <Text>输入您要分享的内容</Text>
+                <Text style={styles.text}>输入您要分享的内容</Text>
                 <RichEditor ref={(ref) => this.editor = ref}/>
                 <KeyboardSpacer/>
             </View>
@@ -74,9 +77,19 @@ class AddArticle extends Component {
 
 export {AddArticle};
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        paddingHorizontal: 16,
-    },
-});
+        container: {
+            flex: 1,
+            backgroundColor: '#fff',
+        },
+        input: {
+            marginTop: 10,
+            height: 40,
+            borderColor: '#eeeeee',
+            borderWidth: 1
+        },
+        text: {
+            marginTop: 15,
+            fontSize: 16
+        }
+    })
+;

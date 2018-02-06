@@ -14,7 +14,6 @@ import Dimensions from 'Dimensions'
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
-        AsyncStorage.setItem('xiaozhen', 'shuai');
         this.state = {
             info: {name: "您的昵称", desc: "您的简单介绍", score: 0, discount: 0, cart: 0},
             desc: '',
@@ -22,6 +21,11 @@ class ProfileScreen extends Component {
             ProfileIsLoading: true,
         }
         this._getData = this._getData.bind(this);
+        this.checkIsLogin = this.checkIsLogin.bind(this);
+    }
+
+    checkIsLogin() {
+        this.componentDidMount();
     }
 
     static navigationOptions = {
@@ -48,6 +52,9 @@ class ProfileScreen extends Component {
     };
 
     componentWillMount() {
+    }
+
+    componentDidMount() {
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
             if (result == null) {
@@ -94,10 +101,6 @@ class ProfileScreen extends Component {
 
     }
 
-    componentDidMount() {
-        //this._getData(this.state.login.user_id);
-
-    }
 
     FlatListItemSeparator = () => {
         return (<View style={{backgroundColor: "#d9d7e8",}}/>);
@@ -121,7 +124,8 @@ class ProfileScreen extends Component {
                                height: Dimensions.get('window').width / 2,
                                justifyContent: 'center',
                            }}/>
-                    <Button title='请登陆' onPress={() => this.props.navigation.navigate('Login')}
+                    <Button title='请登陆'
+                            onPress={() => this.props.navigation.navigate('Login', {checkIsLogin: () => this.checkIsLogin()})}
                             buttonStyle={{
                                 backgroundColor: '#44a3ff',
                                 borderRadius: 10,
@@ -249,30 +253,30 @@ class ProfileScreen extends Component {
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')}>
-                                <Image source={require('../../image/article.png')}
-                                       style={{width: 30, height: 30, marginBottom: 5}}/>
-                                <Text>文章</Text>
+                                    <Image source={require('../../image/article.png')}
+                                           style={{width: 30, height: 30, marginBottom: 5}}/>
+                                    <Text>文章</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Collection')}>
-                                <Image source={require('../../image/restore.png')}
-                                       style={{width: 30, height: 30, marginBottom: 5}}/>
-                                <Text>收藏</Text>
+                                    <Image source={require('../../image/restore.png')}
+                                           style={{width: 30, height: 30, marginBottom: 5}}/>
+                                    <Text>收藏</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowPeople')}>
-                                <Image source={require('../../image/follow.png')}
-                                       style={{width: 30, height: 30, marginBottom: 5}}/>
-                                <Text>关注</Text>
+                                    <Image source={require('../../image/follow.png')}
+                                           style={{width: 30, height: 30, marginBottom: 5}}/>
+                                    <Text>关注</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Fan')}>
-                                <Image source={require('../../image/fans.png')}
-                                       style={{width: 30, height: 30, marginBottom: 5}}/>
-                                <Text>粉丝</Text>
+                                    <Image source={require('../../image/fans.png')}
+                                           style={{width: 30, height: 30, marginBottom: 5}}/>
+                                    <Text>粉丝</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -318,10 +322,10 @@ class ProfileScreen extends Component {
                         <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Setting')}>
-                                <Image source={require('../../image/setting.png')}
-                                       style={{width: 30, height: 30, marginBottom: 5}}/>
-                                <Text>设置</Text>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Setting', {checkIsLogin: () => this.checkIsLogin()})}>
+                                    <Image source={require('../../image/setting.png')}
+                                           style={{width: 30, height: 30, marginBottom: 5}}/>
+                                    <Text>设置</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
