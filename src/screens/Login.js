@@ -31,9 +31,11 @@ class LoginScreen extends Component {
             .then((responseJson) => {
                 if (responseJson.code == 200) {
                     let user_id = responseJson.user_id;
-                    let token = `{"token":"123123","user_id":${user_id}}`;
+                    let token = responseJson.token;
+                    let refresh_token = responseJson.refresh_token;
+                    let login = `{"token":"${token}","user_id":${user_id},"refresh_token":"${refresh_token}"}`;
 
-                    AsyncStorage.setItem("login", token)
+                    AsyncStorage.setItem("login", login)
                         .then(() => {
                             this.props.navigation.state.params.checkIsLogin();
                             this.props.navigation.goBack(null)
