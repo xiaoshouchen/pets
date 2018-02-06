@@ -17,7 +17,13 @@ class AdoptScreen extends Component {
             location: '选择地区'
         }
     }
-
+    static navigationOptions = {
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+        title: '领养',
+    };
     callBack(item) {
         this.setState({
             typeName: item.name,

@@ -4,7 +4,7 @@ import { StyleSheet, FlatList, Text, View,
 } from 'react-native';
 import {Icon} from 'react-native-elements'
 
-class CollectionScreen extends Component {
+class CollectionArticlesScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -12,13 +12,14 @@ class CollectionScreen extends Component {
             isLoading: true
         }
     }
+
     static navigationOptions = {
+        tabBarLabel: "我的",
         headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
         title: '收藏',
-        tabBarLabel: '帖子',
-    }
+    };
 
     render(){
         const {navigate} = this.props.navigation;
@@ -29,4 +30,4 @@ class CollectionScreen extends Component {
         )
     }
 }
-export {CollectionScreen}
+export {CollectionArticlesScreen}

@@ -46,7 +46,7 @@ class MessageScreen extends Component {
                                     <Text style={styles.textView}>回答养宠问题</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => alert('讨论')}>
+                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
                                 <View style={styles.main}>
                                     <Image style={styles.imageView} source={require('../../image/discuss.png')}/>
                                     <Text style={styles.nameView}>讨论</Text>
@@ -60,14 +60,14 @@ class MessageScreen extends Component {
                             <Text style={styles.smallTitle}><Icon name='book'/> 分享</Text>
                         </View>
                         <View style={styles.share}>
-                            <TouchableOpacity onPress={() => alert('文章')}>
+                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
                                 <View style={styles.main}>
                                     <Image style={styles.imageView} source={require('../../image/share.png')}/>
                                     <Text style={styles.nameView}>文章</Text>
                                     <Text style={styles.textView} numberOfLines={3}>较多文字的养宠故事或经验</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => alert('秀宠')}>
+                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
                                 <View style={styles.main}>
                                     <Image style={styles.imageView} source={require('../../image/video.png')}/>
                                     <Text style={styles.nameView}>秀宠</Text>

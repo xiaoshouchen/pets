@@ -14,9 +14,12 @@ class PrivateRecommendScreen extends Component {
             petYear: ''
         }
     }
-
     static navigationOptions = ({navigation}) => ({
-        title: '饮食搭配',
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+        title: '饮食搭配'
     })
 
     componentDidMount() {

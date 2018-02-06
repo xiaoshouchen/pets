@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, Text, View, ScrollView, Image, FlatList, ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity, AsyncStorage
 } from 'react-native'
 import {Button} from "react-native-elements";
 import {GET_PETS} from "../../../config/api";
@@ -14,10 +14,34 @@ class PetList extends Component {
             refreshing: false
         }
     }
-
+    static navigationOptions = {
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+    };
     componentDidMount() {
+        AsyncStorage.getItem('login').then((result) => {
+            //alert(result);
+            if (result == null) {
+                this.setState({login: {token: '', user_id: ''}})
+            }
+            else {
+                this.setState({login: result}, function () {
+                    let json = JSON.parse(this.state.login);
+                    console.log(json)
+                    this.getData(json.user_id);
+                });
+            }
 
-        return fetch(GET_PETS + '?user_id=2')
+        }).catch((e) => {
+            alert(e);
+        })
+
+    }
+
+    getData(user_id){
+        return fetch(GET_PETS + '?user_id=' + user_id)
             .then((response) => response.json())
             .then((responseJson,key) => {
                 this.setState({

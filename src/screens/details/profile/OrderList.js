@@ -4,7 +4,7 @@ import { StyleSheet, FlatList, Text, View,
 } from 'react-native';
 import {Icon} from 'react-native-elements'
 
-class FanScreen extends Component {
+class OrderListScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -13,18 +13,20 @@ class FanScreen extends Component {
         }
     }
     static navigationOptions = {
+        tabBarLabel: "我的",
         headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
+        headerBackTitle: null,
         headerStyle: {backgroundColor: '#44a3ff'},
-        title: '粉丝',
-    }
+        title: '订单',
+    };
+
     render(){
         const {navigate} = this.props.navigation;
         return(
             <View>
-                <Text>粉丝</Text>
+                <Text>订单</Text>
             </View>
         )
     }
 }
-export {FanScreen}
+export {OrderListScreen}

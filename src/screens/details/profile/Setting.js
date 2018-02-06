@@ -11,6 +11,15 @@ const sectonDatas = {
 }
 
 class SettingScreen extends Component {
+
+    static navigationOptions = {
+        tabBarLabel: "我的",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+        title: '设置',
+    };
+
     _renderItemComponent = ({item}) => {
 
         return (

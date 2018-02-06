@@ -1,28 +1,37 @@
 import React, {Component} from 'react';
 import {
-    Modal,
-    StyleSheet, Text, TextInput, TouchableOpacity, View
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 
-class PairInfoScreen extends Component {
+class MedicalCareScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "萌宠",
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: null,
         headerStyle: {backgroundColor: '#44a3ff'},
+        title: '医疗',
     };
+
     render() {
         const {state, navigate} = this.props.navigation;
         return (
-            <View>
-                <Text>配对具体信息</Text>
+            <View style={{flex: 1, justifyContent: 'space-between'}}>
+                <View>
+                    <Text>医疗</Text>
+                </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    buttonStyle: {
+        backgroundColor: '#44a3ff',
+    }
+
 })
 
-export {PairInfoScreen}
+export {MedicalCareScreen}

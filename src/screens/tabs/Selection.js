@@ -46,7 +46,7 @@ class SelectionScreen extends Component {
                         </View>
                     </View>
                     <TouchableOpacity style={styles.buttonRight} onPress={(navigation) => {
-                        navigate('AddPet');
+                        navigate('Remind');
                     }}>
                         <Text style={styles.text}>提醒</Text>
                     </TouchableOpacity>
@@ -64,17 +64,12 @@ class SelectionScreen extends Component {
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>饮食</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
-                            pet_id: 1,
-                            article_type: 'food',
-                            petYear: 1,
-                            pet_type_id: 1
-                        })}>
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('MedicalCare')}>
                             <Image source={require('../../image/list-2.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>医疗</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('Training', {
                             pet_id: 1,
                             article_type: 'food',
                             petYear: 1,
@@ -84,22 +79,12 @@ class SelectionScreen extends Component {
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>训练</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
-                            pet_id: 1,
-                            article_type: 'food',
-                            petYear: 1,
-                            pet_type_id: 1
-                        })}>
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('Cosmetology')}>
                             <Image source={require('../../image/list-4.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>美容</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.item} onPress={() => navigate('PrivateRecommends', {
-                            pet_id: 1,
-                            article_type: 'food',
-                            petYear: 1,
-                            pet_type_id: 1
-                        })}>
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('Item')}>
                             <Image source={require('../../image/list-5.png')}
                                    style={{width: 48, height: 48, marginBottom: 5}}/>
                             <Text style={styles.itemText}>用品</Text>
@@ -110,45 +95,52 @@ class SelectionScreen extends Component {
                     <Text style={styles.smallTitle}>常用功能</Text>
                     <View style={styles.item_list}>
                         <View style={styles.item}>
-                            <Image source={require('../../image/list1.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>日记</Text>
+                            <TouchableOpacity onPress={() => navigate('Diary')}>
+                                <Image source={require('../../image/list1.png')}
+                                       style={{width: 48, height: 48, marginBottom: 5}}/>
+                                <Text style={styles.itemText}>日记</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AdoptList')}>
-                            <View style={styles.item}>
+                        <View style={styles.item}>
+                            <TouchableOpacity onPress={() => navigate('AdoptList')}>
                                 <Image source={require('../../image/list2.png')}
                                        style={{width: 48, height: 48, marginBottom: 5}}/>
                                 <Text style={styles.itemText}>领养</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('PairList')}>
-                            <View style={styles.item}>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.item}>
+                            <TouchableOpacity onPress={() => navigate('PairList')}>
                                 <Image source={require('../../image/list3.png')}
                                        style={{width: 48, height: 48, marginBottom: 5}}/>
                                 <Text style={styles.itemText}>配对</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={styles.item}>
-                            <Image source={require('../../image/list4.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>百科</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/list5.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>问答</Text>
+                            <TouchableOpacity onPress={() => navigate('Encyclopedias')}>
+                                <Image source={require('../../image/list4.png')}
+                                       style={{width: 48, height: 48, marginBottom: 5}}/>
+                                <Text style={styles.itemText}>百科</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.item}>
+                            <TouchableOpacity onPress={() => navigate('QuestionAndAnswer')}>
+                                <Image source={require('../../image/list5.png')}
+                                       style={{width: 48, height: 48, marginBottom: 5}}/>
+                                <Text style={styles.itemText}>问答</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
                 <View style={{backgroundColor: '#eeeeee', height: 10}}></View>
                 <View style={styles.scroll}>
-                    <TouchableOpacity style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1}} onPress={() => navigate('NecessaryKnowledge')}>
                         <Text style={{textAlign: 'center', fontSize: 16}}>养宠必读</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1}} onPress={() => navigate('NecessaryRemind')}>
                         <Text style={{textAlign: 'center', fontSize: 16}}>提醒事项</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1}} onPress={() => navigate('CommodityRecommendation')}>
                         <Text style={{textAlign: 'center', fontSize: 16}}>商品推荐</Text>
                     </TouchableOpacity>
                 </View>

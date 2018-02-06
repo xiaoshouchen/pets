@@ -13,7 +13,12 @@ class PairItemScreen extends Component {
             isLoading: true
         }
     }
-
+    static navigationOptions = {
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+    };
     componentDidMount() {
 
         return fetch(GET_PETS + '?user_id=2')

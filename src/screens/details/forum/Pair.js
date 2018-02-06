@@ -17,6 +17,13 @@ class PairScreen extends Component {
             imageNum: 0
         }
     }
+    static navigationOptions = {
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+        title: '配对',
+    };
 
     selectPhotoTapped() {
         let count = this.state.imageNum;

@@ -5,10 +5,10 @@ class ShoppingCartScreen extends Component {
 
     static navigationOptions = {
         headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
-        headerStyle: {backgroundColor: '#ff8302'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
         title: '购物车',
-    }
+    };
 
     render(){
         return(

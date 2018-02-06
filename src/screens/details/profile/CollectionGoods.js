@@ -12,13 +12,14 @@ class CollectionGoodsScreen extends Component {
             isLoading: true
         }
     }
+
     static navigationOptions = {
+        tabBarLabel: "我的",
         headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
+        headerBackTitle: null,
         headerStyle: {backgroundColor: '#44a3ff'},
         title: '收藏',
-        tabBarLabel: '商品',
-    }
+    };
 
     render(){
         return(

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {
     StyleSheet, Text, View, ScrollView, Image, TextInput, Picker,
-    TouchableOpacity, Modal
+    TouchableOpacity, Modal, AsyncStorage
 } from 'react-native'
 import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
@@ -16,7 +16,6 @@ class AddPet extends Component {
             checked: false,
             typeName: '选择宠物种类',
             sex: 1,
-            userId: 2,
             isLoading: true,
             isClickAble: true,
             visibility: false,
@@ -24,6 +23,20 @@ class AddPet extends Component {
         }
         this.confirm=this.confirm.bind(this);
     }
+
+    static navigationOptions=({navigation}) => ({
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+        title: '宠物资料',
+        headerRight:
+            <TouchableOpacity onPress={() => navigation.state.params.confirm()}>
+                <Text style={{marginRight: 15}}>{navigation.state.params.showDelete}</Text>
+            </TouchableOpacity>
+
+    })
+
     callBack(item){
         this.setState({
             typeName: item.name,
@@ -31,10 +44,15 @@ class AddPet extends Component {
         })
     }
 
+    confirm(){
+        this.setState({
+            visibility: true
+        })
+    }
     deletePet(){
         let formData = new FormData();
         const {state, goBack} = this.props.navigation;
-        formData.append('user_id',2);
+        formData.append('user_id',this.state.userId);
         formData.append('pet_id',this.state.petId);
         fetch(DELETE_PETS, {
             method: 'POST',
@@ -47,23 +65,10 @@ class AddPet extends Component {
             (response) => response.json())
             .then((responseJson) => {
                 state.params.callBack();
-                this.props.navigation.goBack(null)
+                goBack(null)
             });
     }
 
-    static navigationOptions=({navigation}) => ({
-        title: '宠物资料',
-        headerRight:
-            <TouchableOpacity onPress={() => navigation.state.params.confirm()}>
-                <Text style={{marginRight: 15}}>{navigation.state.params.showDelete}</Text>
-            </TouchableOpacity>
-
-    })
-    confirm(){
-        this.setState({
-            visibility: true
-        })
-    }
     selectPhotoTapped() {
         const options = {
             quality: 1.0,
@@ -102,6 +107,7 @@ class AddPet extends Component {
             }
         });
     }
+
     post(){
         if(this.state.isClickAble){
             if(this.state.name == '' || this.state.typeName == '选择宠物种类' || this.state.date == null || this.state.avatarSource == require('../../../image/default_pet_avatar.png')){
@@ -117,14 +123,15 @@ class AddPet extends Component {
                 const {state, goBack} = this.props.navigation;
                 let formData = new FormData();
                 let file = {uri: this.state.avatarSource.uri, type: 'multipart/form-data', name: 'a.jpg'}
-                formData.append('birthday', this.state.date)
-                formData.append('sex', this.state.sex)
-                formData.append('name', this.state.name)
-                formData.append('small_type_id', this.state.typeId)
-                formData.append('avatar', file)
-                formData.append('user_id', this.state.userId)
+                formData.append('birthday', this.state.date);
+                formData.append('sex', this.state.sex);
+                formData.append('name', this.state.name);
+                formData.append('small_type_id', this.state.typeId);
+                formData.append('avatar', file);
+                formData.append('user_id', this.state.userId);
                 const { params }=this.props.navigation.state;
                 if(params.item!=undefined){
+                    formData.append('pet_id',this.state.petId);
                     fetch(UPDATE_PETS, {
                         method: 'POST',
                         headers: {
@@ -136,7 +143,7 @@ class AddPet extends Component {
                         (response) => response.json())
                         .then((responseJson) => {
                             state.params.callBack();
-                            this.props.navigation.goBack(null)
+                            goBack(null)
                         });
                 }else {
                     fetch(ADD_PETS, {
@@ -150,7 +157,7 @@ class AddPet extends Component {
                         (response) => response.json())
                         .then((responseJson) => {
                             state.params.callBack();
-                            this.props.navigation.goBack(null)
+                            goBack(null)
                         });
                 }
             }
@@ -158,8 +165,24 @@ class AddPet extends Component {
 
         }
     }
+
     componentDidMount(){
         const { params }=this.props.navigation.state;
+        AsyncStorage.getItem('login').then((result) => {
+            //alert(result);
+            if (result == null) {
+                this.setState({login: {token: '', user_id: ''}})
+            }
+            else {
+                this.setState({login: result}, function () {
+                    let json = JSON.parse(this.state.login);
+                    this.setState({userId: json.user_id});
+                });
+            }
+
+        }).catch((e) => {
+            alert(e);
+        })
         if(this.state.isLoading){
             if(params.item!=undefined){
                 this.setState({
@@ -184,6 +207,7 @@ class AddPet extends Component {
             }
         }
     }
+
     render() {
         const { state, navigate } = this.props.navigation;
         return (

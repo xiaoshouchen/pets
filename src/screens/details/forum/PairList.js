@@ -6,7 +6,12 @@ import {
 import {Button} from "react-native-elements";
 
 class PairListScreen extends Component {
-
+    static navigationOptions = {
+        tabBarLabel: "萌宠",
+        headerTitleStyle: {color: '#fff'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#44a3ff'},
+    };
     render() {
         const {state, navigate} = this.props.navigation;
         return (
