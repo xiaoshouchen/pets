@@ -34,4 +34,4 @@ export const MY_FOLLOWS = `${BASE_URL}/api/follows`;
 
 export const LOGIN = `${BASE_URL}/api/login`;
 export const SEND_MESSAGE_CODE = `${BASE_URL}/api/sendmessage/`;
-export const REGISTER = `${BASE_URL}/api/register/`;
+export const REGISTER = `${BASE_URL}/api/register`;
