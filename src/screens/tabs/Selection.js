@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, FlatList, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Dimensions from 'Dimensions'
 
-const data = [{key: 'a'}, {key: 'b'}];
+const data = [{key: 'a'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
 
 class SelectionScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            clickSelected: ""
+            clickSelected: "",
+            show: false,
+            scrollY: new Animated.Value(0)
         }
     }
 
@@ -26,11 +29,19 @@ class SelectionScreen extends Component {
             />
         ),
     };
-
     render() {
         const {navigate} = this.props.navigation;
+        let absuloteTitle = this.state.scrollY.interpolate({
+            inputRange: [0, 410, 1000, 1000],
+            outputRange: [0, 0, 590, 590]
+        })
         return (
-            <View style={{backgroundColor: 'white'}}>
+            <ScrollView
+                style={{backgroundColor: 'white'}}
+                onScroll={Animated.event(
+                    [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
+                )}
+            >
                 <View style={{height: 180}}>
                     <Image source={require('../../image/back.jpg')} style={{width: null, height: 180}}/>
                 </View>
@@ -133,28 +144,35 @@ class SelectionScreen extends Component {
                     </View>
                 </View>
                 <View style={{backgroundColor: '#eeeeee', height: 10}}></View>
-                <View style={styles.scroll}>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => navigate('NecessaryKnowledge')}>
-                        <Text style={{textAlign: 'center', fontSize: 16}}>养宠必读</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => navigate('NecessaryRemind')}>
-                        <Text style={{textAlign: 'center', fontSize: 16}}>提醒事项</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => navigate('CommodityRecommendation')}>
-                        <Text style={{textAlign: 'center', fontSize: 16}}>商品推荐</Text>
-                    </TouchableOpacity>
-                </View>
+                <Animated.View
+                    style={{
+                        transform: [{
+                            translateY: absuloteTitle
+                        }]
+                    }}>
+                    <View style={styles.scroll}>
+                        <TouchableOpacity style={{flex: 1}}>
+                            <Text style={{textAlign: 'center', fontSize: 16}}>养宠必读</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flex: 1}}>
+                            <Text style={{textAlign: 'center', fontSize: 16}}>提醒事项</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flex: 1}}>
+                            <Text style={{textAlign: 'center', fontSize: 16}}>商品推荐</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Animated.View>
                 <View style={{flex: 1}}>
                     <FlatList
                         data={data}
-                        renderItem={({item}) => {
-                            <Text>{item.key}</Text>
-                        }}
+                        renderItem={({item}) => (
+                            <View>
+                                <Text style={{height: 50}}>{item.key}</Text>
+                            </View>
+                        )}
                     />
                 </View>
-
-            </View>
-
+            </ScrollView>
         )
     }
 }

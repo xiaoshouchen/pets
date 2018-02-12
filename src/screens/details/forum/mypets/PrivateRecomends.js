@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -50,6 +50,9 @@ class PrivateRecommendScreen extends Component {
             />
         );
     }
+    ListHeaderComponent = () => {
+
+    }
 
     GetFlatListItem(fruit_name) {
 
@@ -69,8 +72,8 @@ class PrivateRecommendScreen extends Component {
 
         return (
 
-            <View style={styles.MainContainer}>
-                <View>
+            <ScrollView style={styles.MainContainer}>
+                <View style={{overflow: 'hidden'}}>
                     <View>
                         <Text>您的宠物品种为：</Text>
                         <Text>{this.state.petType}</Text>
@@ -86,7 +89,6 @@ class PrivateRecommendScreen extends Component {
                     data={this.state.dataSource}
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
-
                     renderItem={({item}) => (
 
                         <View style={styles.item}>
@@ -120,7 +122,7 @@ class PrivateRecommendScreen extends Component {
                 />
 
 
-            </View>
+            </ScrollView>
 
         );
     }
