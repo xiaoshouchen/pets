@@ -29,7 +29,8 @@ class PersonalInfoChangeScreen extends Component{
             title: '选择一张照片',
             cancelButtonTitle: '取消',
             takePhotoButtonTitle: '拍照',
-            chooseFromLibraryButtonTitle: '手机相册选取'
+            chooseFromLibraryButtonTitle: '手机相册选取',
+            allowsEditing: true
         };
 
         ImagePicker.showImagePicker(options, (response) => {
