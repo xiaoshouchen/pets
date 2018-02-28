@@ -59,7 +59,7 @@ class LoginScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <ImageBackground source={require('../image/login_back.png')} style={styles.backgroundImage}>
+            <ImageBackground style={styles.backgroundImage}>
                 <View style={styles.backView}>
 
                 <View>
@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginLeft: 30,
         marginRight: 30,
-        borderColor: 'rgba(0,0,0,0)',
+        borderColor: 'white',
         borderRadius: 20,
         backgroundColor: 'rgba(0,0,0,0)',
         width: 300,
-        paddingLeft: 20,
+        paddingLeft: 10,
         marginBottom: 20,
         color: 'white'
     },
