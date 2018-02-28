@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
-import {StyleSheet, Text, View, ScrollView, Button, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Button, Image, TouchableOpacity, Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {AddArticle} from "../details/forum/AddArticle";
+import Dimensions from 'Dimensions'
+
+const windowWidth = Dimensions.get('window').width;
+const iconWidth = windowWidth / 4;
 
 class MessageScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            html: props.editorHtml
+            html: props.editorHtml,
+            ModalIsVisible: true,
         }
     }
 
@@ -23,115 +28,108 @@ class MessageScreen extends Component {
         ),
     }
 
+    componentDidMount() {
+        const {params} = this.props.navigation.state;
+        //this.setState({ModalIsVisible: params.isvisible});
+    }
+
     render() {
-        const {navigate} = this.props.navigation;
         return (
-            <View style={styles.mainView}>
-                <View style={{marginTop: 100}}>
-                    <Text style={{fontSize: 30}}>小宠乐园</Text>
-                    <View>
-                        <Text>让养宠物变得简单点</Text>
-                    </View>
-                </View>
-                <View style={{}}>
-                    <View style={styles.questionView}>
+            <View>
+                <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.ModalIsVisible}
+                    onRequestClose={() => {
+                        this.props.navigation.goBack();
+                    }}
+                >
+                    <View style={styles.mainView}>
                         <View>
-                            <Text style={styles.smallTitle}><Icon name='help-circle'/> 提问</Text>
+                            <Text style={{fontSize: 30}}>小宠乐园</Text>
+                            <View>
+                                <Text>让养宠物变得简单点</Text>
+                            </View>
                         </View>
-                        <View style={styles.question}>
-                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
-                                <View style={styles.main}>
-                                    <Image style={styles.imageView} source={require('../../image/question.png')}/>
-                                    <Text style={styles.nameView}>答题</Text>
-                                    <Text style={styles.textView}>回答养宠问题</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
-                                <View style={styles.main}>
-                                    <Image style={styles.imageView} source={require('../../image/discuss.png')}/>
-                                    <Text style={styles.nameView}>讨论</Text>
-                                    <Text style={styles.textView}>讨论热门事件</Text>
-                                </View>
-                            </TouchableOpacity>
+                        <View style={styles.mainSection}>
+                            <View style={styles.icons}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                                    <View style={styles.main}>
+                                        <Image style={styles.imageView} source={require('../../image/post/share.png')}/>
+                                        <Text style={styles.nameView}>分享</Text>
+                                        <Text style={styles.textView}>经验或故事</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                                    <View style={styles.main}>
+                                        <Image style={styles.imageView} source={require('../../image/post/ask.png')}/>
+                                        <Text style={styles.nameView}>提问</Text>
+                                        <Text style={styles.textView}>养宠难题</Text>
+                                    </View>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                                    <View style={styles.main}>
+                                        <Image style={styles.imageView} source={require('../../image/post/video.png')}/>
+                                        <Text style={styles.nameView}>说说</Text>
+                                        <Text style={styles.textView}>照片视频闲聊</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                                    <View style={styles.main}>
+                                        <Image style={styles.imageView} source={require('../../image/post/diary.png')}/>
+                                        <Text style={styles.nameView}>日记</Text>
+                                        <Text style={styles.textView}>记录宠物日常</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.shareView}>
-                        <View>
-                            <Text style={styles.smallTitle}><Icon name='book'/> 分享</Text>
-                        </View>
-                        <View style={styles.share}>
-                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
-                                <View style={styles.main}>
-                                    <Image style={styles.imageView} source={require('../../image/share.png')}/>
-                                    <Text style={styles.nameView}>文章</Text>
-                                    <Text style={styles.textView} numberOfLines={3}>较多文字的养宠故事或经验</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigate('AddArticle')}>
-                                <View style={styles.main}>
-                                    <Image style={styles.imageView} source={require('../../image/video.png')}/>
-                                    <Text style={styles.nameView}>秀宠</Text>
-                                    <Text style={styles.textView}>宠物可爱的照片、视频</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
+                </Modal>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    mainView: {
-        backgroundColor: 'white',
-        alignItems: 'center',
-        flex: 1
-    },
-    main: {
-        width: 200,
-        alignItems: 'center'
-    },
-    titleView: {
-        marginTop: 40
-    },
-    imageView: {
-        marginTop: 15,
-        height: 80,
-        width: 80,
-        borderRadius: 30,
-    },
-    nameView: {
-        fontSize: 14
-    },
-    textView: {
-        marginTop: 10,
-        fontSize: 10,
-    },
-    question: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingLeft:25
-    },
-    share: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingLeft:25
-    },
-    questionView: {
-        marginTop: 20,
-    },
-    shareView: {
-        marginTop: 20
-    },
-    smallTitle: {
-        paddingTop:3,
-        height: 30,
-        fontSize: 16,
-        backgroundColor: '#eeeeee',
-        width: 60,
-        borderBottomRightRadius: 15,
-        borderTopRightRadius: 15,
-    }
-});
+        mainView: {
+            backgroundColor: 'white',
+            alignItems: 'center',
+            flex: 1,
+            justifyContent: 'space-around'
+        },
+        icons: {
+            flexDirection: 'row',
+            alignItems: "center",
+            justifyContent: 'flex-end'
+        },
+        main: {
+            width: iconWidth,
+            alignItems: 'center'
+        },
+        mainSection: {
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end'
+        },
+        imageView: {
+            marginTop: 15,
+            height: 40,
+            width: 40,
+            borderRadius: 5,
+        }
+        ,
+        nameView: {
+            fontSize: 14,
+            fontWeight: 'bold',
+            marginTop: 10
+        }
+        ,
+        textView: {
+            marginTop: 10,
+            fontSize: 10,
+        }
+        ,
+    })
+;
 export {MessageScreen}

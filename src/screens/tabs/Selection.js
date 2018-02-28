@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, FlatList, A
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Dimensions from 'Dimensions'
 
-const data = [{key: 'a'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
+const data = [{key: '这是一个测试，一个键但的打法打飞机啊贷款首付'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
 
 class SelectionScreen extends Component {
     constructor(props) {
@@ -234,7 +234,7 @@ const styles = StyleSheet.create(
             width: 80,
             height: 30,
             justifyContent: 'center',
-            backgroundColor: 'rgba(107, 242, 252, 0.8)',
+            backgroundColor: 'rgba(107, 242, 252, 0.5)',
             borderBottomLeftRadius: 15,
             borderTopLeftRadius: 15,
             overflow: 'hidden',

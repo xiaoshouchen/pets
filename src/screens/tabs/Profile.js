@@ -7,20 +7,20 @@ import {
 import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
 import {Button} from "react-native-elements";
-import {GET_PETS} from "../../config/api";
+import {GET_PETS, GET_PROFILE} from "../../config/api";
 import Dimensions from 'Dimensions'
-
 
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: {name: "您的昵称", desc: "您的简单介绍", score: 0, discount: 0, cart: 0},
+            info: {name: "", desc: "", score: 0, discount: 0, cart: 0},
             desc: '',
             login: {token: '', user_id: ''},
             ProfileIsLoading: true,
         }
-        this._getData = this._getData.bind(this);
+        this._getPetData = this._getPetData.bind(this);
+        this._getInfoData = this._getInfoData.bind(this);
         this.checkIsLogin = this.checkIsLogin.bind(this);
     }
 
@@ -63,17 +63,21 @@ class ProfileScreen extends Component {
             else {
                 this.setState({login: result}, function () {
                     let json = JSON.parse(this.state.login);
-                    console.log(json)
-                    this._getData(json.user_id);
+                    //console.log(json)
+                    this._getPetData(json.user_id, json.token);
                 });
             }
 
         }).catch((e) => {
-            alert(e);
+            //alert(e);
         })
     }
 
-    _getData(user_id) {
+    _getInfoData() {
+
+    }
+
+    _getPetData(user_id, token) {
         if (user_id == '' || user_id == null) {
             user_id = this.state.login.user_id;
             //this._getData(user_id);
@@ -81,23 +85,27 @@ class ProfileScreen extends Component {
         fetch(GET_PETS + '?user_id=' + user_id)
             .then((response) => response.json())
             .then((responseJson) => {
-                //alert(this.state.login);
-                //alert(user_id + "测试返回来的json数据为" + responseJson);
                 this.setState({
                     PetsDataSource: responseJson,
                 }, function () {
-                    // In this block you can do something with new state.
                     this.setState({
                         ProfileIsLoading: false
                     })
-                    /*AsyncStorage.getItem('login').then((result) => {
-                        this.setState({login: result})
-                    });*/
                 });
             })
             .catch((error) => {
                 console.error(error);
             });
+        fetch(`${GET_PROFILE}?items=name,desc&user_id=${user_id}&token=${token}`)
+            .then((response) => {
+                    return response.json();
+                }
+            ).then((responseJson) => {
+            this.setState({
+                info: {name: responseJson.name, desc: responseJson.desc, score: 0, discount: 0, cart: 0}
+            });
+            //alert('fasdfasd');
+        }).catch((error) => alert(error))
 
     }
 
@@ -154,7 +162,7 @@ class ProfileScreen extends Component {
                         <View style={styles.topRight}>
                             <View style={{justifyContent: 'space-around', marginLeft: 15}}>
                                 <Text>{this.state.info.name}</Text>
-                                <Text>{this.state.desc}</Text>
+                                <Text>{this.state.info.desc}</Text>
                             </View>
                             <View style={{alignItems: 'flex-end', justifyContent: 'flex-start'}}>
                                 <Button buttonStyle={{
@@ -330,7 +338,8 @@ class ProfileScreen extends Component {
                         <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Setting', {checkIsLogin: () => this.checkIsLogin()})}>
+                                <TouchableOpacity
+                                    onPress={() => this.props.navigation.navigate('Setting', {checkIsLogin: () => this.checkIsLogin()})}>
                                     <Image source={require('../../image/setting.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>设置</Text>

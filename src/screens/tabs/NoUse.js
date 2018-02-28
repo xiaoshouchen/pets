@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View, ScrollView, Button, Image} from 'react-native'
 
-class Pet extends Component {
+class NoUse extends Component {
     constructor(props) {
         super(props);
     }
@@ -16,3 +16,5 @@ class Pet extends Component {
             ;
     }
 }
+
+export {NoUse}

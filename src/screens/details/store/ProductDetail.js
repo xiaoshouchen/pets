@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
     View, Text, Button, WebView, StyleSheet, ScrollView, Image, TouchableOpacity
 } from 'react-native';
+import {GET_PRODUCT_DETAIL} from "../../../config/api";
 
 class ProductDetailScreen extends Component {
     static navigationOptions= {
@@ -30,24 +31,22 @@ class ProductDetailScreen extends Component {
             total
         });
     }
-
+    onMessage(e) {
+        let message = e.nativeEvent.data;
+        this.props.navigation.navigate('ShoppingCart', {item: message});
+    }
     render() {
         const {params}=this.props.navigation.state;
         const {navigate}=this.props.navigation;
         return (
-            <View>
-                <Image source={{uri: params.item.img1}} style={styles.product_img}/>
-                <View>
-                    <Text >{params.item.title}</Text>
-                    <Text >{params.item.describe}</Text>
-                    <Text >￥{params.item.price}</Text>
-                    <Text>{params.item.created_at}</Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={() => this.addToCar(params.item)}>
-                        <Text>加入购物车</Text>
-                    </TouchableOpacity>
-                </View>
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}>
+                <WebView style={{flex: 1}}
+                         source={{uri: GET_PRODUCT_DETAIL + params.id}}
+                         onMessage={this.onMessage.bind(this)}/>
             </View>
         );
     }

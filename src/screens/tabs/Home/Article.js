@@ -42,6 +42,10 @@ class ArticleScreen extends Component {
         );
     }
 
+    _like() {
+
+    }
+
     _getData(_pageNo) {
         fetch(GET_ARTICLES + _pageNo)
             .then((response) => response.json())
@@ -166,31 +170,13 @@ class ArticleScreen extends Component {
                                     height: 40
                                 }}>
                                     <TouchableOpacity>
-                                        <Icon
-                                            style={{marginRight: 10}}
-                                            name='heart'
-                                            size={24}
+                                        <Image source={require('../../../image/forum/like.png')}
+                                               style={styles.smallIcon}
                                         />
                                     </TouchableOpacity>
                                     <TouchableOpacity>
-                                        <Icon
-                                            style={{marginRight: 10}}
-                                            name='star'
-                                            size={24}
-                                        />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Icon
-                                            style={{marginRight: 10}}
-                                            name='comment'
-                                            size={24}
-                                        />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Icon
-                                            style={{marginRight: 10}}
-                                            name='share-apple'
-                                            size={24}
+                                        <Image source={require('../../../image/forum/restore.png')}
+                                               style={styles.smallIcon}
                                         />
                                     </TouchableOpacity>
                                 </View>
@@ -251,7 +237,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#495863',
         marginBottom: 10
-    }
+    },
+    smallIcon: {
+        width: 25,
+        height: 25,
+        marginRight: 20
+    },
+
 
 });
 
