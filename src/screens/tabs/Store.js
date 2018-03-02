@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import {
-    StyleSheet, FlatList, Text, View,
+    StyleSheet, FlatList, Text, View, ScrollView, RefreshControl,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image, TouchableHighlight
 } from 'react-native'
 import {TabNavigator, StackNavigator} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Feather';
-import ItemList from '../../config/ItemList'
 import {GET_PRODUCTS} from "../../config/api";
 import Swiper from 'react-native-swiper';
 import Dimensions from 'Dimensions'
@@ -14,8 +13,10 @@ class StoreScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            isRefreshing: false
         }
+        this._onRefresh = this._onRefresh.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +26,7 @@ class StoreScreen extends Component {
             .then((responseJson) => {
                 this.setState({
                     isLoading: false,
+                    isRefreshing: false,
                     dataSource: responseJson
                 }, function () {
                     // In this block you can do something with new state.
@@ -75,6 +77,10 @@ class StoreScreen extends Component {
         ),
     }
 
+    _onRefresh() {
+        this.componentDidMount();
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
@@ -86,74 +92,85 @@ class StoreScreen extends Component {
         }
         return (
             <View style={styles.MainContainer}>
-                <Swiper style={styles.wrapper} showsButtons={false} height={Dimensions.get('window').width / 3}>
-                    <View style={styles.slide1}>
-                        <Image
-                            source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
-                            style={{
-                                width: Dimensions.get('window').width,
-                                height: Dimensions.get('window').width / 3 + 50
-                            }}/>
-                    </View>
-                    <View style={styles.slide2}>
-                        <Text style={styles.text}>Beautiful</Text>
-                    </View>
-                    <View style={styles.slide3}>
-                        <Text style={styles.text}>And simple</Text>
-                    </View>
-                </Swiper>
-                <View style={styles.item_list}>
-                    <View style={styles.itemLeft}>
-                        <Image source={require('../../image/f-0.png')}
-                               style={{width: 48, height: 48, marginBottom: 5}}/>
-                        <Text style={styles.itemText}>宠物零食</Text>
-                    </View>
-                    <View style={styles.item}>
-                        <Image source={require('../../image/f-1.png')}
-                               style={{width: 48, height: 48, marginBottom: 5}}/>
-                        <Text style={styles.itemText}>宠物口粮</Text>
-                    </View>
-                    <View style={styles.item}>
-                        <Image source={require('../../image/f-2.png')}
-                               style={{width: 48, height: 48, marginBottom: 5}}/>
-                        <Text style={styles.itemText}>宠物卫生</Text>
-                    </View>
-                    <View style={styles.item}>
-                        <Image source={require('../../image/f-3.png')}
-                               style={{width: 48, height: 48, marginBottom: 5}}/>
-                        <Text style={styles.itemText}>宠物用品</Text>
-                    </View>
-                    <View style={styles.itemRight}>
-                        <Image source={require('../../image/f-4.png')}
-                               style={{width: 48, height: 48, marginBottom: 5}}/>
-                        <Text style={styles.itemText}>宠物零食</Text>
-                    </View>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this._onRefresh}
+                            tintColor="#ff0000"
+                            title="Loading..."
+                            titleColor="#00ff00"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="white"
+                        />
+                    }>
+                    <Swiper style={styles.wrapper} showsButtons={false} height={Dimensions.get('window').width / 3}>
+                        <View style={styles.slide1}>
+                            <Image
+                                source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
+                                style={{
+                                    width: Dimensions.get('window').width,
+                                    height: Dimensions.get('window').width / 3 + 50
+                                }}/>
+                        </View>
+                        <View style={styles.slide2}>
+                            <Text style={styles.text}>Beautiful</Text>
+                        </View>
+                        <View style={styles.slide3}>
+                            <Text style={styles.text}>And simple</Text>
+                        </View>
+                    </Swiper>
+                    <View style={styles.item_list}>
+                        <View style={styles.itemLeft}>
+                            <Image source={require('../../image/f-0.png')}
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>宠物零食</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/f-1.png')}
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>宠物口粮</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/f-2.png')}
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>宠物卫生</Text>
+                        </View>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/f-3.png')}
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>宠物用品</Text>
+                        </View>
+                        <View style={styles.itemRight}>
+                            <Image source={require('../../image/f-4.png')}
+                                   style={{width: 48, height: 48, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>宠物玩具</Text>
+                        </View>
 
-                </View>
-                <View style={styles.goods}>
-                    <Text style={{margin: 10}}>为您推荐</Text>
-                    <FlatList
-                        data={this.state.dataSource}
-                        ItemSeparatorComponent={this.FlatListItemSeparator}
-                        renderItem={({item}) => (
-                            <TouchableHighlight
-                                onPress={() => this.props.navigation.navigate('ProductDetail', {item: item})}>
-                                <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                                    <Image source={{uri: item.img1}} style={styles.product_img}/>
-                                    <View>
-                                        <Text style={styles.product_title}>{item.title}</Text>
-                                        <Text style={styles.product_describe}>{item.describe}</Text>
-                                        <Text style={styles.product_price}>￥{item.price}</Text>
-                                        <Text>{item.created_at}</Text>
+                    </View>
+                    <View style={styles.goods}>
+                        <Text style={{margin: 10}}>为您推荐</Text>
+                        <FlatList
+                            data={this.state.dataSource}
+                            ItemSeparatorComponent={this.FlatListItemSeparator}
+                            renderItem={({item}) => (
+                                <TouchableHighlight
+                                    onPress={() => this.props.navigation.navigate('ProductDetail', {item: item})}>
+                                    <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                                        <Image source={{uri: item.img1}} style={styles.product_img}/>
+                                        <View>
+                                            <Text style={styles.product_title}>{item.title}</Text>
+                                            <Text style={styles.product_describe}>{item.describe}</Text>
+                                            <Text style={styles.product_price}>￥{item.price/100}</Text>
+                                            <Text>{item.created_at}</Text>
+                                        </View>
                                     </View>
-                                </View>
-                            </TouchableHighlight>)
-                        }
-                        keyExtractor={(item, index) => index}
-                    />
-                </View>
-
-
+                                </TouchableHighlight>)
+                            }
+                            keyExtractor={(item, index) => index}
+                        />
+                    </View>
+                </ScrollView>
             </View>
 
         );

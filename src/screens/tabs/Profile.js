@@ -4,7 +4,6 @@ import {
     StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity, Slider, FlatList,
     ActivityIndicator, AsyncStorage
 } from 'react-native';
-import itemList from '../../config/ItemList'
 import Icon from 'react-native-vector-icons/Feather';
 import {Button} from "react-native-elements";
 import {GET_PETS, GET_PROFILE} from "../../config/api";

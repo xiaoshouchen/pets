@@ -65,25 +65,12 @@ const PetTypeTabs = TabNavigator({
 const Tabs = TabNavigator({
     Home: { screen: HomeScreen },
     Selection: { screen: SelectionScreen },
-    NoUse: { screen: NoUse },
+    Message: { screen: MessageScreen },
     Store: { screen: StoreScreen },
     Profile: { screen: ProfileScreen }
 },
     {
-        tabBarComponent: ({jumpToIndex, ...props, navigation}) => (
-            <TabBarBottom
-                {...props}
-                jumpToIndex={index => {
-                    if (index === 2) {
-                        navigation.navigate('Message')
-                    }
-                    else {
-                        jumpToIndex(index)
-                    }
-                }}
-            />
-
-        ),
+        tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',
         lazyLoad: false,
         swipeEnabled: false,
@@ -102,7 +89,6 @@ const RootNavigator = StackNavigator({
         screen: AddArticle,
         headerTitle: "文章"
     },
-    Message: { screen: MessageScreen },
     AddPet: { screen: AddPet },
     PetList: { screen: PetList },
     Score: { screen: ScoreScreen },

@@ -3,7 +3,9 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {GET_ARTICLES} from "../../../../config/api";
+import Swiper from 'react-native-swiper';
+import Dimensions from 'Dimensions'
 
 class PrivateRecommendScreen extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class PrivateRecommendScreen extends Component {
             petYear: ''
         }
     }
+
     static navigationOptions = ({navigation}) => ({
         tabBarLabel: "萌宠",
         headerTitleStyle: {color: '#fff'},
@@ -24,7 +27,7 @@ class PrivateRecommendScreen extends Component {
 
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/articles?pageNo=1')
+        return fetch(`${GET_ARTICLES}1&small_type=1&type_id=5&small_category=0`)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -73,55 +76,59 @@ class PrivateRecommendScreen extends Component {
         return (
 
             <ScrollView style={styles.MainContainer}>
-                <View style={{overflow: 'hidden'}}>
-                    <View>
-                        <Text>您的宠物品种为：</Text>
-                        <Text>{this.state.petType}</Text>
+                <Text>热门推荐</Text>
+                <Swiper style={styles.wrapper} showsButtons={false} height={150}>
+                    <View style={styles.slide1}>
+                        <Image
+                            source={require('../../../../image/food_back.jpg')}
+                            style={{
+                                width: Dimensions.get('window').width,
+                                height: 150
+                            }}/>
                     </View>
-                    <View>
-                        <Text>您的宠物年龄为：</Text>
-                        <Text>{this.state.petYear}</Text>
+                    <View style={styles.slide2}>
+                        <Text style={styles.text}>Beautiful</Text>
                     </View>
-                    <Text>您的宠物可以使用以下食物：</Text>
-                </View>
-                <FlatList
+                    <View style={styles.slide3}>
+                        <Text style={styles.text}>And simple</Text>
+                    </View>
+                </Swiper>
+                <View>
+                    <FlatList
+                        data={this.state.dataSource}
+                        ItemSeparatorComponent={this.FlatListItemSeparator}
+                        renderItem={({item}) => (
 
-                    data={this.state.dataSource}
-
-                    ItemSeparatorComponent={this.FlatListItemSeparator}
-                    renderItem={({item}) => (
-
-                        <View style={styles.item}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
-                                <View>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.date}>{item.created_at}</Text>
+                            <View style={styles.item}>
+                                <Text style={styles.title} onPress={
+                                    () => navigate('ArticleDetail', {id: item.id})
+                                }>
+                                    {item.type == undefined ? '【分享】' : item.type}{item.title}
+                                </Text>
+                                <Text style={styles.content}>{item.content}</Text>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    flex: 1,
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center',
+                                    height: 40
+                                }}>
+                                    <TouchableOpacity>
+                                        <Image source={require('../../../../image/forum/like.png')}
+                                               style={styles.smallIcon}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                        <Image source={require('../../../../image/forum/restore.png')}
+                                               style={styles.smallIcon}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
-                            </View>
-                            <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', {id: item.id})
-                            }>
-                                {item.type == undefined ? '【分享】' : item.type}{item.title}
-                            </Text>
-                            <Text style={styles.content}>{item.content}</Text>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <TouchableOpacity>
-                                    <Icon
-                                        name='star'
-                                        size={16}
-                                        color='yellow'
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>)
-                    }
-
-                    keyExtractor={(item, index) => index}
-
-                />
-
-
+                            </View>)
+                        }
+                        keyExtractor={(item, index) => index}
+                    />
+                </View>
             </ScrollView>
 
         );
@@ -167,7 +174,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#495863',
         marginBottom: 10
-    }
+    },
+    smallIcon: {
+        width: 20,
+        height: 20,
+        marginRight: 12
+    },
 
 });
 

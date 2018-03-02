@@ -26,8 +26,8 @@ class AddArticle extends Component {
     static navigationOptions = ({navigation}) => ({
         tabBarLabel: "",
         headerRight:
-            <Button title="保存" onPress={() => navigation.state.params.postArticle()}/>,
-        title: '发布',
+            <Button title="发布" onPress={() => navigation.state.params.postArticle()} style={{marginRight: 15}}/>,
+        headerTitle: '与他人分享宠物点滴',
     });
 
     post() {

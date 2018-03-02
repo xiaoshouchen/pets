@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, FlatList, A
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Dimensions from 'Dimensions'
 
-const data = [{key: '这是一个测试，一个键但的打法打飞机啊贷款首付'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
+const data = [{key: '如何挑选一只适合自己的猫'}, {key: '狗的常见疾病'}, {key: '家里的猫就是个闹钟，每天弄醒我，不然我睡觉'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
 
 class SelectionScreen extends Component {
     constructor(props) {
@@ -29,6 +29,7 @@ class SelectionScreen extends Component {
             />
         ),
     };
+
     render() {
         const {navigate} = this.props.navigation;
         let absuloteTitle = this.state.scrollY.interpolate({

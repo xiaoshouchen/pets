@@ -1,6 +1,6 @@
 //base
 // const BASE_URL = 'http://123.207.217.225';
-const BASE_URL = 'http://192.168.17.71';
+const BASE_URL = 'http://192.168.16.140/';
 
 
 //pets
@@ -14,7 +14,9 @@ export const GET_DOG_TYPES = BASE_URL + '/api/pets/type/dog';
 export const GET_OTHER_TYPES = BASE_URL + '/api/pets/type/other';
 
 //store
+export const GET_PRODUCT_DETAIL = BASE_URL + '/api/product/detail/';
 export const GET_PRODUCTS = BASE_URL + '/api/products';
+export const GET_CARTS = BASE_URL + '/api/carts';
 export const GET_PRODUCTS_BY_ID = BASE_URL + '/api/products/';
 export const ADD_PRODUCTS = BASE_URL + '/api/products/add';
 export const UPDATE_PRODUCTS = BASE_URL + '/api/products/update';
@@ -28,6 +30,7 @@ export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
 
 //profile
+export const GET_PROFILE = `${BASE_URL}/api/profile/items`
 export const MY_FOLLOWS = `${BASE_URL}/api/follows`;
 
 //login

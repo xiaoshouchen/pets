@@ -109,6 +109,28 @@ class ArticleScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+        let title = (type, title) => {
+            let type_name;
+            switch (type) {
+                case 4:
+                    type_name = "【说说】";
+                    return null;
+                case 1:
+                    type_name = "【分享】";
+                    break;
+                case 2:
+                    type_name = "【提问】";
+                    break;
+                case 5:
+                    type_name = "【精选】";
+                    break;
+                default:
+                    type_name = "【分享】";
+            }
+            return <Text style={styles.title}>
+                {type == undefined ? '【分享】' : type_name}{title}
+            </Text>
+        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
@@ -154,9 +176,7 @@ class ArticleScreen extends Component {
                                 <TouchableOpacity onPress={
                                     () => navigate('ArticleDetail', {id: item.id})
                                 }>
-                                    <Text style={styles.title}>
-                                        {item.type == undefined ? '【分享】' : item.type}{item.title}
-                                    </Text>
+                                    {title(item.type_id, item.title)}
                                     <Text style={styles.content}>{item.content}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         {images}
