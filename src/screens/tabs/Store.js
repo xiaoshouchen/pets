@@ -155,7 +155,7 @@ class StoreScreen extends Component {
                             ItemSeparatorComponent={this.FlatListItemSeparator}
                             renderItem={({item}) => (
                                 <TouchableHighlight
-                                    onPress={() => this.props.navigation.navigate('ProductDetail', {item: item})}>
+                                    onPress={() => this.props.navigation.navigate('ProductDetail', {id: item.id})}>
                                     <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                         <Image source={{uri: item.img1}} style={styles.product_img}/>
                                         <View>

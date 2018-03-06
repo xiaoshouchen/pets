@@ -12,7 +12,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.pets.NativeModule.RecordPackage;
+import com.tencent.rtmp.TXLiveBase;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,8 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new MainReactPackage(),
                     new VectorIconsPackage(),
                     new ImagePickerPackage(),
-                    new RecordPackage()
-      );
+                    new MyPackage()
+            );
         }
 
         @Override
@@ -46,9 +47,17 @@ public class MainApplication extends Application implements ReactApplication {
         return mReactNativeHost;
     }
 
+    private static MainApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
+        instance = this;
+        TXLiveBase.setConsoleEnabled(true);
+    }
+
+    public static MainApplication getApplication() {
+        return instance;
     }
 }

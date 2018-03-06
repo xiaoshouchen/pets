@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, ScrollView, Image, FlatList, ActivityIndicator,
-    TouchableOpacity, AsyncStorage, Button
+    TouchableOpacity, AsyncStorage, Button, CheckBox
 } from 'react-native';
 import {GET_CARTS} from "../../../config/api";
 
@@ -101,63 +101,59 @@ class ShoppingCartScreen extends Component {
         }
         const {navigate} = this.props.navigation;
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <FlatList
-                        data={this.state.dataSource}
-                        ItemSeparatorComponent={this.FlatListItemSeparator}
-                        keyExtractor={this.ExtraUniqueKey}
-                        onRefresh={this.onRefresh}
-                        refreshing={this.state.refreshing}
-                        renderItem={({item}) => (
-                            <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('AddPet', {
-                                    item: item,
-                                    callBack: () => this.callBack()
-                                })}>
+            <View>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <FlatList
+                            data={this.state.dataSource}
+                            ItemSeparatorComponent={this.FlatListItemSeparator}
+                            keyExtractor={this.ExtraUniqueKey}
+                            onRefresh={this.onRefresh}
+                            refreshing={this.state.refreshing}
+                            renderItem={({item}) => (
                                 <View style={styles.itemView}>
+                                    <View>
+                                        <CheckBox></CheckBox>
+                                    </View>
+                                    <View>
+                                        <Image source={{uri: item.img1}} style={styles.product_img}/>
+                                    </View>
                                     <View style={styles.itemView}>
-                                        <Image style={styles.avatar} source={{uri: item.avatar}}/>
-                                        <View style={{justifyContent: 'space-around'}}>
+                                        <View style={{justifyContent: 'flex-start'}}>
                                             <Text style={{fontSize: 16}}>{item.title}</Text>
+                                            <Text style={{
+                                                fontSize: 16,
+                                                color: 'red',
+                                                margin: 5
+                                            }}>￥ {item.price / 100}</Text>
                                         </View>
                                     </View>
                                     <View style={{marginRight: 15}}>
                                         <Image source={require('../../../image/edit.png')}
                                                style={{width: 30, height: 30}}/>
                                     </View>
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
+                                </View>)}/>
+                    </View>
+                </ScrollView>
+                <View>
+                    <Button buttonStyle={{
+                        backgroundColor: '#44a3ff',
+                        borderRadius: 10,
+                        marginTop: 40,
+                        marginBottom: 40,
+                        flex: 1,
+                        marginRight: 10,
+                        marginLeft: 10
+                    }}
+                            onPress={() => navigate('AddPet', {callBack: () => this.callBack()})} title={'结算'}/>
                 </View>
-                <Button buttonStyle={{
-                    backgroundColor: '#44a3ff',
-                    borderRadius: 10,
-                    marginTop: 40,
-                    marginBottom: 40,
-                    flex: 1,
-                    marginRight: 10,
-                    marginLeft: 10
-                }}
-                        onPress={() => navigate('AddPet', {callBack: () => this.callBack()})} title={'结算'}/>
-            </ScrollView>
-        )
-            ;
+            </View>
+        );
     }
 }
 
 const styles = StyleSheet.create(
     {
-        avatar: {
-            marginLeft: 20,
-            marginTop: 5,
-            marginRight: 20,
-            height: 40,
-            width: 40,
-            borderRadius: 20,
-            marginBottom: 5
-        },
         container: {
             backgroundColor: 'white'
         },
@@ -165,8 +161,12 @@ const styles = StyleSheet.create(
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: 60
-        }
+        },
+        product_img: {
+            width: 100,
+            height: 100,
+            margin: 10
+        },
     }
 )
 export {ShoppingCartScreen}

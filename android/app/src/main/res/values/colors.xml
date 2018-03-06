@@ -22,10 +22,11 @@
     <color name="c7">#000000</color>
     <color name="c8">#FFFFFF</color>
     <color name="c9">#777777</color>
-
+    <color name="text_radio_color">#7f0b00df</color>
     <color name="color_bottom_bar_background">#222B48</color>
     <color name="colorPrimaryDark">#21a3f5</color>
     <color name="colorAccent">#0accac</color>
+    <color name="xml_list_item_text_color">#7f0b00e1</color>
     <color name="transparent">#00000000</color>
     <color name="colorBlue">#440accac</color>
     <color name="colorActivityBackground">#F3F3F3</color>
@@ -183,4 +184,16 @@
 
     <!-- 裁剪范围颜色 -->
     <color name="colorAccentTransparent30">#4d0accac</color>
+    <color name="colorTintRed">#FF4C58</color>
+
+    <color name="biz_audio_progress_bg">#00b2ff</color>
+    <color name="biz_audio_progress_first">#ffffff</color>
+    <color name="biz_audio_progress_second">#6b6666</color>
+
+    <color name="default_bg">#aa000000</color>
+    <color name="select_color">#00b2ff</color>
+    <color name="normal_color">#ffffffff</color>
+    <color name="divider_color">#55504a</color>
+    <!--special color-->
+    <color name="black_a10_color">#1a000000</color>
 </resources>

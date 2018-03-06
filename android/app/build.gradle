@@ -103,6 +103,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi", "armeabi-v7a"
         }
@@ -114,6 +115,10 @@ android {
             universalApk false  // If true, also generate a universal APK
             include "armeabi", "armeabi-v7a"
         }
+    }
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "4g"
     }
     buildTypes {
         release {
@@ -139,14 +144,16 @@ android {
 dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-image-picker')
-    compile fileTree(dir: "libs", include: ["*.jar"])
     // 导入短视频SDK aar
     compile(name: 'LiteAVSDK_UGC_4.1.3153', ext: 'aar')
+    compile(name: 'cos-xml-android-sdk.1.2.3.1', ext: 'jar')
+    compile(name: 'qcloud-core-1.2.1.2', ext: 'jar')
     compile fileTree(dir: 'src/main/jniLibs', includes: ['*.jar'])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:23.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 
 // Run this once to be able to run the application with BUCK

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Button, Image, TouchableOpacity, Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Dimensions from 'Dimensions'
+import StartRecord from '../../utils/StartRecord'
 
 const windowWidth = Dimensions.get('window').width;
 const iconWidth = windowWidth / 4;
@@ -15,7 +16,7 @@ class MessageScreen extends Component {
     }
 
     static navigationOptions = {
-        tabBarLabel: "秀一秀",
+        tabBarLabel: "秀宠",
         showLabel: false,
         header: null,
         tabBarIcon: ({tintColor, focused}) => (
@@ -30,22 +31,24 @@ class MessageScreen extends Component {
     render() {
         return (
             <View style={styles.mainView}>
-                <View>
-                    <Text style={{fontSize: 30}}>小宠乐园</Text>
+                <View style={styles.topic}>
+                    <View>
+                        <Text>今日话题</Text>
+                    </View>
                     <View>
                         <Text>让养宠物变得简单点</Text>
                     </View>
                 </View>
                 <View style={styles.mainSection}>
                     <View style={styles.icons}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle',{type_id:2})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/share.png')}/>
                                 <Text style={styles.nameView}>分享</Text>
                                 <Text style={styles.textView}>经验或故事</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle',{type_id:1})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/ask.png')}/>
                                 <Text style={styles.nameView}>提问</Text>
@@ -53,14 +56,14 @@ class MessageScreen extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                        <TouchableOpacity onPress={() => StartRecord.start()}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/video.png')}/>
-                                <Text style={styles.nameView}>说说</Text>
-                                <Text style={styles.textView}>照片视频闲聊</Text>
+                                <Text style={styles.nameView}>视频</Text>
+                                <Text style={styles.textView}>拍摄生活点滴</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle',{type_id:3})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/diary.png')}/>
                                 <Text style={styles.nameView}>日记</Text>
@@ -100,19 +103,19 @@ const styles = StyleSheet.create({
             height: 40,
             width: 40,
             borderRadius: 5,
-        }
-        ,
+        },
         nameView: {
             fontSize: 14,
             fontWeight: 'bold',
             marginTop: 10
-        }
-        ,
+        },
         textView: {
             marginTop: 10,
             fontSize: 10,
+        },
+        topic: {
+            alignItems: 'flex-start',
         }
-        ,
     })
 ;
 export {MessageScreen}

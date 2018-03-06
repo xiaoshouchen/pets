@@ -57,6 +57,7 @@ class AddArticle extends Component {
     }
 
     render() {
+        const {params} =this.props.navigation.state;
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>请输入您的标题</Text>

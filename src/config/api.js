@@ -17,6 +17,7 @@ export const GET_OTHER_TYPES = BASE_URL + '/api/pets/type/other';
 export const GET_PRODUCT_DETAIL = BASE_URL + '/api/product/detail/';
 export const GET_PRODUCTS = BASE_URL + '/api/products';
 export const GET_CARTS = BASE_URL + '/api/carts';
+export const ADD_CART = BASE_URL + '/api/cart/add';
 export const GET_PRODUCTS_BY_ID = BASE_URL + '/api/products/';
 export const ADD_PRODUCTS = BASE_URL + '/api/products/add';
 export const UPDATE_PRODUCTS = BASE_URL + '/api/products/update';
@@ -28,6 +29,7 @@ export const GET_ARTICLES_BY_ID = BASE_URL + '/api/article/';
 export const ADD_ARTICLE = BASE_URL + '/api/article/add';
 export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
+export const LIKE = BASE_URL + '/api/article/like';
 
 //profile
 export const GET_PROFILE = `${BASE_URL}/api/profile/items`
