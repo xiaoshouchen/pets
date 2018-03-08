@@ -12,25 +12,30 @@ import {SearchModal} from "./Home/Search";
 
 
 const HomeTabs = TabNavigator({
-        Article: {screen: ArticleScreen},
         Show: {screen: ShowScreen},
+        Article: {screen: ArticleScreen},
         Follow: {screen: FollowScreen}
     },
     {
         tabBarOptions: {
-            activeTintColor: '#374341',
-            inactiveTintColor: '#859391',
+            activeTintColor: '#ffffff',
+            inactiveTintColor: '#d3e4e2',
             labelStyle: {
-                fontSize: 12,
+                fontSize: 16,
+                fontWeight: "normal"
             },
             style: {
-                backgroundColor: 'white',
+                backgroundColor: '#4fc3f7',
             },
+            indicatorStyle: {
+                backgroundColor: '#ffffff',
+            }
         },
         tabBarComponent: TabBarTop,
         tabBarPosition: 'top',
         swipeEnabled: true,
         lazyLoad: false,
+
     })
 
 class HomeScreen extends Component {
@@ -41,22 +46,23 @@ class HomeScreen extends Component {
             showSearch: false,
             modalVisible: false,
         }
-        this.setModalVisible=this.setModalVisible.bind(this);
+        this.setModalVisible = this.setModalVisible.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
-        title: '小宠乐园',
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        /*title: '小宠乐园',
+        headerTitleStyle: {color: '#fff',fontSize:18,fontWeight:'normal'},*/
+        header: null,
+        //headerBackTitle: null,
+        //headerStyle: {backgroundColor: '#4fc3f7',height:46},
         headerRight:
             <Icon
                 name='search'
-                size={30}
+                size={20}
                 type="MaterialIcons"
                 color="white"
-                style={{paddingRight: 5,}}
-                onPress={() =>navigation.state.params.setModalVisible(!navigation.state.params.modalVisible)}
+                style={{paddingRight: 5, marginTop: 10}}
+                onPress={() => navigation.state.params.setModalVisible(!navigation.state.params.modalVisible)}
             />
         ,
         tabBarLabel: '主页',
@@ -76,8 +82,8 @@ class HomeScreen extends Component {
             modalVisible: !this.state.modalVisible
         });
     }
-    componentDidMount()
-    {
+
+    componentDidMount() {
         this.props.navigation.setParams({
             setModalVisible: this.setModalVisible,
             modalVisible: this.state.modalVisible

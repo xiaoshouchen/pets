@@ -131,7 +131,7 @@ class AddPet extends Component {
                 formData.append('user_id', this.state.userId);
                 const { params }=this.props.navigation.state;
                 if(params.item!=undefined){
-                    formData.append('pet_id',this.state.petId);
+                    formData.append('id',this.state.petId);
                     fetch(UPDATE_PETS, {
                         method: 'POST',
                         headers: {

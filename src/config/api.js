@@ -1,6 +1,6 @@
 //base
 // const BASE_URL = 'http://123.207.217.225';
-const BASE_URL = 'http://192.168.16.140/';
+const BASE_URL = 'http://192.168.16.236/';
 
 
 //pets
@@ -30,10 +30,12 @@ export const ADD_ARTICLE = BASE_URL + '/api/article/add';
 export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
 export const LIKE = BASE_URL + '/api/article/like';
+export const GET_MY_DIARY = `${BASE_URL}/api/diaries`;
 
 //profile
 export const GET_PROFILE = `${BASE_URL}/api/profile/items`
 export const MY_FOLLOWS = `${BASE_URL}/api/follows`;
+export const MY_FANS = `${BASE_URL}/api/fans`;
 
 //login
 

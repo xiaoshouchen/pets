@@ -25,8 +25,12 @@ class AddArticle extends Component {
 
     static navigationOptions = ({navigation}) => ({
         tabBarLabel: "",
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#4fc3f7'},
         headerRight:
-            <Button title="发布" onPress={() => navigation.state.params.postArticle()} style={{marginRight: 15}}/>,
+            <Button title="发布" onPress={() => navigation.state.params.postArticle()}
+                    style={{marginRight: 15, backgroundColor: '#4fc3f7', color: 'white'}}/>,
         headerTitle: '与他人分享宠物点滴',
     });
 
@@ -57,7 +61,7 @@ class AddArticle extends Component {
     }
 
     render() {
-        const {params} =this.props.navigation.state;
+        const {params} = this.props.navigation.state;
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>请输入您的标题</Text>

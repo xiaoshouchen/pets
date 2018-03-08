@@ -166,7 +166,7 @@ public class TCVideoRecordActivity extends Activity implements View.OnClickListe
         mMaxDuration = 60 * 1000;
         mAspectRatio = TXRecordCommon.VIDEO_ASPECT_RATIO_9_16;
         mRecommendQuality = TXRecordCommon.VIDEO_QUALITY_LOW;
-        mNeedEditer = false;
+        mNeedEditer = true;
 
         mCurrentAspectRatio = mAspectRatio;
         setSelectAspect();

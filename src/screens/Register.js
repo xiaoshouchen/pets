@@ -25,9 +25,9 @@ class RegisterScreen extends Component {
 
     static navigationOptions = () => ({
         title: '注册小宠乐园',
-        headerTitleStyle: {color: '#fff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerStyle: {backgroundColor: '#4fc3f7'},
     })
 
     _sendMessageCode(phone) {

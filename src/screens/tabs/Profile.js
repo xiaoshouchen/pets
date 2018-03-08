@@ -29,9 +29,9 @@ class ProfileScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "我的",
-        headerTitleStyle: {color: '#fff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerStyle: {backgroundColor: '#4fc3f7'},
         title: '个人资料',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
@@ -43,7 +43,7 @@ class ProfileScreen extends Component {
         headerRight:
             <Icon
                 name='bell'
-                size={30}
+                size={20}
                 type="MaterialIcons"
                 color="white"
                 style={{paddingRight: 5,}}
@@ -134,7 +134,7 @@ class ProfileScreen extends Component {
                     <Button title='请登陆'
                             onPress={() => this.props.navigation.navigate('Login', {checkIsLogin: () => this.checkIsLogin()})}
                             buttonStyle={{
-                                backgroundColor: '#44a3ff',
+                                backgroundColor: '#4fc3f7',
                                 borderRadius: 10,
                                 width: Dimensions.get('window').width / 3 * 2,
                             }}/>
@@ -160,16 +160,18 @@ class ProfileScreen extends Component {
                         </View>
                         <View style={styles.topRight}>
                             <View style={{justifyContent: 'space-around', marginLeft: 15}}>
-                                <Text>{this.state.info.name}</Text>
-                                <Text>{this.state.info.desc}</Text>
-                            </View>
-                            <View style={{alignItems: 'flex-end', justifyContent: 'flex-start'}}>
-                                <Button buttonStyle={{
-                                    backgroundColor: '#44a3ff',
-                                    borderRadius: 10,
-                                    width: 60,
-                                    height: 20
-                                }} title={'签到'}/>
+                                <View style={{flexDirection: 'row'}}><Text
+                                    style={{fontWeight: 'bold'}}>{this.state.info.name}</Text><Text
+                                    style={{
+                                        backgroundColor: '#23bfee',
+                                        opacity: 50,
+                                        borderRadius: 10,
+                                        marginLeft: 10,
+                                        paddingHorizontal: 10,
+                                        color: 'white'
+                                    }}>LV
+                                    1</Text></View>
+                                <Text>简介： {this.state.info.desc}</Text>
                             </View>
                         </View>
                     </View>
@@ -369,9 +371,9 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     image: {
-        width: 90,
-        height: 90,
-        borderRadius: 45,
+        width: 80,
+        height: 80,
+        borderRadius: 40,
     },
     topLeft: {},
     topRight: {

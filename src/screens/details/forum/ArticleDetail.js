@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Button, WebView, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, Button, WebView, StyleSheet, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import {GET_ARTICLES_BY_ID} from "../../../config/api";
 import Icon from 'react-native-vector-icons/EvilIcons';
 
@@ -38,13 +38,34 @@ class ArticleDetail extends Component {
                 <WebView style={{flex: 1}}
                          source={{uri: GET_ARTICLES_BY_ID + params.id}}
                          onMessage={this.onMessage.bind(this)}/>
-                <Button title='评论' style={{height: 50}} onPress={() => {
-                    navigate('AddArticle')
-                }}/>
+                <View style={styles.comment}>
+                    <TextInput style={styles.input} underlineColorAndroid='transparent'/>
+                    <TouchableOpacity style={styles.btn}>
+                        <Text style={styles.txt}>发送</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
 }
 
-const styles1 = StyleSheet.create({})
+const styles = StyleSheet.create({
+    btn: {
+        backgroundColor: 'white',
+    },
+    comment: {
+        flexDirection: 'row'
+    },
+    input: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+
+    },
+    txt: {
+        backgroundColor: '#4fc3f7',
+        padding: 10,
+        borderRadius: 5,
+
+    }
+})
 export {ArticleDetail}

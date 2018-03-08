@@ -8,9 +8,9 @@ import {GET_CARTS} from "../../../config/api";
 class ShoppingCartScreen extends Component {
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerStyle: {backgroundColor: '#4fc3f7'},
         title: '购物车',
     };
 

@@ -37,10 +37,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".common.activity.videopreview.TCVideoPreviewActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
         <activity
             android:name=".videorecord.TCVideoRecordActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".shortvideo.choose.TCVideoChooseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shortvideo.joiner.TCVideoJoinerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shortvideo.joiner.TCVideoJoinerPreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shortvideo.editor.TCVideoEditerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shortvideo.editor.TCVideoPreprocessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shortvideo.editor.paster.TCPasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shortvideo.editor.bubble.TCWordEditActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

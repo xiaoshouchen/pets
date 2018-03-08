@@ -22,7 +22,7 @@ class ArticleScreen extends Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        title: '文章分享',
+        title: '文章',
     })
 
     componentDidMount() {

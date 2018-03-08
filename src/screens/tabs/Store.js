@@ -56,18 +56,19 @@ class StoreScreen extends Component {
     }
 
 
-    static navigationOptions = {
+    static navigationOptions = ({navigation}) => ({
         tabBarLabel: "商城",
-        headerTitleStyle: {color: '#fff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerStyle: {backgroundColor: '#4fc3f7'},
         headerRight: <Icon
+            onPress={() => navigation.navigate('ShoppingCart')}
             name='shopping-cart'
-            size={25}
+            size={20}
             color='white'
-            style={{marginRight: 5,}}
+            style={{marginRight: 15,}}
         />,
-        title: '小宠商城',
+        headerTitle: '小宠商城',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='shopping-cart'
@@ -75,7 +76,7 @@ class StoreScreen extends Component {
                 color={tintColor}
             />
         ),
-    }
+    })
 
     _onRefresh() {
         this.componentDidMount();
@@ -161,7 +162,7 @@ class StoreScreen extends Component {
                                         <View>
                                             <Text style={styles.product_title}>{item.title}</Text>
                                             <Text style={styles.product_describe}>{item.describe}</Text>
-                                            <Text style={styles.product_price}>￥{item.price/100}</Text>
+                                            <Text style={styles.product_price}>￥{item.price / 100}</Text>
                                             <Text>{item.created_at}</Text>
                                         </View>
                                     </View>

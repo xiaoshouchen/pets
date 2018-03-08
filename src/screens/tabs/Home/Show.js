@@ -17,7 +17,7 @@ class ShowScreen extends Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        title: '宠物秀场',
+        title: '动态',
     })
 
     componentDidMount() {

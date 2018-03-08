@@ -41,14 +41,14 @@ class MessageScreen extends Component {
                 </View>
                 <View style={styles.mainSection}>
                     <View style={styles.icons}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle',{type_id:2})}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle', {type_id: 2})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/share.png')}/>
                                 <Text style={styles.nameView}>分享</Text>
                                 <Text style={styles.textView}>经验或故事</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle',{type_id:1})}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle', {type_id: 1})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/ask.png')}/>
                                 <Text style={styles.nameView}>提问</Text>
@@ -63,7 +63,7 @@ class MessageScreen extends Component {
                                 <Text style={styles.textView}>拍摄生活点滴</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle',{type_id:3})}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle', {type_id: 3})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/diary.png')}/>
                                 <Text style={styles.nameView}>日记</Text>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         },
         topic: {
             alignItems: 'flex-start',
+            marginLeft: -150
         }
     })
 ;
