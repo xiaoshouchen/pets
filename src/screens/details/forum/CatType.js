@@ -9,8 +9,9 @@ class CatTypeScreen extends Component{
         }
     }
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#4fc3f7'},
         title: '宠物品种',
         tabBarLabel: '猫',
     }
@@ -72,7 +73,7 @@ class CatTypeScreen extends Component{
                                 goBack(null)
                             }}>
                                 <View style={{flexDirection: 'row', backgroundColor: 'white', height: 25, alignItems: 'center'}}>
-                                    <Text>{item.name}</Text>
+                                    <Text style={{fontSize:14}}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         }

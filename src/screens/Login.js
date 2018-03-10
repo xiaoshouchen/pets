@@ -54,14 +54,15 @@ class LoginScreen extends Component {
     static navigationOptions = {
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
+        headerTitle: "登陆小宠",
         headerStyle: {backgroundColor: '#4fc3f7'},
     };
 
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <ImageBackground style={styles.backgroundImage}>
-                <View style={styles.backView}>
+
+            <View style={styles.backView}>
 
                 <View>
                     <Image source={require('../image/banner.png')}
@@ -129,7 +130,7 @@ class LoginScreen extends Component {
                     <Text>忘记密码？</Text><Text>|</Text><Text onPress={() => navigate('Register')}>立即注册</Text>
                 </View>
             </View>
-            </ImageBackground>
+
         );
     }
 }
@@ -139,24 +140,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0)'
+        backgroundColor: 'white',
+        paddingBottom: 50
     },
     loginView: {
         borderWidth: 1,
         marginLeft: 30,
         marginRight: 30,
-        borderColor: 'white',
+        borderColor: '#e0e0e0',
         borderRadius: 20,
         backgroundColor: 'rgba(0,0,0,0)',
         width: 300,
         paddingLeft: 10,
         marginBottom: 20,
-        color: 'white'
+        color: '#263238'
     },
-    backgroundImage:{
-        flex:1,
-        backgroundColor:'rgba(0,0,0,0)'
-    }
 });
 
 export {LoginScreen};

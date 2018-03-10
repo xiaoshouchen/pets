@@ -8,9 +8,9 @@ class PairInfoScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "萌宠",
-        headerTitleStyle: {color: '#fff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerStyle: {backgroundColor: '#4fc3f7'},
     };
     render() {
         const {state, navigate} = this.props.navigation;

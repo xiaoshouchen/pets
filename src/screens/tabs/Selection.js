@@ -11,7 +11,8 @@ class SelectionScreen extends Component {
         this.state = {
             clickSelected: "",
             show: false,
-            scrollY: new Animated.Value(0)
+            scrollY: new Animated.Value(0),
+            currentContent: 'recommend',
         }
     }
 
@@ -36,6 +37,11 @@ class SelectionScreen extends Component {
             inputRange: [0, 410, 1000, 1000],
             outputRange: [0, 0, 590, 590]
         })
+        switch (this.state.currentContent) {
+            case 'recommend': {
+                let {list} = <View/>
+            }
+        }
         return (
 
             <ScrollView

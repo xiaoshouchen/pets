@@ -1,6 +1,6 @@
 //base
 // const BASE_URL = 'http://123.207.217.225';
-const BASE_URL = 'http://192.168.16.236/';
+const BASE_URL = 'http://www.xiaochongleyuan.com/';
 
 
 //pets
@@ -27,6 +27,7 @@ export const DELETE_PRODUCTS = BASE_URL + '/api/products/delete';
 export const GET_ARTICLES = BASE_URL + '/api/articles?pageNo=';
 export const GET_ARTICLES_BY_ID = BASE_URL + '/api/article/';
 export const ADD_ARTICLE = BASE_URL + '/api/article/add';
+export const ADD_REPLY = BASE_URL + '/api/reply/add';
 export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
 export const LIKE = BASE_URL + '/api/article/like';

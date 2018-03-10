@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements'
 import {MY_FANS} from "../../../config/api";
+import {InformationScreen} from "./PrivateInformation";
 
 class FanScreen extends Component {
 
@@ -18,7 +19,7 @@ class FanScreen extends Component {
     static navigationOptions = {
         headerTitleStyle: {color: '#fff'},
         headerBackTitle: '个人资料',
-        headerTitleStyle: {color: '#fff',fontSize:18,fontWeight:'normal'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
         headerStyle: {backgroundColor: '#4fc3f7'},
         title: '粉丝',
@@ -74,7 +75,7 @@ class FanScreen extends Component {
                     onRefresh={this.onRefresh}
                     refreshing={this.state.refreshing}
                     renderItem={({item}) => (
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>navigate('Information')}>
                             <View style={styles.itemView}>
                                 <View style={styles.itemView}>
                                     <Image style={styles.avatar} source={{uri: item.avatar_img}}/>
@@ -106,7 +107,9 @@ const styles = StyleSheet.create({
     labelContainerStyle: {
         marginTop: 8,
     },
-    itemView: {},
+    itemView: {
+        flexDirection: 'row'
+    },
     avatar: {
         width: 40,
         height: 40,

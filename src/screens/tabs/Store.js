@@ -42,7 +42,7 @@ class StoreScreen extends Component {
             <View
                 style={{
                     height: 1,
-                    width: "80%",
+                    width: "100%",
                     backgroundColor: "#eeeeee",
                 }}
             />
@@ -105,13 +105,14 @@ class StoreScreen extends Component {
                             progressBackgroundColor="white"
                         />
                     }>
-                    <Swiper style={styles.wrapper} showsButtons={false} height={Dimensions.get('window').width / 3}>
+                    <Swiper style={styles.wrapper} showsButtons={false}
+                            height={Dimensions.get('window').width / 21 * 9}>
                         <View style={styles.slide1}>
                             <Image
                                 source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
                                 style={{
                                     width: Dimensions.get('window').width,
-                                    height: Dimensions.get('window').width / 3 + 50
+                                    height: Dimensions.get('window').width / 21 * 9
                                 }}/>
                         </View>
                         <View style={styles.slide2}>
@@ -122,35 +123,35 @@ class StoreScreen extends Component {
                         </View>
                     </Swiper>
                     <View style={styles.item_list}>
-                        <View style={styles.itemLeft}>
-                            <Image source={require('../../image/f-0.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物零食</Text>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/lingshi.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>零食</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-1.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物口粮</Text>
+                            <Image source={require('../../image/goupen.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>主粮</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-2.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物卫生</Text>
+                            <Image source={require('../../image/xizao.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>卫生</Text>
                         </View>
                         <View style={styles.item}>
-                            <Image source={require('../../image/f-3.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物用品</Text>
+                            <Image source={require('../../image/yongpin.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>用品</Text>
                         </View>
-                        <View style={styles.itemRight}>
-                            <Image source={require('../../image/f-4.png')}
-                                   style={{width: 48, height: 48, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>宠物玩具</Text>
+                        <View style={styles.item}>
+                            <Image source={require('../../image/wanju.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>玩具</Text>
                         </View>
-
                     </View>
+                    <View style={{height: 2}}/>
                     <View style={styles.goods}>
-                        <Text style={{margin: 10}}>为您推荐</Text>
+                        <Text style={{marginTop: 10, marginHorizontal: 15, marginBottom: 5}}>为您推荐</Text>
                         <FlatList
                             data={this.state.dataSource}
                             ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -163,7 +164,7 @@ class StoreScreen extends Component {
                                             <Text style={styles.product_title}>{item.title}</Text>
                                             <Text style={styles.product_describe}>{item.describe}</Text>
                                             <Text style={styles.product_price}>￥{item.price / 100}</Text>
-                                            <Text>{item.created_at}</Text>
+                                            <Text>8人购买</Text>
                                         </View>
                                     </View>
                                 </TouchableHighlight>)
@@ -182,25 +183,17 @@ const styles = StyleSheet.create({
     item: {
         marginTop: 10,
         marginBottom: 10,
-        paddingLeft: 10
+        alignItems: 'center'
     },
     itemText: {
         textAlign: 'center'
     },
-    itemLeft: {
-        marginTop: 10,
-        marginBottom: 10,
-        paddingLeft: 10
-    },
-    itemRight: {
-        marginTop: 10,
-        marginBottom: 10,
-        paddingRight: 10
-    },
     item_list: {
         flexDirection: 'row',
         backgroundColor: 'white',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 30,
     },
     MainContainer: {
         flex: 1,
@@ -208,7 +201,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     goods: {
-        flex: 2
+        flex: 2,
+        backgroundColor: 'white'
     },
     product_img: {
         width: 100,
@@ -217,12 +211,12 @@ const styles = StyleSheet.create({
     },
     product_price: {
         paddingTop: 6,
-        fontSize: 14,
+        fontSize: 18,
         color: 'red'
     },
     product_title: {
         paddingTop: 10,
-        fontSize: 14,
+        fontSize: 16,
         color: "black"
     },
     product_describe: {

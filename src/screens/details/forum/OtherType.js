@@ -10,8 +10,9 @@ class OtherTypeScreen extends Component{
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#4fc3f7'},
         title: '宠物品种',
         tabBarLabel: '其它',
     }

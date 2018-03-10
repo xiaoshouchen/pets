@@ -16,9 +16,9 @@ class FollowPeopleScreen extends Component {
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
-        headerStyle: {backgroundColor: '#44a3ff'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#4fc3f7'},
         title: '关注',
     }
 
