@@ -1,6 +1,6 @@
 //base
 // const BASE_URL = 'http://123.207.217.225';
-const BASE_URL = 'http://www.xiaochongleyuan.com/';
+const BASE_URL = 'http://192.168.16.17';
 
 
 //pets
@@ -32,6 +32,10 @@ export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
 export const LIKE = BASE_URL + '/api/article/like';
 export const GET_MY_DIARY = `${BASE_URL}/api/diaries`;
+
+//social
+
+export const FOLLOW=`${BASE_URL}/api/follow`
 
 //profile
 export const GET_PROFILE = `${BASE_URL}/api/profile/items`

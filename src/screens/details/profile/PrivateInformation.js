@@ -4,32 +4,38 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image
 } from 'react-native';
 import {Button} from "react-native-elements";
+import {GET_PROFILE} from "../../../config/api";
 
 class InformationScreen extends Component {
     constructor(props) {
         super(props);
-        this.state={
-        }
+        this.state = {}
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
     }
 
     noData = () => {
-        return(
+        return (
             <View style={{height: 40}}>
                 <Text>最近没有动态</Text>
             </View>
         )
     }
     haveData = () => {
-        return(
+        return (
             <FlatList></FlatList>
         )
     }
 
-    show(){
+    _getPersonalInfo(id) {
+        fetch(GET_PROFILE, {
+
+        }).then()
+    }
+
+    show() {
         let show = this.state.dataSource == undefined ? this.noData() : this.haveData;
         return show
     }
@@ -58,15 +64,15 @@ class InformationScreen extends Component {
                 <View style={{height: 12, backgroundColor: '#f5f5f9'}}/>
                 <View style={styles.horizontalList}>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>1</Text>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>1</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>帖子</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>1</Text>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>1</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>粉丝</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10,textAlign:'center'}}>1</Text>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>1</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>收藏</Text>
                     </View>
                 </View>
@@ -75,7 +81,13 @@ class InformationScreen extends Component {
                     <Text>最近动态</Text>
                 </View>
                 <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
-                <View style={{backgroundColor: 'white', flex: 1,justifyContent: 'center',alignItems:'center',height: 1}}>
+                <View style={{
+                    backgroundColor: 'white',
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: 1
+                }}>
                     <View>{this.show()}</View>
                 </View>
 

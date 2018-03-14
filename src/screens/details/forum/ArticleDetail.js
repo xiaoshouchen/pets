@@ -3,7 +3,7 @@ import {
     View, Text, Button, WebView, StyleSheet, ScrollView, TextInput, TouchableOpacity,
     AsyncStorage
 } from 'react-native';
-import {GET_ARTICLES_BY_ID, ADD_REPLY} from "../../../config/api";
+import {GET_ARTICLES_BY_ID, ADD_REPLY, FOLLOW} from "../../../config/api";
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 class ArticleDetail extends Component {
@@ -14,6 +14,7 @@ class ArticleDetail extends Component {
             article_id: this.props.navigation.state.params.id,
             login: {user_id: '', token: ''}
         }
+        this.follow = this.follow.bind(this);
     }
 
     isClick = false;
@@ -34,8 +35,14 @@ class ArticleDetail extends Component {
     }
 
     onMessage(e) {
-        let message = e.nativeEvent.data;
-        this.props.navigation.navigate('PrivateInformation', {item: message});
+        let message = JSON.parse(e.nativeEvent.data);
+        if (message.function == 'profile') {
+            this.props.navigation.navigate('PrivateInformation', {item: message.user_id});
+        } else if (message.function == 'follow') {
+            //alert(message.followed_user_id);
+            this.follow(this.state.login.user_id,message.followed_user_id);
+        }
+
     }
 
     componentWillMount() {
@@ -45,7 +52,7 @@ class ArticleDetail extends Component {
                 this.setState({login: {token: '', user_id: ''}})
             }
             else {
-                let json=JSON.parse(result);
+                let json = JSON.parse(result);
                 this.setState({login: {user_id: json.user_id, token: json.token}})
             }
 
@@ -63,7 +70,6 @@ class ArticleDetail extends Component {
         formData.append('user_id', this.state.login.user_id);
         formData.append('article_id', this.state.article_id);
         formData.append('content', this.state.content);
-
         fetch(ADD_REPLY, {
             method: 'POST',
             headers: {
@@ -73,9 +79,27 @@ class ArticleDetail extends Component {
         }).then(
             (response) => response.json())
             .then((responseJson) => {
-                //alert(this.state.article_id);
-                alert(responseJson.code);
-                //this.constructor();
+                //alert(responseJson.code);
+            }).catch((e) => alert(e));
+    }
+
+    follow(user_id,followed_user_id) {
+        //alert(user_id);
+        //alert(this.state.login.token);
+        let token=this.state.login.token;
+        let formData = new FormData();
+        formData.append('user_id', user_id);
+        formData.append('followed_user_id', followed_user_id);
+        fetch(`${FOLLOW}?user_id=${user_id}&token=${token}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            body: formData,
+        }).then(
+            (response) => response.json())
+            .then((responseJson) => {
+                //alert(responseJson.code+"|"+responseJson.message);
             }).catch((e) => alert(e));
     }
 
