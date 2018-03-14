@@ -3806,7 +3806,7 @@ react-native-tab-view@^0.0.74:
   dependencies:
     prop-types "^15.6.0"
 
-react-native-vector-icons@^4.4.2:
+react-native-vector-icons@^4.5.0:
   version "4.5.0"
   resolved "http://registry.npm.taobao.org/react-native-vector-icons/download/react-native-vector-icons-4.5.0.tgz#6b95619e64f62f05f579f74a01fe5640df95158b"
   dependencies:
@@ -3814,9 +3814,9 @@ react-native-vector-icons@^4.4.2:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-"react-native-webview-richeditor@https://github.com/wwlxz22/react-native-webview-richeditor.git":
+"react-native-webview-richeditor@https://github.com/wwlxz22/react-native-richeditor.git":
   version "1.0.0"
-  resolved "https://github.com/wwlxz22/react-native-webview-richeditor.git#43b8a9c57aca5f75248349dcd08fff114bc389b3"
+  resolved "https://github.com/wwlxz22/react-native-richeditor.git#ff800955eca2d8bcda22d4c9575d770053b56ee4"
 
 react-native@0.54.1:
   version "0.54.1"

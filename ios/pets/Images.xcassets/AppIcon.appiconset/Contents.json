@@ -1,58 +1,34 @@
 {
   "images" : [
     {
-      "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "ic_launcher_40.png",
-      "scale" : "2x"
-    },
-    {
-      "size" : "20x20",
-      "idiom" : "iphone",
-      "filename" : "ic_launcher_60.png",
-      "scale" : "3x"
-    },
-    {
       "size" : "29x29",
-      "idiom" : "iphone",
-      "filename" : "ic_launcher_58.png",
       "scale" : "2x"
     },
     {
+      "idiom" : "iphone",
       "size" : "29x29",
-      "idiom" : "iphone",
-      "filename" : "ic_launcher_87.png",
       "scale" : "3x"
     },
     {
-      "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ic_launcher_80.png",
+      "size" : "40x40",
       "scale" : "2x"
     },
     {
-      "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ic_launcher_120.png",
+      "size" : "40x40",
       "scale" : "3x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ic_launcher_120-1.png",
+      "size" : "60x60",
       "scale" : "2x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ic_launcher_180.png",
+      "size" : "60x60",
       "scale" : "3x"
-    },
-    {
-      "size" : "1024x1024",
-      "idiom" : "ios-marketing",
-      "filename" : "ic_launcher_1024.png",
-      "scale" : "1x"
     }
   ],
   "info" : {
