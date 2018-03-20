@@ -1,6 +1,6 @@
 //base
 // const BASE_URL = 'http://123.207.217.225';
-const BASE_URL = 'http://192.168.16.17';
+const BASE_URL = 'http://192.168.17.44';
 
 
 //pets

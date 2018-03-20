@@ -9,12 +9,14 @@ import {ShowScreen} from './Home/Show'
 import {ArticleScreen} from './Home/Article'
 import {FollowScreen} from "./Home/Follow";
 import {SearchModal} from "./Home/Search";
+import {DiaryScreen} from "./Home/Diary";
 
 
 const HomeTabs = TabNavigator({
         Show: {screen: ShowScreen},
         Article: {screen: ArticleScreen},
-        Follow: {screen: FollowScreen}
+        Follow: {screen: FollowScreen},
+        Diary: {screen: DiaryScreen}
     },
     {
         tabBarOptions: {

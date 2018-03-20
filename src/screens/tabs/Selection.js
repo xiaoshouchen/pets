@@ -1,9 +1,24 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, FlatList, Animated, StatusBar} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    TouchableOpacity,
+    Image,
+    FlatList,
+    Animated,
+    StatusBar,
+    Button,
+    ImageBackground, AsyncStorage
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Dimensions from 'Dimensions'
+import Swiper from 'react-native-swiper';
+import Dimensions from 'Dimensions';
+import {GET_PETS, GET_PROFILE} from "../../config/api";
 
-const data = [{key: '如何挑选一只适合自己的猫'}, {key: '狗的常见疾病'}, {key: '家里的猫就是个闹钟，每天弄醒我，不然我睡觉'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
+const data = [{key: '如何挑选一只适合自己的猫'}, {key: '狗的常见疾病'}, {key: '家里有个\"猫闹钟\"'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
+let petList = [<View><Text>暂未登陆</Text></View>];
 
 class SelectionScreen extends Component {
     constructor(props) {
@@ -13,10 +28,12 @@ class SelectionScreen extends Component {
             show: false,
             scrollY: new Animated.Value(0),
             currentContent: 'recommend',
+            PetsData: '',
         }
+        this._getPetData = this._getPetData.bind(this);
     }
 
-    static navigationOptions = {
+    static navigationOptions = ({navigation}) => ({
         tabBarLabel: "萌宠",
         title: '我的萌宠',
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
@@ -29,7 +46,94 @@ class SelectionScreen extends Component {
                 color={tintColor}
             />
         ),
-    };
+        headerRight: <TouchableOpacity
+            onPress={() => navigation.navigate('PetList')}
+        ><Text style={{color: '#ffffff', fontWeight: 'bold', marginRight: 15}}>宠物 + </Text>
+        </TouchableOpacity>,
+    });
+
+    FlatListItemSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: "64%",
+                    backgroundColor: "#eeeeee",
+                    alignSelf: 'flex-end'
+                }}
+            />
+        );
+    }
+
+    componentDidMount() {
+        AsyncStorage.getItem('login').then((result) => {
+            //alert(result);
+            if (result == null) {
+                this.setState({login: {token: '', user_id: ''}})
+            }
+            else {
+                this.setState({login: result}, function () {
+                    let json = JSON.parse(this.state.login);
+                    //console.log(json)
+                    this._getPetData(json.user_id, json.token);
+                });
+            }
+
+        }).catch((e) => {
+            //alert(e);
+        })
+    }
+
+
+    _getPetData(user_id, token) {
+        fetch(GET_PETS + '?user_id=' + user_id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                petList = [];
+                let lists = responseJson;
+                //alert(lists.length);
+                for (let i = 0; i < lists.length; i++) {
+                    petList.push(
+                        <View style={styles.petImageView}>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-around',
+                                alignItems: 'center'
+                            }}>
+                                <Image style={styles.petImage}
+                                       source={{uri: lists[i].avatar}}>
+                                </Image>
+                                <View>
+                                    <Text style={{
+                                        textAlign: 'left',
+                                        fontSize: 16,
+                                        fontWeight: 'bold',
+                                        backgroundColor: 'rgba(0,0,0,0)',
+                                        marginLeft: Dimensions.get('window').width * 0.06
+                                    }}>{lists[i].name}</Text>
+                                    <Text style={{
+                                        paddingTop: Dimensions.get('window').width * 0.032,
+                                        textAlign: 'left',
+                                        backgroundColor: 'rgba(0,0,0,0)',
+                                        marginLeft: Dimensions.get('window').width * 0.06
+                                    }}>{lists[i].typename}</Text>
+                                </View>
+                            </View>
+                        </View>);
+                }
+                this.setState({
+                    PetsData: responseJson,
+                }, function () {
+                    //let lists = this.state.PetsData;
+                    //alert(lists[0].avatar);
+                    //this.petList = [];
+
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     render() {
         const {navigate} = this.props.navigation;
@@ -37,45 +141,34 @@ class SelectionScreen extends Component {
             inputRange: [0, 410, 1000, 1000],
             outputRange: [0, 0, 590, 590]
         })
+        let back_width = Dimensions.get('window').width;
+        let back_height = Dimensions.get('window').width * 0.47;
+
         switch (this.state.currentContent) {
             case 'recommend': {
                 let {list} = <View/>
             }
         }
+
         return (
 
             <ScrollView
                 style={{backgroundColor: 'white'}}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
-                )}
-            >
+                )}>
                 <StatusBar
                     backgroundColor='#4fc3f7'
                     barStyle="light-content"
                 />
-                <View style={{height: 180}}>
-                    <Image source={require('../../image/back.png')}
-                           style={{width: null, height: 180,}}/>
-                </View>
                 <View style={styles.top}>
-                    <TouchableOpacity style={styles.buttonLeft} onPress={() => navigate('PetList')}>
-                        <Text style={styles.text}>宠物 <Icon name='add' color={'white'} size={16}
-                                                           style={{marginTop: 10}}/>
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={styles.petImageView}>
-                        <View>
-                            <Image style={styles.petImage}
-                                   source={{uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58'}}></Image>
-                            <Text style={{textAlign: 'center', backgroundColor: 'rgba(0,0,0,0)'}}>二狗</Text>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={styles.buttonRight} onPress={(navigation) => {
-                        navigate('Remind');
-                    }}>
-                        <Text style={styles.text}><Icon name='add' color={'white'} size={16} style={{marginTop: 4}}/> 提醒</Text>
-                    </TouchableOpacity>
+                    <ImageBackground style={{height: back_height, width: back_width}}
+                                     source={require('../../image/back.png')} resizeMode='cover'>
+                        <Swiper style={styles.wrapper} showsButtons={false}
+                                height={Dimensions.get('window').width * 0.47}>
+                            {petList}
+                        </Swiper>
+                    </ImageBackground>
                 </View>
                 <View style={styles.functionArea}>
                     <View style={styles.item_list}>
@@ -85,13 +178,13 @@ class SelectionScreen extends Component {
                             petYear: 1,
                             pet_type_id: 1
                         })}>
-                            <Image source={require('../../image/list-1.png')}
-                                   style={{width: 35, height: 35, marginBottom: 5}}/>
+                            <Image source={require('../../image/lingshi.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
                             <Text style={styles.itemText}>饮食</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('MedicalCare')}>
-                            <Image source={require('../../image/list-2.png')}
-                                   style={{width: 35, height: 35, marginBottom: 5}}/>
+                            <Image source={require('../../image/yiliao.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
                             <Text style={styles.itemText}>医疗</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('Training', {
@@ -100,19 +193,19 @@ class SelectionScreen extends Component {
                             petYear: 1,
                             pet_type_id: 1
                         })}>
-                            <Image source={require('../../image/list-3.png')}
-                                   style={{width: 35, height: 35, marginBottom: 5}}/>
+                            <Image source={require('../../image/xunlian.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
                             <Text style={styles.itemText}>训练</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('Cosmetology')}>
-                            <Image source={require('../../image/list-4.png')}
-                                   style={{width: 35, height: 35, marginBottom: 5}}/>
+                            <Image source={require('../../image/xizao.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
                             <Text style={styles.itemText}>美容</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.item} onPress={() => navigate('Item')}>
-                            <Image source={require('../../image/list-5.png')}
-                                   style={{width: 35, height: 35, marginBottom: 5}}/>
-                            <Text style={styles.itemText}>用品</Text>
+                            <Image source={require('../../image/yongpin.png')}
+                                   style={{width: 30, height: 30, marginBottom: 5}}/>
+                            <Text style={styles.itemText}>常识</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -179,11 +272,12 @@ class SelectionScreen extends Component {
                 <View style={{flex: 1}}>
                     <FlatList
                         data={data}
+                        ItemSeparatorComponent={this.FlatListItemSeparator}
                         renderItem={({item}) => (
                             <View style={{height: 100, flexDirection: 'row'}}>
-                                <Image style={{width: 120, height: 90, margin: 5}}
-                                       source={{uri: 'http://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
-                                <View>
+                                <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
+                                       source={{uri: 'https://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
+                                <View style={{paddingLeft: 20}}>
                                     <Text style={{height: 20, marginTop: 10, fontWeight: 'bold'}}>{item.key}</Text>
                                     <Text style={{height: 20, marginTop: 10}}>适用的宠物</Text>
                                     <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
@@ -225,42 +319,39 @@ const styles = StyleSheet.create(
         },
         top: {
             flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 10,
-            marginTop: -180
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
         },
         petImageView: {
-            flex: 3,
-            alignItems: 'center',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
             paddingTop: 25
         },
         petImage: {
-            width: 80,
-            height: 80,
-            borderRadius: 40,
-            marginBottom: 10
+            width: 90,
+            height: 90,
+            borderRadius: 45,
+            marginLeft: Dimensions.get('window').width * 0.0533,
         },
-        buttonLeft: {
-            width: 80,
-            height: 30,
-            justifyContent: 'center',
-            backgroundColor: 'rgba(107, 242, 252, 0.5)',
-            borderBottomRightRadius: 15,
-            borderTopRightRadius: 15,
-            overflow: 'hidden',
-            flex: 1,
-            marginTop: 40
-        },
+        // buttonLeft: {
+        //     width: 80,
+        //     height: 30,
+        //     justifyContent: 'center',
+        //     backgroundColor: 'rgba(107, 242, 252, 0.5)',
+        //     borderBottomRightRadius: 15,
+        //     borderTopRightRadius: 15,
+        //     overflow: 'hidden',
+        //     flex: 1,
+        //     marginTop: 40
+        // },
         buttonRight: {
-            width: 80,
+            width: 50,
             height: 30,
             justifyContent: 'center',
             backgroundColor: 'rgba(107, 242, 252, 0.5)',
             borderBottomLeftRadius: 15,
             borderTopLeftRadius: 15,
             overflow: 'hidden',
-            flex: 1,
-            marginTop: 40
         },
         text: {
             textAlign: 'center'
@@ -274,7 +365,7 @@ const styles = StyleSheet.create(
             borderTopRightRadius: 8,
         },
         functionArea: {
-            marginTop: 30,
+            marginTop: 10,
         },
         scroll: {
             flexDirection: 'row',

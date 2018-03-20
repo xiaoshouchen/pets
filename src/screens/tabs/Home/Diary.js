@@ -4,7 +4,9 @@ import {
     TouchableOpacity, AsyncStorage
 } from 'react-native'
 import {Button} from "react-native-elements";
-import {GET_MY_DIARY} from "../../../../config/api";
+import {GET_MY_DIARY} from "../../../config/api";
+import Swiper from 'react-native-swiper';
+import Dimensions from 'Dimensions'
 
 class DiaryScreen extends Component {
     constructor(props) {
@@ -17,7 +19,7 @@ class DiaryScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "日记",
-        headerTitleStyle: {color: '#fff',fontSize:18,fontWeight:'normal'},
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
         headerStyle: {backgroundColor: '#4fc3f7'},
     };
@@ -102,6 +104,28 @@ class DiaryScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <ScrollView>
+                <Swiper style={styles.wrapper} showsButtons={false}
+                        height={Dimensions.get('window').width / 21 * 9}>
+                    <View style={styles.slide1}>
+                        <Image
+                            source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
+                            style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').width / 21 * 9
+                            }}/>
+                    </View>
+                    <View style={styles.slide2}>
+                        <Image
+                            source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
+                            style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').width / 21 * 9
+                            }}/>
+                    </View>
+                    <View style={styles.slide3}>
+                        <Text style={styles.text}>And simple</Text>
+                    </View>
+                </Swiper>
                 <View style={styles.container}>
                     <FlatList
                         data={this.state.dataSource}

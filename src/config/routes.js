@@ -40,7 +40,6 @@ import {MedicalCareScreen} from "../screens/details/forum/mypets/MedicalCare";
 import {CosmetologyScreen} from "../screens/details/forum/mypets/Cosmetology";
 import {TrainingScreen} from "../screens/details/forum/mypets/Training";
 import {ItemScreen} from "../screens/details/forum/mypets/Item";
-import {DiaryScreen} from "../screens/details/forum/mypets/Diary";
 import {EncyclopediasScreen} from "../screens/details/forum/mypets/Encyclopedias";
 import {QuestionAndAnswerScreen} from "../screens/details/forum/mypets/QuestionAndAnswer";
 import {NecessaryKnowledgeScreen} from "../screens/details/forum/NecessaryKnowledge";
@@ -48,7 +47,6 @@ import {NecessaryRemindScreen} from "../screens/details/forum/NecessaryRemind";
 import {CommodityRecommendationScreen} from "../screens/details/forum/CommodityRecommendation";
 import {OrderListScreen} from "../screens/details/profile/OrderList";
 import {AddressListScreen} from "../screens/details/profile/AddressList";
-import {NoUse} from '../screens/tabs/NoUse'
 import {ChatScreen} from '../screens/details/store/Chat';
 
 const PetTypeTabs = TabNavigator({
@@ -120,7 +118,6 @@ const RootNavigator = StackNavigator({
     Cosmetology: {screen: CosmetologyScreen},
     Training: {screen: TrainingScreen},
     Item: {screen: ItemScreen},
-    Diary: {screen: DiaryScreen},
     Encyclopedias: {screen: EncyclopediasScreen},
     QuestionAndAnswer: {screen: QuestionAndAnswerScreen},
     NecessaryKnowledge: {screen: NecessaryKnowledgeScreen},
