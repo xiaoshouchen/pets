@@ -4,7 +4,7 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
-import {GET_ARTICLES, LIKE} from "../../../config/api";
+import {GET_ARTICLES, LIKE, RESTORE} from "../../../config/api";
 import Dimensions from 'Dimensions'
 
 let pageNo = 1;//当前第几页
@@ -20,7 +20,8 @@ class ArticleScreen extends Component {
             like_url: '../../../image/forum/like.png',
             liked_url: '../../../image/forum/liked.png',
             restore_url: '../../../image/forum/restore.png',
-            restored_url: '../../../image/forum/restored.png'
+            restored_url: '../../../image/forum/restored.png',
+            like: [],
         }
         this._getData = this._getData.bind(this);
         this._like = this._like.bind(this);
@@ -49,19 +50,22 @@ class ArticleScreen extends Component {
     }
 
     _like(user_id, article_id, index) {
-        let data = this.state.dataSource;
-        data[index].like = data[index].like == 1 ? 0 : 1;
+        let likes = this.state.like;
+        likes[index] = likes[index] == 1 ? 0 : 1;
         this.setState({
-            dataSource: data
+            like: likes
         });
+        let formData = new FormData();
+        formData.append('article_id', article_id);
+        formData.append('user_id', user_id);
         fetch(LIKE, {
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
-            body: {'user_id': user_id, 'aritlce_id': article_id},
+            body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
-
+            //alert(responeJson.message);
         })
 
     }
@@ -71,7 +75,19 @@ class ArticleScreen extends Component {
         data[index].restore = data[index].restore == 1 ? 0 : 1;
         this.setState({
             dataSource: data
-        })
+        });
+        let formData = new FormData();
+        formData.append('article_id', article_id);
+        formData.append('user_id', user_id);
+        fetch(RESTORE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            body: formData,
+        }).then((respone) => respone.json()).then((responeJson) => {
+            alert(responeJson.message);
+        }).catch((e) => alert(e));
 
     }
 
@@ -192,7 +208,13 @@ class ArticleScreen extends Component {
                                        style={{width: ImgWidth, height: ImgHeight, marginRight: MarginRight}}/>
                             );
                         }
-                        let img_like = this.state.dataSource[index].like ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
+                        //alert(index+"    -----     "+this.state.like[index] );
+                        let img_like = null;
+                        if (this.state.like[index] === undefined) {
+                            img_like = this.state.dataSource[index].like ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
+                        } else {
+                            img_like = this.state.like[index] ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
+                        }
                         let img_restore = this.state.dataSource[index].restore ? require('../../../image/forum/restored.png') : require('../../../image/forum/restore.png');
                         return (
                             <View style={styles.item}>

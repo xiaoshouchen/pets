@@ -31,6 +31,7 @@ export const ADD_REPLY = BASE_URL + '/api/reply/add';
 export const UPDATE_ARTICLE = BASE_URL + '/api/article/update';
 export const DELETE_ARTICLE = BASE_URL + '/api/article/delete';
 export const LIKE = BASE_URL + '/api/article/like';
+export const RESTORE = BASE_URL + '/api/article/restore';
 export const GET_MY_DIARY = `${BASE_URL}/api/diaries`;
 
 //social
