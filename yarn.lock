@@ -3780,6 +3780,10 @@ react-native-keyboard-spacer@^0.4.1:
   version "0.4.1"
   resolved "http://registry.npm.taobao.org/react-native-keyboard-spacer/download/react-native-keyboard-spacer-0.4.1.tgz#46f18a320432098a25ea9fa89f5143dd254d332d"
 
+"react-native-richeditor@https://github.com/wwlxz22/react-native-richeditor.git":
+  version "1.0.0"
+  resolved "https://github.com/wwlxz22/react-native-richeditor.git#ff800955eca2d8bcda22d4c9575d770053b56ee4"
+
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
   resolved "http://registry.npm.taobao.org/react-native-safe-area-view/download/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
@@ -3813,10 +3817,6 @@ react-native-vector-icons@^4.5.0:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
-
-"react-native-webview-richeditor@https://github.com/wwlxz22/react-native-richeditor.git":
-  version "1.0.0"
-  resolved "https://github.com/wwlxz22/react-native-richeditor.git#ff800955eca2d8bcda22d4c9575d770053b56ee4"
 
 react-native@0.54.1:
   version "0.54.1"

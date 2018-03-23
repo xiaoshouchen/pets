@@ -4,7 +4,7 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
-import {GET_ARTICLES} from "../../../config/api";
+import {GET_ARTICLES, LIKE} from "../../../config/api";
 import Dimensions from 'Dimensions'
 
 let pageNo = 1;//当前第几页
@@ -16,9 +16,15 @@ class ArticleScreen extends Component {
         this.state = {
             isLoading: true,
             dataSource: [],
-            showFoot: 0
+            showFoot: 0,
+            like_url: '../../../image/forum/like.png',
+            liked_url: '../../../image/forum/liked.png',
+            restore_url: '../../../image/forum/restore.png',
+            restored_url: '../../../image/forum/restored.png'
         }
         this._getData = this._getData.bind(this);
+        this._like = this._like.bind(this);
+        this._restore = this._restore.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -42,7 +48,30 @@ class ArticleScreen extends Component {
         );
     }
 
-    _like() {
+    _like(user_id, article_id, index) {
+        let data = this.state.dataSource;
+        data[index].like = data[index].like == 1 ? 0 : 1;
+        this.setState({
+            dataSource: data
+        });
+        fetch(LIKE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            body: {'user_id': user_id, 'aritlce_id': article_id},
+        }).then((respone) => respone.json()).then((responeJson) => {
+
+        })
+
+    }
+
+    _restore(user_id, article_id, index) {
+        let data = this.state.dataSource;
+        data[index].restore = data[index].restore == 1 ? 0 : 1;
+        this.setState({
+            dataSource: data
+        })
 
     }
 
@@ -135,9 +164,11 @@ class ArticleScreen extends Component {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
                     <ActivityIndicator/>
+                    <Text>文章加载中</Text>
                 </View>
             );
         }
+
         return (
 
             <View style={styles.MainContainer}>
@@ -148,19 +179,21 @@ class ArticleScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
 
-                    renderItem={({item}) => {
+                    renderItem={({item, index}) => {
                         let images = [];
                         let windowWidth = Dimensions.get('window').width;
                         let [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 3, windowWidth / 3, 15];
                         if (item.img.length > 2) {
                             [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 10 * 3, windowWidth / 10 * 3, windowWidth / 35];
                         }
-                        for (let i = 0; i < 3; i++) {
+                        for (let i = 0; i < 3 && i < item.img.length; i++) {
                             images.push(
                                 <Image source={{uri: item.img[i]}}
                                        style={{width: ImgWidth, height: ImgHeight, marginRight: MarginRight}}/>
                             );
                         }
+                        let img_like = this.state.dataSource[index].like ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
+                        let img_restore = this.state.dataSource[index].restore ? require('../../../image/forum/restored.png') : require('../../../image/forum/restore.png');
                         return (
                             <View style={styles.item}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -189,13 +222,13 @@ class ArticleScreen extends Component {
                                     alignItems: 'center',
                                     height: 40
                                 }}>
-                                    <TouchableOpacity>
-                                        <Image source={require('../../../image/forum/like.png')}
+                                    <TouchableOpacity onPress={() => this._like(27, item.id, index)}>
+                                        <Image source={img_like}
                                                style={styles.smallIcon}
                                         />
                                     </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Image source={require('../../../image/forum/restore.png')}
+                                    <TouchableOpacity onPress={() => this._restore(27, item.id, index)}>
+                                        <Image source={img_restore}
                                                style={styles.smallIcon}
                                         />
                                     </TouchableOpacity>

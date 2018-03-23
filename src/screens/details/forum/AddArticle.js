@@ -9,7 +9,7 @@ import {
     TouchableOpacity, AsyncStorage
 } from 'react-native';
 
-import RichEditor from 'react-native-webview-richeditor';
+import RichEditor from 'react-native-richeditor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {ADD_ARTICLE} from "../../../config/api";
 

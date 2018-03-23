@@ -8,7 +8,7 @@ import {
     TextInput, Modal
 } from 'react-native';
 
-import RichEditor from 'react-native-webview-richeditor';
+import RichEditor from 'react-native-richeditor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TextField from '../../../components/TextField'
 import Dimensions from 'Dimensions'
