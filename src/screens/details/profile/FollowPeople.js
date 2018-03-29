@@ -58,13 +58,25 @@ class FollowPeopleScreen extends Component {
             });
     }
 
+    FlatListItemSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: "100%",
+                    backgroundColor: "#d9d7e8",
+                }}
+            />
+        );
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
             return (<ActivityIndicator style={{paddingTop: 120}}/>);
         }
         return (
-            <View>
+            <View style={styles.main}>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -72,16 +84,18 @@ class FollowPeopleScreen extends Component {
                     onRefresh={this.onRefresh}
                     refreshing={this.state.refreshing}
                     renderItem={({item}) => (
-                        <TouchableOpacity>
-                            <View style={styles.itemView}>
+                        <View style={styles.item}>
+                            <TouchableOpacity onPress={() => navigate('Information')}>
                                 <View style={styles.itemView}>
-                                    <Image style={styles.avatar} source={{uri: item.avatar_img}}/>
-                                    <View style={{justifyContent: 'space-around'}}>
-                                        <Text style={{fontSize: 16}}>{item.name}</Text>
+                                    <View style={styles.itemView}>
+                                        <Image style={styles.avatar} source={{uri: item.avatar_img}}/>
+                                        <View style={{justifyContent: 'space-around'}}>
+                                            <Text style={{fontSize: 16, marginLeft: 20}}>{item.name}</Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                        </View>
                     )}
                 />
             </View>
@@ -96,6 +110,20 @@ const styles = StyleSheet.create({
         padding: 40,
         backgroundColor: '#05a7dc',
     },
+    main: {
+        backgroundColor: '#fff',
+        justifyContent: 'flex-start',
+        flex: 1
+    },
+    item: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingLeft: 20,
+        paddingTop: 12,
+        paddingBottom: 12,
+        paddingRight: 15,
+    },
     heading: {
         color: 'white',
         marginTop: 10,
@@ -104,7 +132,14 @@ const styles = StyleSheet.create({
     labelContainerStyle: {
         marginTop: 8,
     },
-    itemView: {},
-    avatar: {}
+    itemView: {
+        flexDirection: 'row'
+    },
+    avatar: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+
+    }
 });
 export {FollowPeopleScreen}

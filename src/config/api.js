@@ -1,6 +1,7 @@
 //base
 // const BASE_URL = 'http://123.207.217.225';
-const BASE_URL = 'http://192.168.17.44';
+const BASE_URL = 'https://www.xiaochongleyuan.com';
+//const BASE_URL = 'http://192.168.16.185/xc/index.php';
 
 
 //pets
@@ -36,12 +37,18 @@ export const GET_MY_DIARY = `${BASE_URL}/api/diaries`;
 
 //social
 
-export const FOLLOW=`${BASE_URL}/api/follow`
+export const FOLLOW = `${BASE_URL}/api/follow`
 
 //profile
 export const GET_PROFILE = `${BASE_URL}/api/profile/items`
+export const GET_USER_PROFILE = `${BASE_URL}/api/profile/user`
 export const MY_FOLLOWS = `${BASE_URL}/api/follows`;
 export const MY_FANS = `${BASE_URL}/api/fans`;
+export const MY_RESTORES = `${BASE_URL}/api/restores`;
+
+//获取推荐信息
+export const GET_WAIT_NOTICES = `${BASE_URL}/api/notices`;
+export const GET_RECOMMENDS = `${BASE_URL}/api/recommends`
 
 //login
 

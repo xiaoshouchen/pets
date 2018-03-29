@@ -13,7 +13,7 @@ class ProfileScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: {name: "", desc: "", score: 0, discount: 0, cart: 0},
+            info: {name: "", desc: "", score: 0, discount: 0, cart: 0,avatar_img:''},
             desc: '',
             login: {token: '', user_id: ''},
             ProfileIsLoading: true,
@@ -95,13 +95,13 @@ class ProfileScreen extends Component {
             .catch((error) => {
                 console.error(error);
             });
-        fetch(`${GET_PROFILE}?items=name,desc&user_id=${user_id}&token=${token}`)
+        fetch(`${GET_PROFILE}?items=name,desc,points,sex,avatar_img&user_id=${user_id}&token=${token}`)
             .then((response) => {
                     return response.json();
                 }
             ).then((responseJson) => {
             this.setState({
-                info: {name: responseJson.name, desc: responseJson.desc, score: 0, discount: 0, cart: 0}
+                info: {name: responseJson.name, desc: responseJson.desc, score: 0, discount: 0, cart: 0,avatar_img:responseJson.avatar_img}
             });
             //alert('fasdfasd');
         }).catch((error) => alert(error))
@@ -155,7 +155,7 @@ class ProfileScreen extends Component {
                         <View style={styles.topLeft}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal')}>
                                 <Image style={styles.image}
-                                       source={{uri: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58'}}></Image>
+                                       source={{uri: this.state.info.avatar_img}}></Image>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.topRight}>

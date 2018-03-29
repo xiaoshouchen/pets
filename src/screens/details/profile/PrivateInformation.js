@@ -1,19 +1,44 @@
+/*
+* 个人信息的界面，显示每个用户的具体信息。
+* 用户的头像
+* 用户的名称和简介
+* 用户的帖子、粉丝、关注、收藏
+* */
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image
 } from 'react-native';
 import {Button} from "react-native-elements";
-import {GET_PROFILE} from "../../../config/api";
+import {GET_USER_PROFILE} from "../../../config/api";
 
 class InformationScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            dataSource: [],
+            other_user_id:this.props.navigation.state.params.user_id
+        }
+        this._getData = this._getData.bind(this);
+    }
+
+    static navigationOptions = {
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
+        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerTitle: '个人信息',
     }
 
     componentDidMount() {
+        let user_id = this.state.other_user_id;
+        this._getData(user_id);
+    }
 
+    _getData(user_id) {
+
+        fetch(`${GET_USER_PROFILE}?user_id=${user_id}`).then((response) => response.json()).then((responseJson) => {
+            //alert(responseJson.name);
+            this.setState({dataSource: responseJson})
+        }).catch((e)=>alert(e))
     }
 
     noData = () => {
@@ -29,14 +54,9 @@ class InformationScreen extends Component {
         )
     }
 
-    _getPersonalInfo(id) {
-        fetch(GET_PROFILE, {
-
-        }).then()
-    }
 
     show() {
-        let show = this.state.dataSource == undefined ? this.noData() : this.haveData;
+        let show = (this.state.dataSource.recent == undefined||this.state.dataSource.recent=='' )? this.noData() : this.haveData;
         return show
     }
 
@@ -45,14 +65,14 @@ class InformationScreen extends Component {
             <View style={{flex: 1}}>
                 <View style={styles.top}>
                     <View style={styles.avatarBack}>
-                        <Image style={styles.avatar} source={{uri: 'http://123.207.217.225/img/1/tx.jpg'}}/>
+                        <Image style={styles.avatar} source={{uri: this.state.dataSource.avatar_img}}/>
                     </View>
                     <View style={styles.profile}>
                         <Text style={styles.name}>
-                            名字
+                            {this.state.dataSource.name}
                         </Text>
                         <Text style={styles.desc}>
-                            简介
+                            简介:{this.state.dataSource.desc}
                         </Text>
                     </View>
                     <View style={styles.smallButton}>
@@ -64,15 +84,19 @@ class InformationScreen extends Component {
                 <View style={{height: 12, backgroundColor: '#f5f5f9'}}/>
                 <View style={styles.horizontalList}>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>1</Text>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.article_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>帖子</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>1</Text>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.fan_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>粉丝</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>1</Text>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.follow_count}</Text>
+                        <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>关注</Text>
+                    </View>
+                    <View style={styles.listItem}>
+                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.restore_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>收藏</Text>
                     </View>
                 </View>
@@ -128,7 +152,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     name: {
-        fontSize: 16,
+        fontSize: 20,
+        marginTop: 5
     },
     desc: {
         fontSize: 14

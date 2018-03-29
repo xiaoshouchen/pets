@@ -37,7 +37,7 @@ class ArticleDetail extends Component {
     onMessage(e) {
         let message = JSON.parse(e.nativeEvent.data);
         if (message.function == 'profile') {
-            this.props.navigation.navigate('PrivateInformation', {item: message.user_id});
+            this.props.navigation.navigate('PrivateInformation', {user_id: message.user_id});
         } else if (message.function == 'follow') {
             //alert(message.followed_user_id);
             this.follow(this.state.login.user_id,message.followed_user_id);

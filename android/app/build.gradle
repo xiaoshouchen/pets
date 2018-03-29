@@ -144,6 +144,7 @@ android {
 dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-image-picker')
+    compile project(':react-native-puti-pay')
     // 导入短视频SDK aar
     compile(name: 'LiteAVSDK_UGC_4.1.3153', ext: 'aar')
     compile(name: 'cos-xml-android-sdk.1.2.3.1', ext: 'jar')

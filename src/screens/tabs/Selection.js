@@ -15,9 +15,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Swiper from 'react-native-swiper';
 import Dimensions from 'Dimensions';
-import {GET_PETS, GET_PROFILE} from "../../config/api";
+import {GET_PETS, GET_PROFILE, GET_RECOMMENDS, GET_WAIT_NOTICES} from "../../config/api";
 
-const data = [{key: '如何挑选一只适合自己的猫'}, {key: '狗的常见疾病'}, {key: '家里有个\"猫闹钟\"'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: '这是一个测试'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}];
+const data = [{key: '如何挑选一只适合自己的猫'}, {key: '狗的常见疾病'}, {key: '家里有个\"猫闹钟\"'}];
 let petList = [<View><Text>暂未登陆</Text></View>];
 
 class SelectionScreen extends Component {
@@ -27,7 +27,8 @@ class SelectionScreen extends Component {
             clickSelected: "",
             show: false,
             scrollY: new Animated.Value(0),
-            currentContent: 'recommend',
+            currentContent: 'recommends',//当前的状态
+            currentData: [],//显示的数据来源
             PetsData: '',
         }
         this._getPetData = this._getPetData.bind(this);
@@ -135,6 +136,10 @@ class SelectionScreen extends Component {
             });
     }
 
+    _getCurrentShowData() {
+
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         let absuloteTitle = this.state.scrollY.interpolate({
@@ -144,15 +149,7 @@ class SelectionScreen extends Component {
         let back_width = Dimensions.get('window').width;
         let back_height = Dimensions.get('window').width * 0.47;
 
-        switch (this.state.currentContent) {
-            case 'recommend': {
-                let {list} = <View/>
-            }
-        }
-
-        return (
-
-            <ScrollView
+        return (<ScrollView
                 style={{backgroundColor: 'white'}}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
@@ -258,32 +255,62 @@ class SelectionScreen extends Component {
                         }]
                     }}>
                     <View style={styles.scroll}>
-                        <TouchableOpacity style={{flex: 1}}>
+                        <TouchableOpacity style={{flex: 1}}
+                                          onPress={() => this.setState({currentContent: "recommend"})}>
                             <Text style={{textAlign: 'center', fontSize: 16, borderBottom: 2}}>养宠必读</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{flex: 1}}>
+                        <TouchableOpacity style={{flex: 1}}
+                                          onPress={() => this.setState({currentContent: "notices"})}>
                             <Text style={{textAlign: 'center', fontSize: 16}}>提醒事项</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{flex: 1}}>
+                        <TouchableOpacity style={{flex: 1}}
+                                          onPress={() => this.setState({currentContent: "goods"})}>
                             <Text style={{textAlign: 'center', fontSize: 16}}>商品推荐</Text>
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
                 <View style={{flex: 1}}>
                     <FlatList
-                        data={data}
+                        data={this.state.currentContent}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
-                        renderItem={({item}) => (
-                            <View style={{height: 100, flexDirection: 'row'}}>
-                                <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
-                                       source={{uri: 'https://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
-                                <View style={{paddingLeft: 20}}>
-                                    <Text style={{height: 20, marginTop: 10, fontWeight: 'bold'}}>{item.key}</Text>
-                                    <Text style={{height: 20, marginTop: 10}}>适用的宠物</Text>
-                                    <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
-                                </View>
-                            </View>
-                        )}
+                        renderItem={({item}) => {
+                            let Content;
+                            switch (this.state.currentContent) {
+                                case 'recommends': {
+                                    Content = <View style={{height: 100, flexDirection: 'row'}}>
+                                        <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
+                                               source={{uri: 'https://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
+                                        <View style={{paddingLeft: 20}}>
+                                            <Text style={{
+                                                height: 20,
+                                                marginTop: 10,
+                                                fontWeight: 'bold'
+                                            }}>{item.key}</Text>
+                                            <Text style={{height: 20, marginTop: 10}}>适用的宠物</Text>
+                                            <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
+                                        </View>
+                                    </View>;
+                                    break;
+                                }
+                                case 'notices': {
+                                    Content = <View style={{height: 100, flexDirection: 'row'}}>
+                                        <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
+                                               source={{uri: 'https://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
+                                        <View style={{paddingLeft: 20}}>
+                                            <Text style={{
+                                                height: 20,
+                                                marginTop: 10,
+                                                fontWeight: 'bold'
+                                            }}>{item.key}</Text>
+                                            <Text style={{height: 20, marginTop: 10}}>适用的宠物</Text>
+                                            <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
+                                        </View>
+                                    </View>;
+                                    break;
+                                }
+                            }
+                            return Content;
+                        }}
                     />
                 </View>
             </ScrollView>
