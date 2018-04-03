@@ -13,7 +13,7 @@ class ProfileScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: {name: "", desc: "", score: 0, discount: 0, cart: 0,avatar_img:''},
+            info: {name: "", desc: "", score: 0, discount: 0, cart: 0, avatar_img: ''},
             desc: '',
             login: {token: '', user_id: ''},
             ProfileIsLoading: true,
@@ -51,6 +51,11 @@ class ProfileScreen extends Component {
     };
 
     componentWillMount() {
+
+    }
+
+    callBack() {
+        this.componentDidMount();
     }
 
     componentDidMount() {
@@ -101,7 +106,14 @@ class ProfileScreen extends Component {
                 }
             ).then((responseJson) => {
             this.setState({
-                info: {name: responseJson.name, desc: responseJson.desc, score: 0, discount: 0, cart: 0,avatar_img:responseJson.avatar_img}
+                info: {
+                    name: responseJson.name,
+                    desc: responseJson.desc,
+                    score: 0,
+                    discount: 0,
+                    cart: 0,
+                    avatar_img: responseJson.avatar_img
+                }
             });
             //alert('fasdfasd');
         }).catch((error) => alert(error))
@@ -235,7 +247,10 @@ class ProfileScreen extends Component {
                                 keyExtractor={this.ExtraUniqueKey}
                                 renderItem={({item}) => (
                                     <TouchableOpacity
-                                        onPress={() => this.props.navigation.navigate('AddPet', {item: item})}>
+                                        onPress={() => this.props.navigation.navigate('AddPet', {
+                                            item: item,
+                                            callBack: () => this.callBack()
+                                        })}>
                                         <View style={styles.itemView}>
                                             <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                             <View style={{justifyContent: 'space-around'}}>

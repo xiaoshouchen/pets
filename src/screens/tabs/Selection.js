@@ -18,20 +18,23 @@ import Dimensions from 'Dimensions';
 import {GET_PETS, GET_PROFILE, GET_RECOMMENDS, GET_WAIT_NOTICES} from "../../config/api";
 
 const data = [{key: '如何挑选一只适合自己的猫'}, {key: '狗的常见疾病'}, {key: '家里有个\"猫闹钟\"'}];
-let petList = [<View><Text>暂未登陆</Text></View>];
 
 class SelectionScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            login: "",
             clickSelected: "",
             show: false,
+            pet_id: 0,
+            PetLists: [],
             scrollY: new Animated.Value(0),
             currentContent: 'recommends',//当前的状态
             currentData: [],//显示的数据来源
             PetsData: '',
         }
         this._getPetData = this._getPetData.bind(this);
+        this._getCurrentShowData = this._getCurrentShowData.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -77,6 +80,7 @@ class SelectionScreen extends Component {
                     let json = JSON.parse(this.state.login);
                     //console.log(json)
                     this._getPetData(json.user_id, json.token);
+
                 });
             }
 
@@ -90,44 +94,10 @@ class SelectionScreen extends Component {
         fetch(GET_PETS + '?user_id=' + user_id)
             .then((response) => response.json())
             .then((responseJson) => {
-                petList = [];
-                let lists = responseJson;
-                //alert(lists.length);
-                for (let i = 0; i < lists.length; i++) {
-                    petList.push(
-                        <View style={styles.petImageView}>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-around',
-                                alignItems: 'center'
-                            }}>
-                                <Image style={styles.petImage}
-                                       source={{uri: lists[i].avatar}}>
-                                </Image>
-                                <View>
-                                    <Text style={{
-                                        textAlign: 'left',
-                                        fontSize: 16,
-                                        fontWeight: 'bold',
-                                        backgroundColor: 'rgba(0,0,0,0)',
-                                        marginLeft: Dimensions.get('window').width * 0.06
-                                    }}>{lists[i].name}</Text>
-                                    <Text style={{
-                                        paddingTop: Dimensions.get('window').width * 0.032,
-                                        textAlign: 'left',
-                                        backgroundColor: 'rgba(0,0,0,0)',
-                                        marginLeft: Dimensions.get('window').width * 0.06
-                                    }}>{lists[i].typename}</Text>
-                                </View>
-                            </View>
-                        </View>);
-                }
                 this.setState({
-                    PetsData: responseJson,
+                    PetsData: responseJson, PetLists: responseJson
                 }, function () {
-                    //let lists = this.state.PetsData;
-                    //alert(lists[0].avatar);
-                    //this.petList = [];
+                    this._getCurrentShowData(user_id, token, this.state.pet_id);
 
                 });
             })
@@ -136,11 +106,36 @@ class SelectionScreen extends Component {
             });
     }
 
-    _getCurrentShowData() {
+    _getCurrentShowData(user_id = null, token = null, pet_id = null) {
+        if (user_id == null || token == null || pet_id == null) {
+            let json = JSON.parse(this.state.login);
+            user_id = json.user_id;
+            token = json.token;
+            pet_id = this.state.pet_id;
 
+        }
+        if (this.state.currentContent == 'notices') {
+            fetch(`${GET_WAIT_NOTICES}?user_id=${user_id}&state=wait&pet_id=${pet_id}&token=${token}`).then((response) => response.json())
+                .then((responseJson) => {
+                    if (responseJson.code == 200) {
+                        this.setState({currentData: responseJson.data});
+                    }
+                })
+        } else if (this.state.currentContent == 'recommends') {
+            fetch(`${GET_RECOMMENDS}?user_id=${user_id}&pet_id=${pet_id}&token=${token}`).then((response) => response.json())
+                .then((responseJson) => {
+                    if (responseJson.code == 200) {
+                        this.setState({currentData: responseJson.data});
+                    }
+                })
+        } else if (this.state.currentContent == "goods") {
+            this.setState({currentData: []});
+        }
     }
 
+
     render() {
+
         const {navigate} = this.props.navigation;
         let absuloteTitle = this.state.scrollY.interpolate({
             inputRange: [0, 410, 1000, 1000],
@@ -161,9 +156,50 @@ class SelectionScreen extends Component {
                 <View style={styles.top}>
                     <ImageBackground style={{height: back_height, width: back_width}}
                                      source={require('../../image/back.png')} resizeMode='cover'>
-                        <Swiper style={styles.wrapper} showsButtons={false}
+                        <Swiper style={styles.wrapper}
+                                showsButtons={false}
+                                key={this.state.PetLists.length}
+                                onIndexChanged={(index) => {
+                                    alert(index);
+                                }}
                                 height={Dimensions.get('window').width * 0.47}>
-                            {petList}
+                            {this.state.PetLists.map((pet, i) => {
+                                return (
+                                    <View style={styles.petImageView}
+                                          key={i}>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-around',
+                                            alignItems: 'center'
+                                        }}>
+                                            <Image style={styles.petImage}
+                                                   source={{uri: pet.avatar}}>
+                                            </Image>
+                                            <View>
+                                                <Text style={{
+                                                    textAlign: 'left',
+                                                    fontSize: 16,
+                                                    fontWeight: 'bold',
+                                                    backgroundColor: 'rgba(0,0,0,0)',
+                                                    marginLeft: Dimensions.get('window').width * 0.06
+                                                }}>{pet.name}</Text>
+                                                <Text style={{
+                                                    paddingTop: Dimensions.get('window').width * 0.032,
+                                                    textAlign: 'left',
+                                                    backgroundColor: 'rgba(0,0,0,0)',
+                                                    marginLeft: Dimensions.get('window').width * 0.06
+                                                }}>{pet.typename}</Text>
+                                                <Text style={{
+                                                    paddingTop: Dimensions.get('window').width * 0.032,
+                                                    textAlign: 'left',
+                                                    backgroundColor: 'rgba(0,0,0,0)',
+                                                    marginLeft: Dimensions.get('window').width * 0.06
+                                                }}>{pet.sex ? "男生" : "女生"}</Text>
+                                                <Text/>
+                                            </View>
+                                        </View>
+                                    </View>)
+                            })}
                         </Swiper>
                     </ImageBackground>
                 </View>
@@ -256,37 +292,64 @@ class SelectionScreen extends Component {
                     }}>
                     <View style={styles.scroll}>
                         <TouchableOpacity style={{flex: 1}}
-                                          onPress={() => this.setState({currentContent: "recommend"})}>
+                                          onPress={() =>
+                                              this.setState({currentContent: "recommends"}, () => {
+                                                  this._getCurrentShowData();
+                                              })
+                                          }>
                             <Text style={{textAlign: 'center', fontSize: 16, borderBottom: 2}}>养宠必读</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{flex: 1}}
-                                          onPress={() => this.setState({currentContent: "notices"})}>
+                                          onPress={() => this.setState({currentContent: "notices"}, () => {
+                                              this._getCurrentShowData();
+                                          })}>
                             <Text style={{textAlign: 'center', fontSize: 16}}>提醒事项</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{flex: 1}}
-                                          onPress={() => this.setState({currentContent: "goods"})}>
+                                          onPress={() => this.setState({currentContent: "goods"}, () => this._getCurrentShowData())}>
                             <Text style={{textAlign: 'center', fontSize: 16}}>商品推荐</Text>
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
                 <View style={{flex: 1}}>
                     <FlatList
-                        data={this.state.currentContent}
+                        data={this.state.currentData}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
+                        ListEmptyComponent={() => {
+                            switch (this.state.currentContent) {
+                                case 'recommends': {
+                                    return <View style={styles.goodsEmptyView}>
+                                        <Text>当前暂无推荐，请刷新</Text>
+                                    </View>
+                                }
+                                case 'notices': {
+                                    return <View style={styles.goodsEmptyView}>
+                                        <Text>当前暂无提醒，您可以添加新的提醒</Text>
+                                    </View>
+                                }
+                                case 'goods': {
+                                    return <View style={styles.goodsEmptyView}>
+                                        <Text>当前暂无推荐商品，您可以先查看其他内容</Text>
+                                    </View>
+                                }
+                            }
+                        }
+                        }
                         renderItem={({item}) => {
                             let Content;
                             switch (this.state.currentContent) {
                                 case 'recommends': {
                                     Content = <View style={{height: 100, flexDirection: 'row'}}>
                                         <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
-                                               source={{uri: 'https://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
+                                               source={{uri: item.img}}/>
                                         <View style={{paddingLeft: 20}}>
                                             <Text style={{
                                                 height: 20,
                                                 marginTop: 10,
                                                 fontWeight: 'bold'
-                                            }}>{item.key}</Text>
-                                            <Text style={{height: 20, marginTop: 10}}>适用的宠物</Text>
+                                            }} onPress={() => {
+                                                navigate('ArticleDetail', {id: item.id})
+                                            }}>{item.title}</Text>
                                             <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
                                         </View>
                                     </View>;
@@ -294,20 +357,26 @@ class SelectionScreen extends Component {
                                 }
                                 case 'notices': {
                                     Content = <View style={{height: 100, flexDirection: 'row'}}>
-                                        <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
-                                               source={{uri: 'https://www.xiaochongleyuan.com/img/1950213411.jpg'}}/>
+                                        <Image style={{width: 90, height: 90, marginVertical: 5, marginLeft: 20}}
+                                               source={{uri: item.avatar}}/>
                                         <View style={{paddingLeft: 20}}>
                                             <Text style={{
                                                 height: 20,
                                                 marginTop: 10,
                                                 fontWeight: 'bold'
-                                            }}>{item.key}</Text>
-                                            <Text style={{height: 20, marginTop: 10}}>适用的宠物</Text>
-                                            <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
+                                            }}>{item.date}</Text>
+                                            <Text style={{height: 20, marginTop: 10}}>{item.place}</Text>
+                                            <Text style={{height: 20, marginTop: 10}}>{item.thing}</Text>
                                         </View>
                                     </View>;
                                     break;
                                 }
+                                case 'goods': {
+                                    Content = <View><Text>ceshi</Text></View>;
+                                    break;
+                                }
+                                default:
+                                    Content = <View><Text>当前没有数据</Text></View>
                             }
                             return Content;
                         }}
@@ -399,6 +468,11 @@ const styles = StyleSheet.create(
             height: 40,
             alignItems: 'center',
             justifyContent: 'center',
+        },
+        goodsEmptyView: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 20
         }
     }
 )

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
+    Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {GET_ARTICLES, LIKE, RESTORE} from "../../../config/api";
 import Dimensions from 'Dimensions'
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 let pageNo = 1;//当前第几页
 let totalPage = 5;//总的页数
@@ -21,7 +22,7 @@ class ArticleScreen extends Component {
             liked_url: '../../../image/forum/liked.png',
             restore_url: '../../../image/forum/restore.png',
             restored_url: '../../../image/forum/restored.png',
-            like: [],
+            login: "",
         }
         this._getData = this._getData.bind(this);
         this._like = this._like.bind(this);
@@ -33,8 +34,26 @@ class ArticleScreen extends Component {
     })
 
     componentDidMount() {
+        AsyncStorage.getItem('login').then((result) => {
+            //alert(result);
+            if (result == null) {
+                this.setState({login: {token: '', user_id: ''}})
+                this._getData(1, 0);
+            }
+            else {
+                let that = this;
+                this.setState({login: result}, function () {
+                    let json = JSON.parse(this.state.login);
+                    //console.log(json)
+                    that._getData(1, json.user_id);
+                });
+            }
 
-        return this._getData(1);
+        }).catch((e) => {
+            //alert(e);
+        })
+
+
     }
 
     FlatListItemSeparator = () => {
@@ -50,10 +69,10 @@ class ArticleScreen extends Component {
     }
 
     _like(user_id, article_id, index) {
-        let likes = this.state.like;
-        likes[index] = likes[index] == 1 ? 0 : 1;
+        let data = this.state.dataSource;
+        data[index].islike = !data[index].islike;
         this.setState({
-            like: likes
+            dataSource: data
         });
         let formData = new FormData();
         formData.append('article_id', article_id);
@@ -66,13 +85,15 @@ class ArticleScreen extends Component {
             body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
             //alert(responeJson.message);
+            let message = data[index].islike ? "\n点赞成功\n" : "\n取消点赞\n";
+            this.refs.toast.show(message);
         })
 
     }
 
     _restore(user_id, article_id, index) {
         let data = this.state.dataSource;
-        data[index].restore = data[index].restore == 1 ? 0 : 1;
+        data[index].isrestore = ! data[index].isrestore;
         this.setState({
             dataSource: data
         });
@@ -86,18 +107,18 @@ class ArticleScreen extends Component {
             },
             body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
-            alert(responeJson.message);
+            //alert(responeJson.message);
         }).catch((e) => alert(e));
 
     }
 
-    _getData(_pageNo) {
-        fetch(GET_ARTICLES + _pageNo)
+    _getData(_pageNo, user_id) {
+        fetch(GET_ARTICLES + _pageNo + "&user_id=" + user_id)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
                     isLoading: false,
-                    dataSource: _pageNo == 1 ? responseJson : this.state.dataSource.concat(responseJson)
+                    dataSource: _pageNo === 1 ? responseJson : this.state.dataSource.concat(responseJson)
                 }, function () {
                     // In this block you can do something with new state.
                 });
@@ -208,14 +229,8 @@ class ArticleScreen extends Component {
                                        style={{width: ImgWidth, height: ImgHeight, marginRight: MarginRight}}/>
                             );
                         }
-                        //alert(index+"    -----     "+this.state.like[index] );
-                        let img_like = null;
-                        if (this.state.like[index] === undefined) {
-                            img_like = this.state.dataSource[index].like ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
-                        } else {
-                            img_like = this.state.like[index] ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
-                        }
-                        let img_restore = this.state.dataSource[index].restore ? require('../../../image/forum/restored.png') : require('../../../image/forum/restore.png');
+                        let img_like = this.state.dataSource[index].islike ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
+                        let img_restore = this.state.dataSource[index].isrestore ? require('../../../image/forum/restored.png') : require('../../../image/forum/restore.png');
                         return (
                             <View style={styles.item}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -267,7 +282,10 @@ class ArticleScreen extends Component {
 
                 />
 
-
+                <Toast ref="toast"
+                       position='top'
+                       textStyle={{color: 'red'}}
+                       style={{backgroundColor: 'white'}}/>
             </View>
 
         );

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.pets.android_upgrade.UpgradePackage;
 import com.puti.paylib.PayReactPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.bridge.NativeModule;
@@ -34,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new VectorIconsPackage(),
                     new PayReactPackage(),
                     new ImagePickerPackage(),
-                    new MyPackage()
+                    new UpgradePackage()
+
             );
         }
 

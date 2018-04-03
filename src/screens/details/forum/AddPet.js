@@ -7,6 +7,7 @@ import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
 import {Button, CheckBox} from "react-native-elements";
 import {ADD_PETS, DELETE_PETS, UPDATE_PETS} from "../../../config/api";
+
 class AddPet extends Component {
     constructor(props) {
         super(props);
@@ -21,10 +22,10 @@ class AddPet extends Component {
             visibility: false,
             showDelete: ''
         }
-        this.confirm=this.confirm.bind(this);
+        this.confirm = this.confirm.bind(this);
     }
 
-    static navigationOptions=({navigation}) => ({
+    static navigationOptions = ({navigation}) => ({
         tabBarLabel: "萌宠",
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
@@ -37,23 +38,24 @@ class AddPet extends Component {
 
     })
 
-    callBack(item){
+    callBack(item) {
         this.setState({
             typeName: item.name,
             typeId: item.id
         })
     }
 
-    confirm(){
+    confirm() {
         this.setState({
             visibility: true
         })
     }
-    deletePet(){
+
+    deletePet() {
         let formData = new FormData();
         const {state, goBack} = this.props.navigation;
-        formData.append('user_id',this.state.userId);
-        formData.append('pet_id',this.state.petId);
+        formData.append('user_id', this.state.userId);
+        formData.append('pet_id', this.state.petId);
         fetch(DELETE_PETS, {
             method: 'POST',
             headers: {
@@ -96,7 +98,7 @@ class AddPet extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                let source = { uri: response.uri };
+                let source = {uri: response.uri};
 
                 // You can also display the image using data:
                 // let source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -108,15 +110,15 @@ class AddPet extends Component {
         });
     }
 
-    post(){
-        if(this.state.isClickAble){
-            if(this.state.name == '' || this.state.typeName == '选择宠物种类' || this.state.date == null || this.state.avatarSource == require('../../../image/default_pet_avatar.png')){
+    post() {
+        if (this.state.isClickAble) {
+            if (this.state.name == '' || this.state.typeName == '选择宠物种类' || this.state.date == null || this.state.avatarSource == require('../../../image/default_pet_avatar.png')) {
                 let a = this.state.name != null ? '' : '宠物姓名\n';
                 let b = this.state.typeName != '选择宠物种类' ? '' : '宠物种类\n';
                 let c = this.state.date != null ? '' : '宠物生日\n';
-                let d = this.state.avatarSource !=  require('../../../image/default_pet_avatar.png') ? '' : '头像\n';
+                let d = this.state.avatarSource != require('../../../image/default_pet_avatar.png') ? '' : '头像\n';
                 alert(`请填写\n${a}${b}${c}${d}`)
-            }else {
+            } else {
                 this.setState({
                     isClickAble: false
                 })
@@ -129,9 +131,9 @@ class AddPet extends Component {
                 formData.append('small_type_id', this.state.typeId);
                 formData.append('avatar', file);
                 formData.append('user_id', this.state.userId);
-                const { params }=this.props.navigation.state;
-                if(params.item!=undefined){
-                    formData.append('id',this.state.petId);
+                const {params} = this.props.navigation.state;
+                if (params.item != undefined) {
+                    formData.append('id', this.state.petId);
                     fetch(UPDATE_PETS, {
                         method: 'POST',
                         headers: {
@@ -145,7 +147,7 @@ class AddPet extends Component {
                             state.params.callBack();
                             goBack(null)
                         });
-                }else {
+                } else {
                     fetch(ADD_PETS, {
                         method: 'POST',
                         headers: {
@@ -161,13 +163,13 @@ class AddPet extends Component {
                         });
                 }
             }
-        }else {
+        } else {
 
         }
     }
 
-    componentDidMount(){
-        const { params }=this.props.navigation.state;
+    componentDidMount() {
+        const {params} = this.props.navigation.state;
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
             if (result == null) {
@@ -183,24 +185,24 @@ class AddPet extends Component {
         }).catch((e) => {
             alert(e);
         })
-        if(this.state.isLoading){
-            if(params.item!=undefined){
+        if (this.state.isLoading) {
+            if (params.item != undefined) {
                 this.setState({
-                    name: params.item.name,
-                    sex: params.item.sex,
-                    checked: params.item.sex==0?true:false,
-                    date: params.item.birthday,
-                    typeId: params.item.small_type_id,
-                    avatarSource: {uri: params.item.avatar},
-                    typeName: params.item.typename,
-                    isLoading: false,
-                    petId: params.item.id,
-                    showDelete: '删除'
-                },
+                        name: params.item.name,
+                        sex: params.item.sex,
+                        checked: params.item.sex == 0 ? true : false,
+                        date: params.item.birthday,
+                        typeId: params.item.small_type_id,
+                        avatarSource: {uri: params.item.avatar},
+                        typeName: params.item.typename,
+                        isLoading: false,
+                        petId: params.item.id,
+                        showDelete: '删除'
+                    },
                     () => this.props.navigation.setParams({
-                    confirm: this.confirm,
-                    showDelete: this.state.showDelete
-                })
+                        confirm: this.confirm,
+                        showDelete: this.state.showDelete
+                    })
                 )
 
 
@@ -209,7 +211,7 @@ class AddPet extends Component {
     }
 
     render() {
-        const { state, navigate } = this.props.navigation;
+        const {state, navigate} = this.props.navigation;
         return (
             <View style={styles.photoView}>
                 <Modal
@@ -225,13 +227,14 @@ class AddPet extends Component {
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
                                 <Button title={'是'} buttonStyle={{width: 70}} onPress={() => this.deletePet()}/>
-                                <Button title={'否'} buttonStyle={{width: 70}} onPress={() => this.setState({visibility: false})}/>
+                                <Button title={'否'} buttonStyle={{width: 70}}
+                                        onPress={() => this.setState({visibility: false})}/>
                             </View>
                         </View>
                     </View>
                 </Modal>
                 <View style={styles.imageView}>
-                    <TouchableOpacity onPress = {this.selectPhotoTapped.bind(this)}>
+                    <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                         <Image style={styles.image} source={this.state.avatarSource}/>
                     </TouchableOpacity>
                 </View>
@@ -241,7 +244,7 @@ class AddPet extends Component {
                         <TextInput
                             underlineColorAndroid={'transparent'}
                             style={styles.input}
-                            placeholder ={'设置宠物名称'}
+                            placeholder={'设置宠物名称'}
                             value={this.state.name}
                             onChangeText={(text) => this.setState({
                                 name: text
@@ -257,16 +260,28 @@ class AddPet extends Component {
                                 right
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
-                                containerStyle={{ marginRight: -30, borderColor: 'rgba(0,0,0,0)', width: 60, backgroundColor: 'rgba(0,0,0,0)' }}
+                                containerStyle={{
+                                    marginRight: -30,
+                                    borderColor: 'rgba(0,0,0,0)',
+                                    width: 60,
+                                    backgroundColor: 'rgba(0,0,0,0)'
+                                }}
                                 checked={!this.state.checked}
                                 onPress={() => this.setState({checked: false, sex: 1})}
                             />
-                            <Image style={{marginTop:20, marginRight: 20}} source={require('../../../image/male.png')}/>
+                            <Image style={{marginTop: 20, marginRight: 20}}
+                                   source={require('../../../image/male.png')}/>
                             <CheckBox
                                 right
                                 checkedIcon='dot-circle-o'
                                 uncheckedIcon='circle-o'
-                                containerStyle={{ marginRight: -30, marginLeft: 0, borderColor: 'rgba(0,0,0,0)', width: 60, backgroundColor: 'rgba(0,0,0,0)' }}
+                                containerStyle={{
+                                    marginRight: -30,
+                                    marginLeft: 0,
+                                    borderColor: 'rgba(0,0,0,0)',
+                                    width: 60,
+                                    backgroundColor: 'rgba(0,0,0,0)'
+                                }}
                                 checked={this.state.checked}
                                 onPress={() => this.setState({checked: true, sex: 0})}
                             />
@@ -274,47 +289,46 @@ class AddPet extends Component {
                         </View>
                     </View>
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
-                    <View style= {styles.inputView}>
-                        <Text style= {styles.text}>宠物生日</Text>
+                    <View style={styles.inputView}>
+                        <Text style={styles.text}>宠物生日</Text>
                         <DatePicker
-                            style= {{width: 200}}
-                            date= {this.state.date}
-                            mode= "date"
-                            placeholder= "选择宠物生日"
-                            format= "YYYY-MM-DD"
-                            confirmBtnText= "Confirm"
-                            cancelBtnText= "Cancel"
-                            androidMode= "spinner"
-                            showIcon= {false}
+                            style={{width: 200}}
+                            date={this.state.date}
+                            mode="date"
+                            placeholder="选择宠物生日"
+                            format="YYYY-MM-DD"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            androidMode="spinner"
+                            showIcon={false}
                             customStyles={{
-                                dateText:{
-
-                                },
+                                dateText: {},
                                 dateInput: {
                                     borderColor: 'white',
                                     flexDirection: 'row',
                                     justifyContent: 'flex-end',
                                 },
-                                dateTouchBody: {
-
-                                },
-                                placeholderText: {
-
-                                }
+                                dateTouchBody: {},
+                                placeholderText: {}
                             }}
-                            onDateChange={(date) => {this.setState({date: date})}}
+                            onDateChange={(date) => {
+                                this.setState({date: date})
+                            }}
                         />
                     </View>
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
                     <View style={styles.inputView}>
                         <Text style={styles.text}>宠物品种</Text>
-                        <TouchableOpacity onPress={() => navigate('PetType',{callBack: (item)=> this.callBack(item)})}>
+                        <TouchableOpacity
+                            onPress={() => navigate('PetType', {callBack: (item) => this.callBack(item)})}>
                             <Text>{this.state.typeName}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center',}}>
-                    <Button disabled={!this.state.isClickAble} buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}} onPress={()=> this.post()} title={'保存'}/>
+                    <Button disabled={!this.state.isClickAble}
+                            buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}}
+                            onPress={() => this.post()} title={'保存'}/>
                 </View>
             </View>
         );
@@ -325,7 +339,7 @@ export {AddPet}
 const styles = StyleSheet.create(
     {
         photoView: {
-          flex: 1
+            flex: 1
         },
         mainView: {
             marginTop: 10,
@@ -340,7 +354,7 @@ const styles = StyleSheet.create(
         image: {
             width: 80,
             height: 80,
-            borderRadius:40
+            borderRadius: 40
         },
 
         inputView: {

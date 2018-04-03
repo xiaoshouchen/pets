@@ -21,7 +21,7 @@
     <string name="video_edit_segment">请拖拽两侧滑块选择剪裁区域</string>
     <string name="video_repeate_segment">设置重复的片段</string>
     <string name="video_reverse">开启视频倒放</string>
-
+    <string name="android_auto_update_download_progress">正在下载:%1$d%%</string>
     <string name="vod_ffplay">ffplay</string>
     <string name="vod_exo">exo</string>
     <string name="delete">删除</string>

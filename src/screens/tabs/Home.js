@@ -28,6 +28,7 @@ const HomeTabs = TabNavigator({
             },
             style: {
                 backgroundColor: '#4fc3f7',
+                paddingTop: (Platform.OS === 'ios') ? 15 : 0,
             },
             indicatorStyle: {
                 backgroundColor: '#ffffff',

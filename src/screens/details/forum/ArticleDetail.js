@@ -5,6 +5,8 @@ import {
 } from 'react-native';
 import {GET_ARTICLES_BY_ID, ADD_REPLY, FOLLOW} from "../../../config/api";
 import Icon from 'react-native-vector-icons/EvilIcons';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 class ArticleDetail extends Component {
     constructor(props) {
@@ -15,6 +17,7 @@ class ArticleDetail extends Component {
             login: {user_id: '', token: ''}
         }
         this.follow = this.follow.bind(this);
+        this.postMessage = this.postMessage.bind(this);
     }
 
     isClick = false;
@@ -40,7 +43,7 @@ class ArticleDetail extends Component {
             this.props.navigation.navigate('PrivateInformation', {user_id: message.user_id});
         } else if (message.function == 'follow') {
             //alert(message.followed_user_id);
-            this.follow(this.state.login.user_id,message.followed_user_id);
+            this.follow(this.state.login.user_id, message.followed_user_id);
         }
 
     }
@@ -65,6 +68,7 @@ class ArticleDetail extends Component {
         if (this.isClick == false) {
             return;
         }
+        this.setState({content: ""});
         this.isClick = false;
         let formData = new FormData();
         formData.append('user_id', this.state.login.user_id);
@@ -80,13 +84,16 @@ class ArticleDetail extends Component {
             (response) => response.json())
             .then((responseJson) => {
                 //alert(responseJson.code);
+                this.refs.toast.show('留言成功');
+                this.postMessage('reload');
+                this.isClick = true;
             }).catch((e) => alert(e));
     }
 
-    follow(user_id,followed_user_id) {
+    follow(user_id, followed_user_id) {
         //alert(user_id);
         //alert(this.state.login.token);
-        let token=this.state.login.token;
+        let token = this.state.login.token;
         let formData = new FormData();
         formData.append('user_id', user_id);
         formData.append('followed_user_id', followed_user_id);
@@ -103,6 +110,13 @@ class ArticleDetail extends Component {
             }).catch((e) => alert(e));
     }
 
+
+    postMessage(str) {
+        if (this.webview) {
+            this.webview.postMessage(str);
+        }
+    }
+
     render() {
         const {params} = this.props.navigation.state;
         const {navigate} = this.props.navigation;
@@ -115,20 +129,31 @@ class ArticleDetail extends Component {
                 justifyContent: 'space-between',
             }}>
                 <WebView style={{flex: 1}}
-                         source={{uri: GET_ARTICLES_BY_ID + params.id}}
+                         ref={webview => {
+                             this.webview = webview;
+                         }}
+                         source={{uri: GET_ARTICLES_BY_ID + params.id + "?user_id=" + this.state.login.user_id + "&token=" + this.state.login.token}}
                          onMessage={this.onMessage.bind(this)}/>
                 <View style={styles.comment}>
-                    <TextInput style={styles.input} underlineColorAndroid='transparent'
+                    <TextInput style={styles.input}
+                               underlineColorAndroid='transparent'
                                onChangeText={(text) => {
                                    this.setState({content: {text}.text}, () => {
-                                       this.isClick = true;
+                                       if (this.state.content.length > 1) {
+                                           this.isClick = true;
+                                       } else {
+                                           this.isClick = false;
+                                       }
                                    })
-                               }
-                               }/>
+                               }}
+                               value={this.state.content}
+                    />
                     <TouchableOpacity style={styles.btn} onPress={this.reply.bind(this)}>
                         <Text style={styles.txt}>发送</Text>
                     </TouchableOpacity>
                 </View>
+                <KeyboardSpacer/>
+                <Toast ref="toast"/>
             </View>
         );
     }

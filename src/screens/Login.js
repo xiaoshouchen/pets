@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, AsyncStorage, Alert, Image, ImageBackground} from 'react-native';
-import {Card, PricingCard, ListItem, Button, Tile, FormLabel, FormInput} from 'react-native-elements';
+import {StyleSheet, Text, View, TextInput, AsyncStorage, Alert, Image, ImageBackground, Platform} from 'react-native';
+import {Card, PricingCard, ListItem, Button} from 'react-native-elements';
 import App from '../utils/app.core'
 import {LOGIN} from '../config/api'
 import Dimensions from 'Dimensions'
@@ -151,7 +151,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'rgba(0,0,0,0)',
         width: 300,
-        paddingLeft: 10,
+        paddingVertical: Platform.OS == 'android' ? 0 : 15,
+        paddingHorizontal: Platform.OS == 'android' ? 10 : 15,
         marginBottom: 20,
         color: '#263238'
     },
