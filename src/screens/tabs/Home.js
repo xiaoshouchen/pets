@@ -27,7 +27,7 @@ const HomeTabs = TabNavigator({
                 fontWeight: "normal"
             },
             style: {
-                backgroundColor: '#4fc3f7',
+                backgroundColor: '#fb8c00',
                 paddingTop: (Platform.OS === 'ios') ? 15 : 0,
             },
             indicatorStyle: {

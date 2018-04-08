@@ -35,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new VectorIconsPackage(),
                     new PayReactPackage(),
                     new ImagePickerPackage(),
-                    new UpgradePackage()
+                    new UpgradePackage(),
+                    new MyPackage()
 
             );
         }

@@ -28,7 +28,10 @@ class PersonalScreen extends Component{
 
         return(
             <View>
-                <Text>1</Text>
+                <Text>姓名</Text>
+                <Text>个人简介</Text>
+                <Text></Text>
+                <Text>姓名</Text>
             </View>
         )
     }

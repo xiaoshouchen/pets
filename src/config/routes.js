@@ -17,7 +17,7 @@ import {BrowsingHistoryScreen} from "../screens/details/profile/BrowsingHistory"
 import {ShoppingCartScreen} from "../screens/details/store/ShoppingCart";
 import {CollectionGoodsScreen} from "../screens/details/profile/CollectionGoods";
 import {PersonalScreen} from "../screens/details/profile/Personal";
-import {PersonalInfoChangeScreen} from "../screens/details/profile/PersonalInfoChange";
+import {PersonalInfoChangeScreen} from "../screens/details/profile/ChangeAvatar";
 import {RegisterScreen} from '../screens/Register'
 import {ProductDetailScreen} from '../screens/details/store/ProductDetail'
 import {PrivateRecommendScreen} from '../screens/details/forum/mypets/PrivateRecomends'
@@ -74,6 +74,10 @@ const Tabs = TabNavigator({
         lazyLoad: false,
         swipeEnabled: false,
         animationEnabled: false,
+        tabBarOptions: {
+            activeTintColor: '#fb8c00',
+            inactiveTintColor: '#a3a3a3',
+        },
         //lazy: true,
     })
 

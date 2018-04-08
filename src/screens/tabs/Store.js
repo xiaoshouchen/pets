@@ -60,7 +60,7 @@ class StoreScreen extends Component {
         tabBarLabel: "商城",
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerStyle: {backgroundColor: '#fb8c00'},
         headerRight: <Icon
             onPress={() => navigation.navigate('ShoppingCart')}
             name='shopping-cart'
@@ -108,18 +108,9 @@ class StoreScreen extends Component {
                     <Swiper style={styles.wrapper} showsButtons={false}
                             height={Dimensions.get('window').width / 21 * 9}>
                         <View style={styles.slide1}>
-                            <Image
-                                source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
-                                style={{
-                                    width: Dimensions.get('window').width,
-                                    height: Dimensions.get('window').width / 21 * 9
-                                }}/>
-                        </View>
-                        <View style={styles.slide2}>
-                            <Text style={styles.text}>Beautiful</Text>
-                        </View>
-                        <View style={styles.slide3}>
-                            <Text style={styles.text}>And simple</Text>
+                            <Text style={styles.text}>商城即将上线</Text>
+                            <Text style={styles.text_small}>积分可抵扣现金</Text>
+                            <Text style={styles.text_small}>或直接换取积分好礼</Text>
                         </View>
                     </Swiper>
                     <View style={styles.item_list}>
@@ -228,24 +219,17 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#9DD6EB',
-    },
-    slide2: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#97CAE5',
-    },
-    slide3: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#92BBD9',
+        backgroundColor: '#ebaa19',
     },
     text: {
         color: '#fff',
         fontSize: 30,
         fontWeight: 'bold',
+    },
+    text_small: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'normal',
     }
 
 });

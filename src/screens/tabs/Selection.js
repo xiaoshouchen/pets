@@ -10,7 +10,7 @@ import {
     Animated,
     StatusBar,
     Button,
-    ImageBackground, AsyncStorage
+    ImageBackground, AsyncStorage, RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Swiper from 'react-native-swiper';
@@ -26,15 +26,17 @@ class SelectionScreen extends Component {
             login: "",
             clickSelected: "",
             show: false,
-            pet_id: 0,
+            pet_id: 44,
             PetLists: [],
             scrollY: new Animated.Value(0),
             currentContent: 'recommends',//当前的状态
             currentData: [],//显示的数据来源
             PetsData: '',
+            isRefreshing: false
         }
         this._getPetData = this._getPetData.bind(this);
         this._getCurrentShowData = this._getCurrentShowData.bind(this);
+        this._refresh = this._refresh.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -42,7 +44,7 @@ class SelectionScreen extends Component {
         title: '我的萌宠',
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerStyle: {backgroundColor: '#fb8c00'},
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='pets'
@@ -55,6 +57,11 @@ class SelectionScreen extends Component {
         ><Text style={{color: '#ffffff', fontWeight: 'bold', marginRight: 15}}>宠物 + </Text>
         </TouchableOpacity>,
     });
+
+    _refresh() {
+        this.componentDidMount();
+        this.setState({isRefreshing: false});
+    }
 
     FlatListItemSeparator = () => {
         return (
@@ -148,19 +155,30 @@ class SelectionScreen extends Component {
                 style={{backgroundColor: 'white'}}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
-                )}>
+                )}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={() => this._refresh()}
+                        tintColor="#ff0000"
+                        title="加载新的数据中"
+                        titleColor="#00ff00"
+                        colors={['#ff551b', '#00ff00', '#0000ff']}
+                        progressBackgroundColor="#ffff00"
+                    />}
+            >
                 <StatusBar
                     backgroundColor='#4fc3f7'
                     barStyle="light-content"
                 />
                 <View style={styles.top}>
-                    <ImageBackground style={{height: back_height, width: back_width}}
+                    <ImageBackground style={{height: back_height, width: back_width, border: 0}}
                                      source={require('../../image/back.png')} resizeMode='cover'>
                         <Swiper style={styles.wrapper}
                                 showsButtons={false}
                                 key={this.state.PetLists.length}
                                 onIndexChanged={(index) => {
-                                    alert(index);
+                                    this.setState({pet_id: this.state.PetLists[index].id})
                                 }}
                                 height={Dimensions.get('window').width * 0.47}>
                             {this.state.PetLists.map((pet, i) => {
@@ -343,11 +361,12 @@ class SelectionScreen extends Component {
                                         <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
                                                source={{uri: item.img}}/>
                                         <View style={{paddingLeft: 20}}>
-                                            <Text style={{
-                                                height: 20,
-                                                marginTop: 10,
-                                                fontWeight: 'bold'
-                                            }} onPress={() => {
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    marginTop: 10,
+                                                    fontWeight: 'bold'
+                                                }} onPress={() => {
                                                 navigate('ArticleDetail', {id: item.id})
                                             }}>{item.title}</Text>
                                             <Text style={{height: 20, marginTop: 10}}>分类：宠物的饮食</Text>
@@ -361,7 +380,6 @@ class SelectionScreen extends Component {
                                                source={{uri: item.avatar}}/>
                                         <View style={{paddingLeft: 20}}>
                                             <Text style={{
-                                                height: 20,
                                                 marginTop: 10,
                                                 fontWeight: 'bold'
                                             }}>{item.date}</Text>

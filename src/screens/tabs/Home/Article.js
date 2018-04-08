@@ -85,7 +85,7 @@ class ArticleScreen extends Component {
             body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
             //alert(responeJson.message);
-            let message = data[index].islike ? "\n点赞成功\n" : "\n取消点赞\n";
+            let message = data[index].islike ? "   点赞成功   " : "   取消点赞   ";
             this.refs.toast.show(message);
         })
 
@@ -93,7 +93,7 @@ class ArticleScreen extends Component {
 
     _restore(user_id, article_id, index) {
         let data = this.state.dataSource;
-        data[index].isrestore = ! data[index].isrestore;
+        data[index].isrestore = !data[index].isrestore;
         this.setState({
             dataSource: data
         });
@@ -108,6 +108,8 @@ class ArticleScreen extends Component {
             body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
             //alert(responeJson.message);
+            let message = data[index].isrestore ? "   收藏成功   " : "   取消收藏   ";
+            this.refs.toast.show(message);
         }).catch((e) => alert(e));
 
     }
@@ -246,29 +248,57 @@ class ArticleScreen extends Component {
                                 <TouchableOpacity onPress={
                                     () => navigate('ArticleDetail', {id: item.id})
                                 }>
-                                    {title(item.type_id, item.title)}
-                                    <Text style={styles.content}>{item.content}</Text>
+                                    <Text style={styles.title}>{item.title}</Text>
+                                    <Text style={styles.content} numberOfLines={2}>{item.content}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         {images}
                                     </View>
                                 </TouchableOpacity>
+
                                 <View style={{
                                     flexDirection: 'row',
                                     flex: 1,
-                                    justifyContent: 'flex-end',
+                                    justifyContent: 'center',
                                     alignItems: 'center',
-                                    height: 40
+                                    height: 40, marginTop: 8
                                 }}>
-                                    <TouchableOpacity onPress={() => this._like(27, item.id, index)}>
-                                        <Image source={img_like}
-                                               style={styles.smallIcon}
-                                        />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this._restore(27, item.id, index)}>
-                                        <Image source={img_restore}
-                                               style={styles.smallIcon}
-                                        />
-                                    </TouchableOpacity>
+                                    <View style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <TouchableOpacity onPress={() => this._like(27, item.id, index)}
+                                                          style={{
+                                                              flexDirection: 'row',
+                                                              alignItems: 'center',
+                                                              justifyContent: 'center',
+                                                          }}>
+                                            <Image source={img_like}
+                                                   style={styles.smallIcon}
+                                            />
+                                            <Text>点赞</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={{width: 1, backgroundColor: "#d9d7e8", height: 40}}/>
+                                    <View style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <TouchableOpacity onPress={() => this._restore(27, item.id, index)}
+                                                          style={{
+                                                              flexDirection: 'row',
+                                                              justifyContent: 'center',
+                                                              alignItems: 'center'
+                                                          }}>
+                                            <Image source={img_restore}
+                                                   style={styles.smallIcon}
+                                            />
+                                            <Text>收藏</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>)
                     }
@@ -315,7 +345,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 15,
         fontWeight: 'bold',
-        marginBottom: 5
+        marginVertical: 10
     },
     name: {
         marginTop: 8,
@@ -329,7 +359,8 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontSize: 12,
         color: '#495863',
-        marginBottom: 10
+        marginBottom: 10,
+        lineHeight: 18
     },
     smallIcon: {
         width: 25,

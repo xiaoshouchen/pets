@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {StackNavigator} from 'react-navigation';
 import {
-    StyleSheet, Text, View, ScrollView, Image, SectionList, TouchableOpacity, Slider, FlatList,
+    StyleSheet, Text, View, ScrollView, Image, RefreshControl, SectionList, TouchableOpacity, Slider, FlatList,
     ActivityIndicator, AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -17,6 +16,7 @@ class ProfileScreen extends Component {
             desc: '',
             login: {token: '', user_id: ''},
             ProfileIsLoading: true,
+            isRefreshing: false,
         }
         this._getPetData = this._getPetData.bind(this);
         this._getInfoData = this._getInfoData.bind(this);
@@ -31,7 +31,7 @@ class ProfileScreen extends Component {
         tabBarLabel: "我的",
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerStyle: {backgroundColor: '#fb8c00'},
         title: '个人资料',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
@@ -62,10 +62,10 @@ class ProfileScreen extends Component {
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
             if (result == null) {
-                this.setState({login: {token: '', user_id: ''}})
+                this.setState({login: {token: '', user_id: '', isRefreshing: false,}})
             }
             else {
-                this.setState({login: result}, function () {
+                this.setState({login: result, isRefreshing: false,}, function () {
                     let json = JSON.parse(this.state.login);
                     //console.log(json)
                     this._getPetData(json.user_id, json.token);
@@ -161,8 +161,18 @@ class ProfileScreen extends Component {
             );
         }
         return (
-            <ScrollView style={styles.mainView}>
-                <View style={styles.body}>
+            <ScrollView style={styles.mainView}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.isRefreshing}
+                                onRefresh={() => this.componentDidMount()}
+                                tintColor="#ff0000"
+                                title="加载新的数据中"
+                                titleColor="#00ff00"
+                                colors={['#ff0000', '#00ff00', '#0000ff']}
+                                progressBackgroundColor="#ffff00"
+                            />}>
+                < View style={styles.body}>
                     <View style={styles.top}>
                         <View style={styles.topLeft}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal')}>

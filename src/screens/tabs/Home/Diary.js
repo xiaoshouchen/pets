@@ -21,7 +21,7 @@ class DiaryScreen extends Component {
         tabBarLabel: "日记",
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerStyle: {backgroundColor: '#fb8c00'},
     };
 
     componentDidMount() {

@@ -16,16 +16,10 @@ class MessageScreen extends Component {
     }
 
     static navigationOptions = {
-        tabBarLabel: "秀宠",
+        tabBarLabel: " ",
         showLabel: false,
         header: null,
-        tabBarIcon: ({tintColor, focused}) => (
-            <Icon
-                name='camera'
-                size={30}
-                color={tintColor}
-            />
-        ),
+        tabBarIcon:<Image source={require('../../image/plus.png')} style={{width:48,height:48}}/>
     }
 
     render() {
@@ -33,10 +27,10 @@ class MessageScreen extends Component {
             <View style={styles.mainView}>
                 <View style={styles.topic}>
                     <View>
-                        <Text>今日话题</Text>
+                        <Text>捏捏宠</Text>
                     </View>
                     <View>
-                        <Text>让养宠物变得简单点</Text>
+                        <Text>高质量的宠物社区</Text>
                     </View>
                 </View>
                 <View style={styles.mainSection}>
