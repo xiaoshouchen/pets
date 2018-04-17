@@ -5,6 +5,7 @@ import {
 } from 'react-native'
 import {Button} from "react-native-elements";
 import {GET_PETS} from "../../../config/api";
+import App from '../../../utils/app.core';
 
 class PetList extends Component {
     constructor(props) {
@@ -14,13 +15,13 @@ class PetList extends Component {
             refreshing: false
         }
     }
+
     static navigationOptions = {
         tabBarLabel: "萌宠",
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
-        headerTitle:'我的宠物'
+        ...App.commonHeaderStyle,
+        headerTitle: '我的宠物'
     };
+
     componentDidMount() {
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
@@ -41,10 +42,10 @@ class PetList extends Component {
 
     }
 
-    getData(user_id){
+    getData(user_id) {
         return fetch(GET_PETS + '?user_id=' + user_id)
             .then((response) => response.json())
-            .then((responseJson,key) => {
+            .then((responseJson, key) => {
                 this.setState({
                     isLoading: false,
                     dataSource: responseJson
@@ -69,9 +70,10 @@ class PetList extends Component {
         );
     }
 
-    ExtraUniqueKey(item ,index){
-        return "index"+index+item;
+    ExtraUniqueKey(item, index) {
+        return "index" + index + item;
     }
+
     onRefresh = () => {
         this.setState({
             refreshing: true,
@@ -85,7 +87,7 @@ class PetList extends Component {
         this.componentDidMount();
     };
 
-    callBack(){
+    callBack() {
         this.componentDidMount();
     }
 
@@ -104,18 +106,22 @@ class PetList extends Component {
                     <FlatList
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
-                        keyExtractor = {this.ExtraUniqueKey}
+                        keyExtractor={this.ExtraUniqueKey}
                         onRefresh={this.onRefresh}
                         refreshing={this.state.refreshing}
                         renderItem={({item}) => (
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('AddPet', {item: item,callBack: ()=> this.callBack()})}>
+                                onPress={() => this.props.navigation.navigate('AddPet', {
+                                    item: item,
+                                    callBack: () => this.callBack()
+                                })}>
                                 <View style={styles.itemView}>
                                     <View style={styles.itemView}>
                                         <Image style={styles.avatar} source={{uri: item.avatar}}/>
                                         <View style={{justifyContent: 'space-around'}}>
                                             <Text style={{fontSize: 16}}>{item.name}</Text>
-                                            <Text style={{fontSize: 12}}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
+                                            <Text
+                                                style={{fontSize: 12}}>{item.typename} {item.sex == 0 ? '母' : '公'} </Text>
                                         </View>
                                     </View>
                                     <View style={{marginRight: 15}}>
@@ -136,7 +142,7 @@ class PetList extends Component {
                     marginRight: 10,
                     marginLeft: 10
                 }}
-                        onPress={() => navigate('AddPet',{callBack: ()=> this.callBack()})} title={'添加宠物'}/>
+                        onPress={() => navigate('AddPet', {callBack: () => this.callBack()})} title={'添加宠物'}/>
             </ScrollView>
         )
             ;

@@ -12,6 +12,7 @@ import {
 import RichEditor from 'react-native-richeditor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {ADD_ARTICLE} from "../../../config/api";
+import App from '../../../utils/app.core';
 
 class AddArticle extends Component {
     constructor(props) {
@@ -40,13 +41,11 @@ class AddArticle extends Component {
         return {
             title: _Title,
             tabBarLabel: "",
-            headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-            headerBackTitle: null,
-            headerStyle: {backgroundColor: '#4fc3f7'},
+            ...App.commonHeaderStyle,
             headerRight:
                 <TouchableOpacity onPress={() => navigation.state.params.postArticle()}>
                     <Text style={{
-                        backgroundColor: '#4fc3f7',
+                        backgroundColor: '#fb8c00',
                         color: 'white',
                         fontSize: 16,
                         fontWeight: 'bold',

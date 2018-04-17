@@ -169,12 +169,6 @@ class ArticleScreen extends Component {
             });
     }
 
-    _getImage(images) {
-        if (images.size() > 0) {
-
-        }
-    }
-
     render() {
         const {navigate} = this.props.navigation;
         let title = (type, title) => {
@@ -196,7 +190,7 @@ class ArticleScreen extends Component {
                     type_name = "【分享】";
             }
             return <Text style={styles.title}>
-                {type == undefined ? '【分享】' : type_name}{title}
+                {type === undefined ? '【分享】' : type_name}{title}
             </Text>
         }
         if (this.state.isLoading) {
@@ -213,11 +207,8 @@ class ArticleScreen extends Component {
             <View style={styles.MainContainer}>
 
                 <FlatList
-
                     data={this.state.dataSource}
-
                     ItemSeparatorComponent={this.FlatListItemSeparator}
-
                     renderItem={({item, index}) => {
                         let images = [];
                         let windowWidth = Dimensions.get('window').width;

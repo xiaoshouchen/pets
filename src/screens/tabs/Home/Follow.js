@@ -74,7 +74,7 @@ class FollowScreen extends Component {
                     data={this.state.dataSource}
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
-
+                    keyExtractor={(item, index) => index}
                     renderItem={({item}) => (
                         <View style={styles.item}>
                             <View style={{flex: 1, flexDirection: 'row'}}>

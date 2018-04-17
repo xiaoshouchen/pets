@@ -7,6 +7,7 @@ import {GET_ARTICLES_BY_ID, ADD_REPLY, FOLLOW} from "../../../config/api";
 import Icon from 'react-native-vector-icons/EvilIcons';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Toast, {DURATION} from 'react-native-easy-toast'
+import App from '../../../utils/app.core';
 
 class ArticleDetail extends Component {
     constructor(props) {
@@ -22,8 +23,8 @@ class ArticleDetail extends Component {
 
     isClick = false;
     static navigationOptions = {
-        tabBarLabel: "",
-        title: '文章详情',
+        tabBarLabel: "文章详情",
+        ...App.commonHeaderStyle,
         headerRight: (
             <View style={{flexDirection: 'row'}}>
                 <Icon

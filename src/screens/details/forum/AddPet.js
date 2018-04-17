@@ -7,6 +7,7 @@ import ImagePicker from "react-native-image-picker";
 import DatePicker from 'react-native-datepicker'
 import {Button, CheckBox} from "react-native-elements";
 import {ADD_PETS, DELETE_PETS, UPDATE_PETS} from "../../../config/api";
+import App from '../../../utils/app.core';
 
 class AddPet extends Component {
     constructor(props) {
@@ -26,10 +27,8 @@ class AddPet extends Component {
     }
 
     static navigationOptions = ({navigation}) => ({
+        ...App.commonHeaderStyle,
         tabBarLabel: "萌宠",
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
         title: '宠物资料',
         headerRight:
             <TouchableOpacity onPress={() => navigation.state.params.confirm()}>
@@ -263,13 +262,14 @@ class AddPet extends Component {
                                 containerStyle={{
                                     marginRight: -30,
                                     borderColor: 'rgba(0,0,0,0)',
-                                    width: 60,
+                                    width: 50,
+                                    height: 50,
                                     backgroundColor: 'rgba(0,0,0,0)'
                                 }}
                                 checked={!this.state.checked}
                                 onPress={() => this.setState({checked: false, sex: 1})}
                             />
-                            <Image style={{marginTop: 20, marginRight: 20}}
+                            <Image style={{marginTop: 20, marginRight: 20, height: 15}}
                                    source={require('../../../image/male.png')}/>
                             <CheckBox
                                 right
@@ -279,13 +279,14 @@ class AddPet extends Component {
                                     marginRight: -30,
                                     marginLeft: 0,
                                     borderColor: 'rgba(0,0,0,0)',
-                                    width: 60,
+                                    width: 50,
+                                    height: 50,
                                     backgroundColor: 'rgba(0,0,0,0)'
                                 }}
                                 checked={this.state.checked}
                                 onPress={() => this.setState({checked: true, sex: 0})}
                             />
-                            <Image style={{marginTop: 20}} source={require('../../../image/female.png')}/>
+                            <Image style={{marginTop: 20, height: 15}} source={require('../../../image/female.png')}/>
                         </View>
                     </View>
                     <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>

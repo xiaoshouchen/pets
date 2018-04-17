@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Alert, AsyncStorage} from 'react-native';
 import App from "../utils/app.core";
-import {NavigationScreenProp as navigate} from "react-navigation";
 import {SEND_MESSAGE_CODE, REGISTER} from "../config/api";
 
 class RegisterScreen extends Component {

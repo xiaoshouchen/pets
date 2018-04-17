@@ -6,7 +6,8 @@ import {
 import {Button} from "react-native-elements";
 import {GET_MY_DIARY} from "../../../config/api";
 import Swiper from 'react-native-swiper';
-import Dimensions from 'Dimensions'
+import Dimensions from 'Dimensions';
+import App from '../../../utils/app.core'
 
 class DiaryScreen extends Component {
     constructor(props) {
@@ -19,9 +20,7 @@ class DiaryScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "日记",
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#fb8c00'},
+        ...App.commonHeaderStyle
     };
 
     componentDidMount() {

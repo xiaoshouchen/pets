@@ -6,13 +6,14 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import {Button} from "react-native-elements";
 import {GET_PETS, GET_PROFILE} from "../../config/api";
-import Dimensions from 'Dimensions'
+import Dimensions from 'Dimensions';
+import App from '../../utils/app.core';
 
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            info: {name: "", desc: "", score: 0, discount: 0, cart: 0, avatar_img: ''},
+            info: {name: "", desc: "", points: 0, discount: 0, cart: 0, avatar_img: ''},
             desc: '',
             login: {token: '', user_id: ''},
             ProfileIsLoading: true,
@@ -29,9 +30,7 @@ class ProfileScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "我的",
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#fb8c00'},
+        ...App.commonHeaderStyle,
         title: '个人资料',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
@@ -109,7 +108,7 @@ class ProfileScreen extends Component {
                 info: {
                     name: responseJson.name,
                     desc: responseJson.desc,
-                    score: 0,
+                    points: responseJson.points,
                     discount: 0,
                     cart: 0,
                     avatar_img: responseJson.avatar_img
@@ -213,7 +212,7 @@ class ProfileScreen extends Component {
                                     fontSize: 16,
                                     marginTop: 10,
                                     textAlign: 'center'
-                                }}>{this.state.info.score}</Text>
+                                }}>{this.state.info.points}</Text>
                                 <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>积分</Text>
                             </View>
                         </TouchableOpacity>
@@ -287,28 +286,28 @@ class ProfileScreen extends Component {
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')}>
-                                    <Image source={require('../../image/article.png')}
+                                    <Image source={require('../../image/profile/recent.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>文章</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('CollectionArticles')}>
-                                    <Image source={require('../../image/restore.png')}
+                                    <Image source={require('../../image/profile/restore.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>收藏</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowPeople')}>
-                                    <Image source={require('../../image/follow.png')}
+                                    <Image source={require('../../image/profile/follow.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>关注</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Fan')}>
-                                    <Image source={require('../../image/fans.png')}
+                                    <Image source={require('../../image/profile/fans.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>粉丝</Text>
                                 </TouchableOpacity>
@@ -319,35 +318,35 @@ class ProfileScreen extends Component {
                     <View style={styles.menuView}>
                         <View style={styles.littleTitle}>
                             <Text>
-                                商场管理
+                                商城管理
                             </Text>
                         </View>
                         <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                         <View style={styles.blockView}>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('ShoppingCart')}>
-                                    <Image source={require('../../image/shopingCart.png')}
+                                    <Image source={require('../../image/profile/cart.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>购物车</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('OrderList')}>
-                                    <Image source={require('../../image/shopingList.png')}
+                                    <Image source={require('../../image/profile/list.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>订单</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('CollectionGoods')}>
-                                    <Image source={require('../../image/goodsrestore.png')}
+                                    <Image source={require('../../image/profile/restore.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>收藏</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('AddressList')}>
-                                    <Image source={require('../../image/adress.png')}
+                                    <Image source={require('../../image/profile/address.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>地址</Text>
                                 </TouchableOpacity>
@@ -366,7 +365,7 @@ class ProfileScreen extends Component {
                             <View style={styles.blockItem}>
                                 <TouchableOpacity
                                     onPress={() => this.props.navigation.navigate('Setting', {checkIsLogin: () => this.checkIsLogin()})}>
-                                    <Image source={require('../../image/setting.png')}
+                                    <Image source={require('../../image/profile/setting.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
                                     <Text>设置</Text>
                                 </TouchableOpacity>

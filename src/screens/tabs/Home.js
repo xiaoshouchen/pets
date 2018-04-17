@@ -53,11 +53,7 @@ class HomeScreen extends Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        /*title: '小宠乐园',
-        headerTitleStyle: {color: '#fff',fontSize:18,fontWeight:'normal'},*/
         header: null,
-        //headerBackTitle: null,
-        //headerStyle: {backgroundColor: '#4fc3f7',height:46},
         headerRight:
             <Icon
                 name='search'

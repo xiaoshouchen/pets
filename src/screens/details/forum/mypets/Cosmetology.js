@@ -5,14 +5,13 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {GET_ARTICLES} from '../../../../config/api';
+import App from '../../../../utils/app.core';
 
 class CosmetologyScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "萌宠",
-        headerTitleStyle: {color: '#fff',fontSize:18,fontWeight:'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '美容',
     };
 

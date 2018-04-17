@@ -32,7 +32,7 @@ class SettingScreen extends Component {
                 <View style={{backgroundColor: 'white', flexDirection: 'row', alignItems: 'center', height: 44}}>
                     <Text style={{marginLeft: 5, color: '#333', fontSize: 14}}>{item.title}</Text>
                     <Image style={{position: 'absolute', top: 15, right: 15, height: 15, width: 15}}
-                           source={require('../../../image/gift_wall_lettle_white_arrow_msg.png')}/>
+                           source={require('../../../image/right-arrow.png')}/>
                 </View>
             </TouchableOpacity>
         );

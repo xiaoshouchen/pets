@@ -1,19 +1,18 @@
 import React, {Component} from 'react'
-import Text from "react-native-elements/src/text/Text";
-import {ActivityIndicator, FlatList, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, FlatList, TouchableOpacity, View, TextInput, Text} from "react-native";
 import {GET_DOG_TYPES} from "../../../config/api";
-class DogTypeScreen extends Component{
+import App from '../../../utils/app.core'
+
+class DogTypeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            text: '',
         }
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '宠物品种',
         tabBarLabel: '狗',
     }
@@ -47,24 +46,37 @@ class DogTypeScreen extends Component{
         );
     }
 
-    render(){
+    render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
-        const { state, goBack } = this.props.navigation;
-        return(
+        const {state, goBack} = this.props.navigation;
+        return (
             <View>
+                <TextInput
+                    underlineColorAndroid='transparent'
+                    onChangeText={({text}) => this.setState({text})}
+                    value={this.state.text}/>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) => (
-                        <TouchableOpacity onPress={() => {state.params.callBack(item);goBack(null);goBack(null)}}>
+                        <TouchableOpacity onPress={() => {
+                            state.params.callBack(item);
+                            goBack(null);
+                            goBack(null)
+                        }}>
                             <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                                <Text style={{flexDirection: 'row', backgroundColor: 'white', height: 25, alignItems: 'center'}}>{item.name}</Text>
+                                <Text style={{
+                                    flexDirection: 'row',
+                                    backgroundColor: 'white',
+                                    height: 40,
+                                    alignItems: 'center'
+                                }}>{item.name}</Text>
                             </View>
                         </TouchableOpacity>)
                     }

@@ -1,19 +1,19 @@
 'use strict';
 import {AsyncStorage} from 'react-native';
 
-
 let currentRequest = {};
 const App = {
-
     config: {
-
         api: 'your hosst',
         // app 版本号
         version: 1.1,
-
         debug: 1,
     },
-
+    commonHeaderStyle: {
+        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
+        headerBackTitle: null,
+        headerStyle: {backgroundColor: '#fb8c00'},
+    },
     serialize: function (obj) {
         var str = [];
         for (var p in obj)
@@ -39,20 +39,22 @@ const App = {
 
     async isLogin() {
         let key = 'gloabl_login_token';
-
         // {token: '',expire_time: '',user: {userid:1,username:'',head_url}}
         let token = await AsyncStorage.getItem(key);
         if (token === false) {
             return false;
         }
-
         return typeof (token) === 'string' ? token : '';
-
     },
 
     async getAccessToken() {
         //return '483a757f-0ba2-4b6f-93e8-32c2e975d4a8';
         return await this.isLogin();
+    },
+    async getUserInfo() {
+        let userInfo = await AsyncStorage.getItem('login');
+        let jsonData = JSON.parse(userInfo);
+        return jsonData;
     },
     // 获取授权的web url地址  
     async getAuthWebUrl(targetUrl, cb) {
@@ -235,4 +237,4 @@ const App = {
 
 };
 
-module.exports = App;
+export default App;

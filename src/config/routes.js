@@ -18,6 +18,7 @@ import {ShoppingCartScreen} from "../screens/details/store/ShoppingCart";
 import {CollectionGoodsScreen} from "../screens/details/profile/CollectionGoods";
 import {PersonalScreen} from "../screens/details/profile/Personal";
 import {PersonalInfoChangeScreen} from "../screens/details/profile/ChangeAvatar";
+import {ChangeProfileScreen} from '../screens/details/profile/ChangeProfile';
 import {RegisterScreen} from '../screens/Register'
 import {ProductDetailScreen} from '../screens/details/store/ProductDetail'
 import {PrivateRecommendScreen} from '../screens/details/forum/mypets/PrivateRecomends'
@@ -48,6 +49,8 @@ import {CommodityRecommendationScreen} from "../screens/details/forum/CommodityR
 import {OrderListScreen} from "../screens/details/profile/OrderList";
 import {AddressListScreen} from "../screens/details/profile/AddressList";
 import {ChatScreen} from '../screens/details/store/Chat';
+import {AddNoticeScreen} from '../screens/details/notice/AddNotice';
+import {NoticeListsScreen} from '../screens/details/notice/NoticeLists';
 
 const PetTypeTabs = TabNavigator({
         CatType: {screen: CatTypeScreen},
@@ -130,6 +133,9 @@ const RootNavigator = StackNavigator({
     OrderList: {screen: OrderListScreen},
     AddressList: {screen: AddressListScreen},
     Chat: {screen: ChatScreen},
+    AddNotice: {screen: AddNoticeScreen},
+    NoticeLists: {screen: NoticeListsScreen},
+    ChangeProfile: {screen: ChangeProfileScreen},
 });
 
 export default RootNavigator;

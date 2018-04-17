@@ -4,13 +4,14 @@ import {
 } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 
-class PersonalInfoChangeScreen extends Component{
+class PersonalInfoChangeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatarSource: {uri:'http://123.207.217.225/img/1/tx.jpg'}
+            avatarSource: null,
         }
     }
+
     static navigationOptions = () => ({
         title: '修改',
         headerTitleStyle: {color: '#fff'},
@@ -21,8 +22,8 @@ class PersonalInfoChangeScreen extends Component{
     selectPhotoTapped() {
         const options = {
             quality: 1.0,
-            maxWidth: 500,
-            maxHeight: 500,
+            maxWidth: 240,
+            maxHeight: 240,
             storageOptions: {
                 skipBackup: true
             },
@@ -46,7 +47,7 @@ class PersonalInfoChangeScreen extends Component{
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                let source = { uri: response.uri };
+                let source = {uri: response.uri};
 
                 // You can also display the image using data:
                 // let source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -59,13 +60,13 @@ class PersonalInfoChangeScreen extends Component{
     }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <View>
-                <TouchableOpacity onPress = {this.selectPhotoTapped.bind(this)}>
+                <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image style={styles.avatar} source={this.state.avatarSource}/>
-                        <Image style={styles.male} />
+                        <Image style={styles.male}/>
                     </View>
                 </TouchableOpacity>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
@@ -75,13 +76,13 @@ class PersonalInfoChangeScreen extends Component{
 }
 
 const styles = StyleSheet.create({
-    avatar:{
-        marginLeft:15,
-        marginTop:15,
-        height:60,
-        width:60,
-        borderRadius:30,
-        marginBottom:15
+    avatar: {
+        marginLeft: 15,
+        marginTop: 15,
+        height: 60,
+        width: 60,
+        borderRadius: 30,
+        marginBottom: 15
     },
 });
 

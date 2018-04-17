@@ -45,10 +45,16 @@ export const GET_USER_PROFILE = `${BASE_URL}/api/profile/user`
 export const MY_FOLLOWS = `${BASE_URL}/api/follows`;
 export const MY_FANS = `${BASE_URL}/api/fans`;
 export const MY_RESTORES = `${BASE_URL}/api/restores`;
+export const CHANGE_PROFILE = `${BASE_URL}/api/profile/change`;
+export const CHANGE_AVATAR = `${BASE_URL}/api/avatar/change`;
+
 
 //获取推荐信息
 export const GET_WAIT_NOTICES = `${BASE_URL}/api/notices`;
 export const GET_RECOMMENDS = `${BASE_URL}/api/recommends`
+
+//notice
+export const ADD_NOTICE = `${BASE_URL}/api/notice/add`
 
 //login
 

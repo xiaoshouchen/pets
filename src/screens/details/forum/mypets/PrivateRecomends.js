@@ -6,6 +6,7 @@ import {
 import {GET_ARTICLES} from "../../../../config/api";
 import Swiper from 'react-native-swiper';
 import Dimensions from 'Dimensions'
+import App from '../../../../utils/app.core';
 
 class PrivateRecommendScreen extends Component {
     constructor(props) {
@@ -19,9 +20,7 @@ class PrivateRecommendScreen extends Component {
 
     static navigationOptions = ({navigation}) => ({
         tabBarLabel: "萌宠",
-        headerTitleStyle: {color: '#fff',fontSize:18,fontWeight:'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '饮食搭配'
     })
 
@@ -46,9 +45,9 @@ class PrivateRecommendScreen extends Component {
         return (
             <View
                 style={{
-                    height: 1,
+                    height: 2,
                     width: "100%",
-                    backgroundColor: "#d9d7e8",
+                    backgroundColor: "#EEE",
                 }}
             />
         );
@@ -76,54 +75,27 @@ class PrivateRecommendScreen extends Component {
         return (
 
             <ScrollView style={styles.MainContainer}>
-                <Text>热门推荐</Text>
-                <Swiper style={styles.wrapper} showsButtons={false} height={150}>
-                    <View style={styles.slide1}>
-                        <Image
-                            source={require('../../../../image/food_back.jpg')}
-                            style={{
-                                width: Dimensions.get('window').width,
-                                height: 150
-                            }}/>
-                    </View>
-                    <View style={styles.slide2}>
-                        <Text style={styles.text}>Beautiful</Text>
-                    </View>
-                    <View style={styles.slide3}>
-                        <Text style={styles.text}>And simple</Text>
-                    </View>
-                </Swiper>
                 <View>
                     <FlatList
                         data={this.state.dataSource}
                         ItemSeparatorComponent={this.FlatListItemSeparator}
                         renderItem={({item}) => (
-
                             <View style={styles.item}>
-                                <Text style={styles.title} onPress={
-                                    () => navigate('ArticleDetail', {id: item.id})
-                                }>
-                                    {item.type == undefined ? '【分享】' : item.type}{item.title}
-                                </Text>
-                                <Text style={styles.content}>{item.content}</Text>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    flex: 1,
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'center',
-                                    height: 40
-                                }}>
-                                    <TouchableOpacity>
-                                        <Image source={require('../../../../image/forum/like.png')}
-                                               style={styles.smallIcon}
-                                        />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Image source={require('../../../../image/forum/restore.png')}
-                                               style={styles.smallIcon}
-                                        />
-                                    </TouchableOpacity>
+                                <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 5}}
+                                       source={{uri: item.img[0]}}/>
+                                <View style={{paddingLeft: 10}}>
+                                    <Text
+                                        numberOfLines={1}
+                                        style={{
+                                            marginTop: 10,
+                                            fontWeight: 'bold',
+                                            width: 200
+                                        }} onPress={() => {
+                                        navigate('ArticleDetail', {id: item.id})
+                                    }}>{item.title}</Text>
+                                    <Text style={styles.content} numberOfLines={3}>{item.content}</Text>
                                 </View>
+
                             </View>)
                         }
                         keyExtractor={(item, index) => index}
@@ -146,6 +118,7 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginLeft: 10,
         marginRight: 10,
+        flexDirection: 'row'
     },
     avatar: {
         marginLeft: 5,
@@ -170,14 +143,14 @@ const styles = StyleSheet.create({
         color: '#a19fa9'
     },
     content: {
-        marginLeft: 5,
         fontSize: 12,
-        color: '#495863',
-        marginBottom: 10
+        color: '#545454',
+        marginTop: 10,
+        width: 200
     },
     smallIcon: {
-        width: 20,
-        height: 20,
+        width: 25,
+        height: 25,
         marginRight: 12
     },
 

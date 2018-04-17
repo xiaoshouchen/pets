@@ -7,7 +7,8 @@ import {TabNavigator, StackNavigator} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Feather';
 import {GET_PRODUCTS} from "../../config/api";
 import Swiper from 'react-native-swiper';
-import Dimensions from 'Dimensions'
+import Dimensions from 'Dimensions';
+import App from '../../utils/app.core';
 
 class StoreScreen extends Component {
     constructor(props) {
@@ -58,9 +59,7 @@ class StoreScreen extends Component {
 
     static navigationOptions = ({navigation}) => ({
         tabBarLabel: "商城",
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#fb8c00'},
+        ...App.commonHeaderStyle,
         headerRight: <Icon
             onPress={() => navigation.navigate('ShoppingCart')}
             name='shopping-cart'

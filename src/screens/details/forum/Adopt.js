@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import {Button, CheckBox} from "react-native-elements";
 import DatePicker from "react-native-datepicker";
+import App from '../../../utils/app.core';
 
 class AdoptScreen extends Component {
 
@@ -19,9 +20,7 @@ class AdoptScreen extends Component {
     }
     static navigationOptions = {
         tabBarLabel: "萌宠",
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '领养',
     };
     callBack(item) {
