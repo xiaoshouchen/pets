@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: '#ebaa19',
-        color: '#FFF'
     }
 })
 

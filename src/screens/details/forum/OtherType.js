@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import Text from "react-native-elements/src/text/Text";
 import {ActivityIndicator, FlatList, TouchableOpacity, View} from "react-native";
-class OtherTypeScreen extends Component{
+import {GET_OTHER_TYPES} from "../../../config/api";
+import App from '../../../utils/app.core';
+
+class OtherTypeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -10,28 +13,29 @@ class OtherTypeScreen extends Component{
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '宠物品种',
         tabBarLabel: '其它',
     }
 
     componentDidMount() {
-
-        return fetch('http://123.207.217.225/api/pets/type/other')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson
-                }, function () {
-                    // In this block you can do something with new state.
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            fetch(`${GET_OTHER_TYPES}?user_id=${data.user_id}&token=${data.token}`)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                        isLoading: false,
+                        dataSource: responseJson
+                    }, function () {
+                        // In this block you can do something with new state.
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
+
     }
 
     FlatListItemSeparator = () => {
@@ -46,24 +50,33 @@ class OtherTypeScreen extends Component{
         );
     }
 
-    render(){
+    render() {
         if (this.state.isLoading) {
             return (
-                <View style={{ flex: 1, paddingTop: 20 }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
-        const { state, goBack } = this.props.navigation;
-        return(
+        const {state, goBack} = this.props.navigation;
+        return (
             <View>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) => (
-                        <TouchableOpacity onPress={() => {state.params.callBack(item);goBack(null);goBack(null)}}>
+                        <TouchableOpacity onPress={() => {
+                            state.params.callBack(item);
+                            goBack(null);
+                            goBack(null)
+                        }}>
                             <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                                <Text style={{flexDirection: 'row', backgroundColor: 'white', height: 25, alignItems: 'center'}}>{item.name}</Text>
+                                <Text style={{
+                                    flexDirection: 'row',
+                                    backgroundColor: 'white',
+                                    height: 25,
+                                    alignItems: 'center'
+                                }}>{item.name}</Text>
                             </View>
                         </TouchableOpacity>)
                     }

@@ -1,37 +1,44 @@
 import React, {Component} from 'react'
 import {ActivityIndicator, FlatList, TouchableOpacity, View, Text} from "react-native";
 import {GET_CAT_TYPES} from "../../../config/api";
-class CatTypeScreen extends Component{
+import App from '../../../utils/app.core';
+
+class CatTypeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true
         }
     }
-    static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
-        title: '宠物品种',
-        tabBarLabel: '猫',
-    }
-    componentDidMount() {
 
-        return fetch(GET_CAT_TYPES)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    dataSource: responseJson
-                }, function () {
-                    // In this block you can do something with new state.
+    static navigationOptions = {
+        ...App.commonHeaderStyle,
+        title: '宠物品种'
+        ,
+        tabBarLabel: '猫'
+        ,
+    }
+
+    componentDidMount() {
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            fetch(`${GET_CAT_TYPES}?user_id=${data.user_id}&token=${data.token}`)
+                .then((response) => response.json())
+                .then((responseJson) => {
                     this.setState({
-                        isLoading: false,
-                    })
+                        dataSource: responseJson
+                    }, function () {
+                        // In this block you can do something with new state.
+                        this.setState({
+                            isLoading: false,
+                        })
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
+
     }
 
     FlatListItemSeparator = () => {
@@ -72,8 +79,13 @@ class CatTypeScreen extends Component{
                                 state.params.callBack(item);
                                 goBack(null)
                             }}>
-                                <View style={{flexDirection: 'row', backgroundColor: 'white', height: 25, alignItems: 'center'}}>
-                                    <Text style={{fontSize:14}}>{item.name}</Text>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    backgroundColor: 'white',
+                                    height: 25,
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{fontSize: 14}}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         }

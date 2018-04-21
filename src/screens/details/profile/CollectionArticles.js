@@ -3,8 +3,9 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, AsyncStorage
 } from 'react-native';
-import {Icon} from 'react-native-elements'
 import {MY_RESTORES} from '../../../config/api';
+import App from '../../../utils/app.core';
+import Dimensions from 'Dimensions';
 
 class CollectionArticlesScreen extends Component {
 
@@ -17,10 +18,8 @@ class CollectionArticlesScreen extends Component {
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
-        title: '收藏',
+        headerTitle: '文章收藏',
+        ...App.commonHeaderStyle,
     };
 
     componentDidMount() {
@@ -47,7 +46,7 @@ class CollectionArticlesScreen extends Component {
         return fetch(MY_RESTORES + '?user_id=' + user_id + '&token=' + token)
             .then((response) => response.json())
             .then((responseJson, key) => {
-                if (responseJson.code == 200) {
+                if (responseJson.code === 200) {
                     this.setState({
                         isLoading: false,
                         dataSource: responseJson.data
@@ -68,15 +67,20 @@ class CollectionArticlesScreen extends Component {
         return (
             <View
                 style={{
-                    height: 1,
+                    height: 5,
                     width: "100%",
-                    backgroundColor: "#d9d7e8",
+                    //backgroundColor: "#EEE",
                 }}
             />
         );
     }
 
+    ExtraUniqueKey(item, index) {
+        return "index" + index + item;
+    }
+
     render() {
+        const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
             return (<ActivityIndicator style={{paddingTop: 120}}/>);
         }
@@ -86,15 +90,14 @@ class CollectionArticlesScreen extends Component {
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     keyExtractor={this.ExtraUniqueKey}
-                    renderItem={({item,index}) => (
+                    renderItem={({item, index}) => (
                         <View style={styles.item}>
-                            <TouchableOpacity onPress={() => navigate('Information')}>
+                            <Image style={styles.image} source={{uri: item.img}}/>
+                            <TouchableOpacity onPress={() => navigate('ArticleDetail', {id: item.article_id})}>
                                 <View style={styles.itemView}>
                                     <View style={styles.itemView}>
-                                        <Image style={styles.avatar} source={{uri: item.avatar_img}}/>
-                                        <View>
-                                            <Text style={{fontSize: 16, marginLeft: 20}}>{item.author_name}</Text>
-                                            <Text>{item.title}</Text>
+                                        <View style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                                            <Text style={styles.title}>{item.title}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -108,42 +111,40 @@ class CollectionArticlesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    headingContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 40,
-        backgroundColor: '#05a7dc',
-    },
-    main: {
-        backgroundColor: '#fff',
-        justifyContent: 'flex-start',
-        flex: 1
-    },
-    item: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingLeft: 20,
-        paddingTop: 12,
-        paddingBottom: 12,
-        paddingRight: 15,
-    },
-    heading: {
-        color: 'white',
-        marginTop: 10,
-        fontSize: 22,
-    },
-    labelContainerStyle: {
-        marginTop: 8,
-    },
-    itemView: {
-        flexDirection: 'row'
-    },
-    avatar: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
+        main: {
+            backgroundColor: '#fff',
+            justifyContent: 'flex-start',
+            flex: 1
+        },
+        item: {
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+        },
+        heading: {
+            color: 'white',
+            marginTop: 10,
+            fontSize: 22,
+        },
+        labelContainerStyle: {
+            marginTop: 8,
+        },
+        itemView: {
+            flexDirection: 'row'
+        },
+        title: {
+            fontWeight: 'bold',
+            width: Dimensions.get('window').width * 0.6,
+            lineHeight: 25
 
-    }
-});
+        },
+        image: {
+            height: Dimensions.get('window').width * 0.2,
+            width: Dimensions.get('window').width * 0.3,
+            marginHorizontal: 10,
+            marginVertical: 8,
+            borderRadius: 5
+        }
+    })
+;
 export {CollectionArticlesScreen}

@@ -45,6 +45,7 @@ export const GET_USER_PROFILE = `${BASE_URL}/api/profile/user`
 export const MY_FOLLOWS = `${BASE_URL}/api/follows`;
 export const MY_FANS = `${BASE_URL}/api/fans`;
 export const MY_RESTORES = `${BASE_URL}/api/restores`;
+export const MY_RECENT = `${BASE_URL}/api/recent`;
 export const CHANGE_PROFILE = `${BASE_URL}/api/profile/change`;
 export const CHANGE_AVATAR = `${BASE_URL}/api/avatar/change`;
 
@@ -61,3 +62,4 @@ export const ADD_NOTICE = `${BASE_URL}/api/notice/add`
 export const LOGIN = `${BASE_URL}/api/login`;
 export const SEND_MESSAGE_CODE = `${BASE_URL}/api/sendmessage/`;
 export const REGISTER = `${BASE_URL}/api/register`;
+export const UPDATE = `${BASE_URL}/api/update`;//查询更新

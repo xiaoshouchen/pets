@@ -19,7 +19,7 @@ class MessageScreen extends Component {
         tabBarLabel: " ",
         showLabel: false,
         header: null,
-        tabBarIcon:<Image source={require('../../image/plus.png')} style={{width:48,height:48}}/>
+        tabBarIcon: <Image source={require('../../image/plus.png')} style={{width: 48, height: 48}}/>
     }
 
     render() {
@@ -27,7 +27,7 @@ class MessageScreen extends Component {
             <View style={styles.mainView}>
                 <View style={styles.topic}>
                     <View>
-                        <Text>捏捏宠</Text>
+                        <Text style={{fontSize: 24, marginVertical: 20}}>捏捏宠</Text>
                     </View>
                     <View>
                         <Text>高质量的宠物社区</Text>
@@ -50,13 +50,13 @@ class MessageScreen extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => StartRecord.start()}>
-                            <View style={styles.main}>
-                                <Image style={styles.imageView} source={require('../../image/post/video.png')}/>
-                                <Text style={styles.nameView}>视频</Text>
-                                <Text style={styles.textView}>拍摄生活点滴</Text>
-                            </View>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity onPress={() => StartRecord.start()}>*/}
+                            {/*<View style={styles.main}>*/}
+                                {/*<Image style={styles.imageView} source={require('../../image/post/video.png')}/>*/}
+                                {/*<Text style={styles.nameView}>视频</Text>*/}
+                                {/*<Text style={styles.textView}>拍摄生活点滴</Text>*/}
+                            {/*</View>*/}
+                        {/*</TouchableOpacity>*/}
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('AddArticle', {type_id: 3})}>
                             <View style={styles.main}>
                                 <Image style={styles.imageView} source={require('../../image/post/diary.png')}/>

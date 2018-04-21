@@ -18,20 +18,23 @@ class DogTypeScreen extends Component {
     }
 
     componentDidMount() {
-
-        return fetch(GET_DOG_TYPES)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson
-                }, function () {
-                    // In this block you can do something with new state.
+        let userInfo=App.getUserInfo();
+        userInfo.then((data)=>{
+            fetch(`${GET_DOG_TYPES}?user_id=${data.user_id}&token=${data.token}`)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                        isLoading: false,
+                        dataSource: responseJson
+                    }, function () {
+                        // In this block you can do something with new state.
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
+
     }
 
     FlatListItemSeparator = () => {

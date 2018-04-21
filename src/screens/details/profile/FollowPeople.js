@@ -3,7 +3,7 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, AsyncStorage
 } from 'react-native';
-import {Icon} from 'react-native-elements'
+import App from '../../../utils/app.core';
 import {MY_FOLLOWS} from "../../../config/api";
 
 class FollowPeopleScreen extends Component {
@@ -16,9 +16,7 @@ class FollowPeopleScreen extends Component {
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '关注',
     }
 

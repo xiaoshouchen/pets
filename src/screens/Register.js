@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Alert, AsyncStorage} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    Alert,
+    AsyncStorage,
+    Image,
+    Dimensions
+} from 'react-native';
+import {Button} from 'react-native-elements';
 import App from "../utils/app.core";
 import {SEND_MESSAGE_CODE, REGISTER} from "../config/api";
 
@@ -23,10 +33,8 @@ class RegisterScreen extends Component {
     }
 
     static navigationOptions = () => ({
-        title: '注册小宠乐园',
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerTitle: '注册捏捏宠',
+        ...App.commonHeaderStyle
     })
 
     _sendMessageCode(phone) {
@@ -35,7 +43,6 @@ class RegisterScreen extends Component {
 
     _register() {
         let formData = new FormData();
-        //alert(LOGIN);
         formData.append('phone', this.state.phone);
         formData.append('password', this.state.password);
         formData.append('code', this.state.code);
@@ -47,7 +54,7 @@ class RegisterScreen extends Component {
             body: formData,
         }).then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson.code == 200) {
+                if (responseJson.code === 200) {
                     let user_id = responseJson.user_id;
                     let token = responseJson.token;
                     let refresh_token = responseJson.refresh_token;
@@ -55,7 +62,6 @@ class RegisterScreen extends Component {
 
                     AsyncStorage.setItem("login", login)
                         .then(() => {
-                            //this.props.navigation.state.params.checkIsLogin();
                             this.props.navigation.goBack('Profile');
                         }).catch((error) => alert('error'))
                 }
@@ -68,28 +74,6 @@ class RegisterScreen extends Component {
             }).catch((error) => alert(error));
     }
 
-    // handleClick() {
-    //     return alert(this.state.phone);
-    //     let data = {
-    //         phone: this.state.phone,
-    //         password: this.state.password
-    //     }
-    //     fetch('', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    //         .then(function (data) {
-    //             console.log('request succeeded with JSON response', data)
-    //         })
-    //         .catch(function (error) {
-    //             console.log('request failed', error)
-    //         })
-    // }
-    // ;
 
     clickTimer() {
         if (this.state.liked) {
@@ -115,7 +99,6 @@ class RegisterScreen extends Component {
 
     render() {
         let text = this.state.liked ? '获取验证码' : this.state.count + '秒后重发';
-        let hintMessage = this.state.usePhone ? "使用邮箱注册" : "使用手机号注册";
         let waitButton = this.state.usePhone ? <View style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -129,7 +112,7 @@ class RegisterScreen extends Component {
                 style={styles.input}
                 placeholder="手机验证码"
                 secureTextEntry={true}
-                maxLength={16}
+                maxLength={6}
                 onChangeText={(text) => {
                     this.setState({code: {text}.text}, () => {
                         if (this.state.phone.length == 11 && this.state.password.length >= 6 && this.state.password == this.state.repassword && this.state.code.length == 6) {
@@ -147,11 +130,19 @@ class RegisterScreen extends Component {
                 onPress={() => {
                     this.clickTimer()
                 }}
+                buttonStyle={{backgroundColor: '#ff7816'}}
             />
         </View> : null;
         return (
             <View style={{alignItems: 'center'}}>
                 <View style={{alignItems: 'center', marginTop: 80}}>
+                    <Image source={require('../image/banner.png')}
+                           style={{
+                               width: Dimensions.get('window').width / 2,
+                               height: Dimensions.get('window').width / 8,
+                               justifyContent: 'center',
+                               marginTop: -20, marginBottom: 30
+                           }}/>
                     <View style={{
                         height: 50,
                         flexDirection: 'row',
@@ -159,6 +150,7 @@ class RegisterScreen extends Component {
                         marginLeft: 15,
                         marginRight: 15
                     }}>
+
                         <TextInput
                             underlineColorAndroid={'transparent'}
                             style={styles.input}
@@ -244,7 +236,7 @@ class RegisterScreen extends Component {
                     }}
                     title="注册"
                     buttonStyle={{
-                        backgroundColor: '#44a3ff',
+                        backgroundColor: '#ff7a17',
                         borderRadius: 10,
                         marginTop: 20,
                         width: 300,
@@ -257,12 +249,6 @@ class RegisterScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    headingContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 40,
-        backgroundColor: '#00B233',
-    },
     heading: {
         color: 'white',
         marginTop: 10,

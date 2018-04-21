@@ -3,9 +3,8 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, AsyncStorage
 } from 'react-native';
-import {Icon} from 'react-native-elements'
 import {MY_FANS} from "../../../config/api";
-import {InformationScreen} from "./PrivateInformation";
+import App from '../../../utils/app.core';
 
 class FanScreen extends Component {
 
@@ -17,12 +16,9 @@ class FanScreen extends Component {
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
-        title: '粉丝',
+        ...App.commonHeaderStyle,
+        headerBackTitle: '',
+        headerTitle: '粉丝',
     }
 
     componentDidMount() {
@@ -60,6 +56,7 @@ class FanScreen extends Component {
                 console.error(error);
             });
     }
+
     FlatListItemSeparator = () => {
         return (
             <View
@@ -71,6 +68,7 @@ class FanScreen extends Component {
             />
         );
     }
+
     render() {
         const {navigate} = this.props.navigation;
         if (this.state.isLoading) {
@@ -91,7 +89,7 @@ class FanScreen extends Component {
                                     <View style={styles.itemView}>
                                         <Image style={styles.avatar} source={{uri: item.avatar_img}}/>
                                         <View style={{justifyContent: 'space-around'}}>
-                                            <Text style={{fontSize: 16,marginLeft:20}}>{item.name}</Text>
+                                            <Text style={{fontSize: 16, marginLeft: 20}}>{item.name}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -114,17 +112,17 @@ const styles = StyleSheet.create({
     },
     main: {
         backgroundColor: '#fff',
-        justifyContent:'flex-start',
-        flex:1
+        justifyContent: 'flex-start',
+        flex: 1
     },
     item: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingLeft:20,
-        paddingTop:12,
-        paddingBottom:12,
-        paddingRight:15,
+        paddingLeft: 20,
+        paddingTop: 12,
+        paddingBottom: 12,
+        paddingRight: 15,
     },
     heading: {
         color: 'white',

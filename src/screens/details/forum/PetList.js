@@ -12,7 +12,9 @@ class PetList extends Component {
         super(props);
         this.state = {
             isLoading: true,
-            refreshing: false
+            refreshing: false,
+            isLogin: false
+
         }
     }
 
@@ -24,15 +26,14 @@ class PetList extends Component {
 
     componentDidMount() {
         AsyncStorage.getItem('login').then((result) => {
-            //alert(result);
-            if (result == null) {
-                this.setState({login: {token: '', user_id: ''}})
+            if (result === null) {
+                this.setState({login: {token: '', user_id: ''}});
             }
             else {
-                this.setState({login: result}, function () {
+                this.setState({login: result, isLogin: true}, function () {
                     let json = JSON.parse(this.state.login);
-                    console.log(json)
-                    this.getData(json.user_id);
+                    //console.log(json);
+                    this.getData(json.user_id, json.token);
                 });
             }
 
@@ -42,8 +43,8 @@ class PetList extends Component {
 
     }
 
-    getData(user_id) {
-        return fetch(GET_PETS + '?user_id=' + user_id)
+    getData(user_id, token) {
+        return fetch(`${GET_PETS}?user_id=${user_id}&token=${token}`)
             .then((response) => response.json())
             .then((responseJson, key) => {
                 this.setState({
@@ -92,6 +93,14 @@ class PetList extends Component {
     }
 
     render() {
+        const {navigate, goBack} = this.props.navigation;
+        if (this.state.isLogin === false) {
+            return (
+                <View>
+                    <Text>请您先登陆</Text>
+                </View>
+            )
+        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
@@ -99,7 +108,7 @@ class PetList extends Component {
                 </View>
             );
         }
-        const {navigate} = this.props.navigation;
+
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -134,7 +143,7 @@ class PetList extends Component {
                     />
                 </View>
                 <Button buttonStyle={{
-                    backgroundColor: '#4fc3f7',
+                    backgroundColor: '#ff7816',
                     borderRadius: 10,
                     marginTop: 40,
                     marginBottom: 40,

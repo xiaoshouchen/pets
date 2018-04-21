@@ -4,9 +4,9 @@ import {AsyncStorage} from 'react-native';
 let currentRequest = {};
 const App = {
     config: {
-        api: 'your hosst',
         // app 版本号
         version: 1.1,
+        number: 1,
         debug: 1,
     },
     commonHeaderStyle: {

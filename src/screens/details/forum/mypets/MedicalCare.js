@@ -3,7 +3,6 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import {GET_ARTICLES} from '../../../../config/api';
 import App from '../../../../utils/app.core';
 
@@ -12,7 +11,7 @@ class MedicalCareScreen extends Component {
     static navigationOptions = {
         tabBarLabel: "萌宠",
         ...App.commonHeaderStyle,
-        title: '医疗',
+        title: '医疗卫生',
     };
 
     constructor(props) {

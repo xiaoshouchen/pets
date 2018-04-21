@@ -3,39 +3,46 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, Image, TouchableOpacity, RefreshControl
 } from 'react-native';
-import {GET_ARTICLES} from "../../../config/api";
+import {MY_RECENT} from "../../../config/api";
+import App from "../../../utils/app.core";
 
 class PostScreen extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            dataSource: [],
         }
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
-        headerStyle: {backgroundColor: '#44a3ff'},
-        title: '文章',
+        ...App.commonHeaderStyle,
+        title: '我的动态',
     }
 
     componentDidMount() {
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            fetch(`${MY_RECENT}?user_id=${data.user_id}&token=${data.token}`)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    if (responseJson.code === 200) {
+                        this.setState({
+                            isLoading: false,
+                            dataSource: responseJson.data
+                        }, function () {
+                            // In this block you can do something with new state.
+                            alert(this.state.dataSource);
+                        });
+                    }
 
-        return fetch(GET_ARTICLES + 1)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson
-                }, function () {
-                    // In this block you can do something with new state.
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
+
     }
 
     FlatListItemSeparator = () => {
@@ -50,21 +57,20 @@ class PostScreen extends Component {
         );
     }
 
-    render(){
+    render() {
         if (this.state.isLoading) {
-            console.log(this.state.dataSource);
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
                     <ActivityIndicator/>
                 </View>
             );
         }
-        return(
+        return (
             <View style={{backgroundColor: 'white'}}>
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                    <Image style={styles.avatar} source={{uri:'http://123.207.217.225/img/1/tx.jpg'}}/>
+                    <Image style={styles.avatar} source={{uri: 'http://123.207.217.225/img/1/tx.jpg'}}/>
                     <Text style={styles.userName}>管理员</Text>
-                    <Image style={styles.male} />
+                    <Image style={styles.male}/>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center', height: 80, justifyContent: 'space-around'}}>
                     <TouchableOpacity tyle={{flex: 1}} onPress={() => this.componentDidMount()}>
@@ -90,26 +96,18 @@ class PostScreen extends Component {
                 </View>
                 <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>
                 <FlatList
-
                     data={this.state.dataSource}
-
                     ItemSeparatorComponent={this.FlatListItemSeparator}
-
                     renderItem={({item}) => (
                         <View style={styles.item}>
                             <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
                                 <View>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.date}>{item.created_at}</Text>
+                                    <Text style={styles.name}>{item.title}</Text>
                                 </View>
                             </View>
-                            <Text style={styles.title} onPress={
-                                () => this.props.navigation.navigate('ArticleDetail', {id: item.id})
-                            }>
-                                {item.type == undefined ? '【分享】' : item.type}{item.title}
+                            <Text style={styles.title}
+                                  onPress={() => this.props.navigation.navigate('ArticleDetail', {id: item.id})}>
                             </Text>
-                            <Text style={styles.content}>{item.content}</Text>
                         </View>)
 
                     }
@@ -149,17 +147,17 @@ const styles = StyleSheet.create({
     },
     date: {
         marginTop: 4,
-        fontSize:10,
-        color:'#a19fa9'
+        fontSize: 10,
+        color: '#a19fa9'
     },
-    userName:{
-        fontSize:15,
-        color:'#333'
+    userName: {
+        fontSize: 15,
+        color: '#333'
     },
-    male:{
-        marginLeft:5,
-        height:15,
-        width:15
+    male: {
+        marginLeft: 5,
+        height: 15,
+        width: 15
     },
 })
 

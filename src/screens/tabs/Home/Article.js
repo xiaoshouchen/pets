@@ -8,9 +8,6 @@ import {GET_ARTICLES, LIKE, RESTORE} from "../../../config/api";
 import Dimensions from 'Dimensions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 
-let pageNo = 1;//当前第几页
-let totalPage = 5;//总的页数
-let itemNo = 0;//item的个数
 class ArticleScreen extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +20,8 @@ class ArticleScreen extends Component {
             restore_url: '../../../image/forum/restore.png',
             restored_url: '../../../image/forum/restored.png',
             login: "",
+            pageNo: 1,
+            totalPage: 1
         }
         this._getData = this._getData.bind(this);
         this._like = this._like.bind(this);
@@ -30,7 +29,7 @@ class ArticleScreen extends Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        title: '文章',
+        title: '精选',
     })
 
     componentDidMount() {
@@ -107,7 +106,6 @@ class ArticleScreen extends Component {
             },
             body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
-            //alert(responeJson.message);
             let message = data[index].isrestore ? "   收藏成功   " : "   取消收藏   ";
             this.refs.toast.show(message);
         }).catch((e) => alert(e));
@@ -115,15 +113,19 @@ class ArticleScreen extends Component {
     }
 
     _getData(_pageNo, user_id) {
-        fetch(GET_ARTICLES + _pageNo + "&user_id=" + user_id)
+        fetch(`${GET_ARTICLES}${_pageNo}&user_id${user_id}&type_id=5`)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: _pageNo === 1 ? responseJson : this.state.dataSource.concat(responseJson)
-                }, function () {
-                    // In this block you can do something with new state.
-                });
+                if (responseJson.code === 200) {
+                    this.setState({
+                        totalPage: responseJson.totalPageNo,
+                        isLoading: false,
+                        dataSource: _pageNo === 1 ? responseJson.data : this.state.dataSource.concat(responseJson.data)
+                    }, function () {
+                        // In this block you can do something with new state.
+                    });
+                }
+
             })
             .catch((error) => {
                 console.error(error);
@@ -136,15 +138,15 @@ class ArticleScreen extends Component {
             return;
         }
         //如果当前页大于或等于总页数，那就是到最后一页了，返回
-        if ((pageNo != 1) && (pageNo >= totalPage)) {
+        if ((this.state.pageNo != 1) && (this.pageNo >= this.state.totalPage)) {
             return;
         } else {
-            pageNo++;
+            this.setState({pageNo: this.state.pageNo + 1});
         }
         //底部显示正在加载更多数据
         //this.setState({showFoot: 2});
         //获取数据
-        this._getData(pageNo);
+        this._getData(this.state.pageNo);
     }
 
     _onRefresh() {
@@ -154,7 +156,7 @@ class ArticleScreen extends Component {
             .then((responseJson) => {
                 //alert(responseJson[0].id+"    "+this.state.dataSource[0].id);
                 //alert();
-                if (responseJson[0].id == this.state.dataSource[0].id) {
+                if (responseJson.data[0].id == this.state.dataSource[0].id) {
                     this.articles.refreshing = false;
                     return;
                 } else {
@@ -195,9 +197,9 @@ class ArticleScreen extends Component {
         }
         if (this.state.isLoading) {
             return (
-                <View style={{flex: 1, paddingTop: 20}}>
+                <View style={{flex: 1, paddingTop: 20, alignItems: 'center'}}>
                     <ActivityIndicator/>
-                    <Text>文章加载中</Text>
+                    <Text style={styles.loading}>文章加载中</Text>
                 </View>
             );
         }

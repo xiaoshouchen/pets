@@ -30,7 +30,6 @@ class SelectionScreen extends Component {
             scrollY: new Animated.Value(0),
             currentContent: 'recommends',//当前的状态
             currentData: [],//显示的数据来源
-            PetsData: '',
             isRefreshing: false,
             isbold: 1
         }
@@ -77,10 +76,27 @@ class SelectionScreen extends Component {
     componentDidMount() {
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
-            if (result == null) {
-                this.setState({login: {token: '', user_id: ''}});
-                this._getPetData(0, 0)
+            if (result === null || result === '') {
+                this.setState({
+                    login: {token: '', user_id: ''}, PetLists:
+                        [{
+                            birthday: "",
+                            sex: null,
+                            id: 0,
+                            typename: "添加宠物获取宠物专属知识",
+                            name: "请登录",
+                            small_type_id: 0,
+                            avatar: "",
+                            sexText: "",
+                            old: ""
+                        }]
+                }, () => {
+                    this._getCurrentShowData(0, 0, 0);
+
+                });
+                // this._getPetData(0, 0)
                 //如果没有登陆,则显示没有登陆
+
             }
             else {
                 this.setState({login: result}, function () {
@@ -103,11 +119,11 @@ class SelectionScreen extends Component {
 
 
     _getPetData(user_id, token) {
-        fetch(GET_PETS + '?user_id=' + user_id)
+        fetch(`${GET_PETS}?user_id=${user_id}&token=${token}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    PetsData: responseJson, PetLists: responseJson
+                    PetLists: responseJson
                 }, function () {
                     this._getCurrentShowData(user_id, token, this.state.pet_id);
 
@@ -178,7 +194,7 @@ class SelectionScreen extends Component {
                     />}
             >
                 <StatusBar
-                    backgroundColor='#4fc3f7'
+                    backgroundColor='#fb8c00'
                     barStyle="light-content"
                 />
                 <View style={styles.top}>
@@ -194,6 +210,7 @@ class SelectionScreen extends Component {
                             {
                                 this.state.PetLists.map((pet, i) => {
                                     let sex = pet.sex === 0 ? require('../../image/female.png') : require('../../image/male.png');
+                                    let avatar = pet.avatar === '' ? require('../../image/avatar/default.png') : {uri: pet.avatar};
                                     return (
                                         <View style={styles.petImageView}
                                               key={i}>
@@ -203,7 +220,7 @@ class SelectionScreen extends Component {
                                                 alignItems: 'center'
                                             }}>
                                                 <Image style={styles.petImage}
-                                                       source={{uri: pet.avatar}}>
+                                                       source={avatar}>
                                                 </Image>
                                                 <View>
                                                     <View style={{flexDirection: 'row'}}>
@@ -406,6 +423,7 @@ class SelectionScreen extends Component {
                                                 numberOfLines={2}
                                                 style={{
                                                     marginTop: 10,
+                                                    width: 200,
                                                     fontWeight: 'bold'
                                                 }} onPress={() => {
                                                 navigate('ArticleDetail', {id: item.id})

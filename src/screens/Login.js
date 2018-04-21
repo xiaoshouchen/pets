@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, AsyncStorage, Alert, Image, ImageBackground, Platform} from 'react-native';
-import {Card, PricingCard, ListItem, Button} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import App from '../utils/app.core'
 import {LOGIN} from '../config/api'
 import Dimensions from 'Dimensions'
@@ -30,7 +30,7 @@ class LoginScreen extends Component {
             body: formData,
         }).then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson.code == 200) {
+                if (responseJson.code === 200) {
                     let user_id = responseJson.user_id;
                     let token = responseJson.token;
                     let refresh_token = responseJson.refresh_token;
@@ -52,10 +52,8 @@ class LoginScreen extends Component {
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerTitle: "登陆小宠",
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        headerTitle: "登陆捏捏宠",
+        ...App.commonHeaderStyle
     };
 
     render() {
@@ -67,9 +65,10 @@ class LoginScreen extends Component {
                 <View>
                     <Image source={require('../image/banner.png')}
                            style={{
-                               width: Dimensions.get('window').width / 3,
-                               height: Dimensions.get('window').width / 3,
+                               width: Dimensions.get('window').width / 2,
+                               height: Dimensions.get('window').width / 8,
                                justifyContent: 'center',
+                               marginTop: -20, marginBottom: 30
                            }}/>
                 </View>
                 <View>
@@ -121,7 +120,7 @@ class LoginScreen extends Component {
                         onPress={() =>
                             this._login()
                         }
-                        buttonStyle={{width: 300, borderRadius: 20, marginBottom: 10, backgroundColor: '#43A0F8'}}
+                        buttonStyle={{width: 300, borderRadius: 20, marginBottom: 10, backgroundColor: '#ee7316'}}
                         title="登陆"
                     />
 

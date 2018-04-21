@@ -81,11 +81,11 @@ class ProfileScreen extends Component {
     }
 
     _getPetData(user_id, token) {
-        if (user_id == '' || user_id == null) {
+        if (user_id === '' || user_id == null) {
             user_id = this.state.login.user_id;
             //this._getData(user_id);
         }
-        fetch(GET_PETS + '?user_id=' + user_id)
+        fetch(`${GET_PETS}?user_id=${user_id}&token=${token}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -133,22 +133,31 @@ class ProfileScreen extends Component {
             return (
                 <View style={{
                     alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    paddingTop: Dimensions.get('window').height / 4
+                    justifyContent: 'center',
+                    flex: 1,
+                    backgroundColor: '#FFF',
                 }}>
                     <Image source={require('../../image/banner.png')}
                            style={{
                                width: Dimensions.get('window').width / 2,
-                               height: Dimensions.get('window').width / 2,
-                               justifyContent: 'center',
+                               height: Dimensions.get('window').width / 8,
+                               marginTop: -20, marginBottom: 30
                            }}/>
+
+                    <Text style={{
+                        fontSize: 24,
+                        fontWeight: 'normal',
+                        textAlign: 'center',
+                        paddingBottom: 30
+                    }}>让宠物与我更亲近</Text>
                     <Button title='请登陆'
                             onPress={() => this.props.navigation.navigate('Login', {checkIsLogin: () => this.checkIsLogin()})}
                             buttonStyle={{
-                                backgroundColor: '#4fc3f7',
+                                backgroundColor: '#fb8c00',
                                 borderRadius: 10,
                                 width: Dimensions.get('window').width / 3 * 2,
                             }}/>
+
                 </View>
             );
         }
@@ -176,22 +185,23 @@ class ProfileScreen extends Component {
                         <View style={styles.topLeft}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Personal')}>
                                 <Image style={styles.image}
-                                       source={{uri: this.state.info.avatar_img}}></Image>
+                                       source={{uri: this.state.info.avatar_img}}/>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.topRight}>
                             <View style={{justifyContent: 'space-around', marginLeft: 15}}>
-                                <View style={{flexDirection: 'row'}}><Text
-                                    style={{fontWeight: 'bold'}}>{this.state.info.name}</Text><Text
-                                    style={{
-                                        backgroundColor: '#23bfee',
-                                        opacity: 50,
-                                        borderRadius: 10,
-                                        marginLeft: 10,
-                                        paddingHorizontal: 10,
-                                        color: 'white'
-                                    }}>LV
-                                    1</Text></View>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text
+                                        style={{fontWeight: 'bold'}}>{this.state.info.name}</Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#ebaa19',
+                                            opacity: 50,
+                                            borderRadius: 10,
+                                            marginLeft: 10,
+                                            paddingHorizontal: 10,
+                                            color: 'white'
+                                        }}>LV {this.state.info.points / 100}</Text></View>
                                 <Text>简介： {this.state.info.desc}</Text>
                             </View>
                         </View>

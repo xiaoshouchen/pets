@@ -3,7 +3,6 @@ import {
     StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image, ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import {GET_ARTICLES} from '../../../../config/api';
 import App from '../../../../utils/app.core';
 
@@ -13,7 +12,7 @@ class ItemScreen extends Component {
     static navigationOptions = {
         tabBarLabel: "萌宠",
         ...App.commonHeaderStyle,
-        title: '用品',
+        title: '用品使用',
     };
 
     constructor(props) {

@@ -15,7 +15,8 @@ class ArticleDetail extends Component {
         this.state = {
             content: '',
             article_id: this.props.navigation.state.params.id,
-            login: {user_id: '', token: ''}
+            login: {user_id: '', token: ''},
+            editable: false,
         }
         this.follow = this.follow.bind(this);
         this.postMessage = this.postMessage.bind(this);
@@ -56,8 +57,13 @@ class ArticleDetail extends Component {
                 this.setState({login: {token: '', user_id: ''}})
             }
             else {
-                let json = JSON.parse(result);
-                this.setState({login: {user_id: json.user_id, token: json.token}})
+                try {
+                    let json = JSON.parse(result);
+                    this.setState({login: {user_id: json.user_id, token: json.token}, editable: true})
+                } catch (e) {
+                    console.log(e);
+                }
+
             }
 
         }).catch((e) => {
@@ -66,7 +72,7 @@ class ArticleDetail extends Component {
     }
 
     reply() {
-        if (this.isClick == false) {
+        if (this.isClick === false) {
             return;
         }
         this.setState({content: ""});
@@ -148,6 +154,8 @@ class ArticleDetail extends Component {
                                    })
                                }}
                                value={this.state.content}
+                               editable={this.state.editable}
+                               placeholder={this.state.editable ? '' : '登陆后可回复'}
                     />
                     <TouchableOpacity style={styles.btn} onPress={this.reply.bind(this)}>
                         <Text style={styles.txt}>发送</Text>

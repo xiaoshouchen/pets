@@ -81,29 +81,20 @@ class TrainingScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) => (
-
                         <View style={styles.item}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
-                                <View>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.date}>{item.created_at}</Text>
-                                </View>
-                            </View>
-                            <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', {id: item.id})
-                            }>
-                                {item.type == undefined ? '【分享】' : item.type}{item.title}
-                            </Text>
-                            <Text style={styles.content}>{item.content}</Text>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <TouchableOpacity>
-                                    <Icon
-                                        name='star'
-                                        size={16}
-                                        color='yellow'
-                                    />
-                                </TouchableOpacity>
+                            <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 5}}
+                                   source={{uri: item.img[0]}}/>
+                            <View style={{paddingLeft: 10}}>
+                                <Text
+                                    numberOfLines={1}
+                                    style={{
+                                        marginTop: 10,
+                                        fontWeight: 'bold',
+                                        width: 200
+                                    }} onPress={() => {
+                                    navigate('ArticleDetail', {id: item.id})
+                                }}>{item.title}</Text>
+                                <Text style={styles.content} numberOfLines={3}>{item.content}</Text>
                             </View>
                         </View>)
                     }
@@ -129,6 +120,7 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginLeft: 10,
         marginRight: 10,
+        flexDirection: 'row'
     },
     avatar: {
         marginLeft: 5,
@@ -153,11 +145,16 @@ const styles = StyleSheet.create({
         color: '#a19fa9'
     },
     content: {
-        marginLeft: 5,
         fontSize: 12,
-        color: '#495863',
-        marginBottom: 10
-    }
+        color: '#545454',
+        marginTop: 10,
+        width: 200
+    },
+    smallIcon: {
+        width: 25,
+        height: 25,
+        marginRight: 12
+    },
 
 });
 

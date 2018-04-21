@@ -28,10 +28,9 @@ class NoticeListsScreen extends Component {
                 {key: 'done', title: '已完成'},
                 {key: 'miss', title: '已过期'},
             ],
-            isLoading: true,
             currentPet: null,
+            isLogin: false,
         };
-        this._getNotices = this._getNotices.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -44,13 +43,6 @@ class NoticeListsScreen extends Component {
         </TouchableOpacity>,
     });
 
-    _getNotices(pet_id) {
-        //get notices of pet
-        fetch().then((response) => response.json()).then((responseJson) => {
-
-        }).catch((e) => console.log(e));
-    }
-
     _handleIndexChange = index => this.setState({index});
 
     _renderHeader = props => <TabBar {...props} style={styles.header} tabStyle={styles.tab} labelStyle={styles.label}
@@ -62,7 +54,28 @@ class NoticeListsScreen extends Component {
         miss: MissScreen
     });
 
+    componentWillMount() {
+        try {
+            let userInfo = App.getUserInfo();
+            userInfo.then((data) => {
+                if (data.user_id && data.token) {
+                    this.setState({isLogin: true});
+                }
+            });
+        } catch (e) {
+
+        }
+
+    }
+
     render() {
+        const {navigate, goBack} = this.props.navigation;
+        if (this.state.isLogin === false) {
+            return (
+                <View>
+                    <Text>你好</Text>
+                </View>);
+        }
         return (
             <TabViewAnimated
                 navigationState={this.state}
@@ -73,8 +86,6 @@ class NoticeListsScreen extends Component {
             />
         );
     }
-
-
 }
 
 const styles = StyleSheet.create({

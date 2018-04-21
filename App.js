@@ -9,19 +9,39 @@ import {
     NativeModules, Platform
 } from 'react-native';
 import RootNavigation from './src/config/routes'
-
+import APPCONFIG from './src/utils/app.core';
+import {UPDATE} from './src/config/api';
 
 export default class App extends Component {
 
-    componentWillMount() {
-        let update=false;
-        if (Platform.OS == 'android') {
-            if (update){
-                NativeModules.upgrade.upgrade("http://oz4snvss0.bkt.clouddn.com/anjuke_11.7.1_321843_b688.apk");
-            }
-        } else if (Platform.OS === 'ios') {
+    constructor(props) {
+        super(props);
 
-        }
+    }
+
+    componentWillMount() {
+        fetch(`${UPDATE}`).then((response) => response.json())
+            .then((json) => {
+                if (json.code === 200) {
+                    if (Platform.OS === 'android') {
+                        if (json.android.number > APPCONFIG.config.number) {
+                            try {
+                                NativeModules.upgrade.upgrade(json.android.url);
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        }
+                    } else if (Platform.OS === 'ios') {
+                        if (APPCONFIG.config.number) {
+                            NativeModules.upgrade.openAPPStore('123daasd');
+                        }
+                    }
+                    else {
+                        //Do Nothing
+                    }
+                }
+            })
+
     }
 
     render() {

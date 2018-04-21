@@ -4,13 +4,12 @@ import {
     TouchableOpacity, AsyncStorage, Button, CheckBox
 } from 'react-native';
 import {GET_CARTS} from "../../../config/api";
+import App from '../../../utils/app.core'
 
 class ShoppingCartScreen extends Component {
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         title: '购物车',
     };
 
