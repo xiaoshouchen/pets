@@ -24,14 +24,12 @@ class CollectionArticlesScreen extends Component {
 
     componentDidMount() {
         AsyncStorage.getItem('login').then((result) => {
-            //alert(result);
             if (result == null) {
                 this.setState({login: {token: '', user_id: ''}})
             }
             else {
                 this.setState({login: result}, function () {
                     let json = JSON.parse(this.state.login);
-                    console.log(json)
                     this.getData(json.user_id, json.token);
                 });
             }

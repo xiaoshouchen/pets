@@ -21,21 +21,22 @@ class AddArticle extends Component {
             title: '测试',
             html: '',
             type: '',//文章的类型
+            login: {}
         }
         this.post = this.post.bind(this);
     }
 
     static navigationOptions = ({navigation}) => {
-        let _Title='';
+        let _Title = '';
         const {params} = navigation.state;
         switch (params.type_id) {
             case 3:
                 _Title = "记录我与宠物的点滴";
                 break;
-            case 2:
+            case 1:
                 _Title = "分享我的养宠故事或经验";
                 break;
-            case 1:
+            case 2:
                 _Title = "提出您在宠物上遇到的难题";
         }
         return {
@@ -54,6 +55,7 @@ class AddArticle extends Component {
                 </TouchableOpacity>,
         };
     };
+
     componentWillMount() {
         AsyncStorage.getItem('login').then((result) => {
             //alert(result);
@@ -61,7 +63,7 @@ class AddArticle extends Component {
                 this.setState({login: {token: '', user_id: ''}})
             }
             else {
-                let json=JSON.parse(result);
+                let json = JSON.parse(result);
                 this.setState({login: {user_id: json.user_id, token: json.token}})
             }
 
@@ -69,6 +71,7 @@ class AddArticle extends Component {
             alert('网络发生错误');
         })
     }
+
     post() {
         //alert('fsd');
         const {params} = this.props.navigation.state;
@@ -77,7 +80,7 @@ class AddArticle extends Component {
         formData.append('user_id', this.state.login.user_id);
         formData.append('content', this.editor.state.editorHtml);
         formData.append('category', 2);
-        formData.append('tags', 'tags');
+        formData.append('tags', 'app上传');
         formData.append('type', params.type_id);
         formData.append('visit', 0);
         fetch(ADD_ARTICLE, {
@@ -98,7 +101,7 @@ class AddArticle extends Component {
 
     render() {
         const {params} = this.props.navigation.state;
-        let _Title='';
+        let _Title = '';
         switch (params.type_id) {
             case 3:
                 _Title = "日记仅自己可见，记录下我与宠物的小秘密";

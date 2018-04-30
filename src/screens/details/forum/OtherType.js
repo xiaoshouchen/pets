@@ -60,7 +60,7 @@ class OtherTypeScreen extends Component {
         }
         const {state, goBack} = this.props.navigation;
         return (
-            <View>
+            <View style={{backgroundColor: 'white', flex: 1}}>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -68,14 +68,21 @@ class OtherTypeScreen extends Component {
                         <TouchableOpacity onPress={() => {
                             state.params.callBack(item);
                             goBack(null);
-                            goBack(null)
+                            goBack(null);
                         }}>
-                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                            <View style={{
+                                flexDirection: 'row',
+                                backgroundColor: 'white',
+                                height: 40,
+                                alignItems: 'center',
+                                justifyContent: 'flex-start'
+                            }}>
                                 <Text style={{
-                                    flexDirection: 'row',
-                                    backgroundColor: 'white',
-                                    height: 25,
-                                    alignItems: 'center'
+                                    fontSize: 14,
+                                    lineHeight: 50,
+                                    marginLeft: 20,
+                                    fontWeight: 'bold',
+                                    alignSelf: 'center'
                                 }}>{item.name}</Text>
                             </View>
                         </TouchableOpacity>)

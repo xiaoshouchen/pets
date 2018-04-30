@@ -12,7 +12,10 @@ const App = {
     commonHeaderStyle: {
         headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
         headerBackTitle: null,
-        headerStyle: {backgroundColor: '#fb8c00'},
+        headerStyle: {
+            backgroundColor: '#fb8c00',
+            tintColor: '#FFFFFF'
+        },
     },
     serialize: function (obj) {
         var str = [];
@@ -53,8 +56,12 @@ const App = {
     },
     async getUserInfo() {
         let userInfo = await AsyncStorage.getItem('login');
+        if (userInfo === null || userInfo === '') {
+            return false;
+        }
         let jsonData = JSON.parse(userInfo);
         return jsonData;
+
     },
     // 获取授权的web url地址  
     async getAuthWebUrl(targetUrl, cb) {

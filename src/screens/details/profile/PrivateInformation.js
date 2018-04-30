@@ -10,57 +10,90 @@ import {
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image
 } from 'react-native';
 import {Button} from "react-native-elements";
-import {GET_USER_PROFILE} from "../../../config/api";
+import {FOLLOW, GET_USER_PROFILE, USER_RECENT} from "../../../config/api";
+import App from '../../../utils/app.core';
+import Toast, {DURATION} from 'react-native-easy-toast'
+
 
 class InformationScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dataSource: [],
-            other_user_id:this.props.navigation.state.params.user_id
+            followed_user_id: this.props.navigation.state.params.user_id,
+            isLogin: false,
+            login: {},
+            recentData: [],
+            isfollow: false,
         }
         this._getData = this._getData.bind(this);
+        this._follow = this._follow.bind(this);
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff', fontSize: 18, fontWeight: 'normal'},
-        headerStyle: {backgroundColor: '#4fc3f7'},
+        ...App.commonHeaderStyle,
         headerTitle: '个人信息',
+        headerBackTitle: null,
     }
 
     componentDidMount() {
-        let user_id = this.state.other_user_id;
-        this._getData(user_id);
+        let followed_user_id = this.state.followed_user_id;
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            if (data === false) {
+                this._getData(followed_user_id);
+            } else {
+                this.setState({login: data, isLogin: true}, () => {
+                    this._getData(followed_user_id, this.state.login.user_id, this.state.login.token);
+                })
+            }
+        })
     }
 
-    _getData(user_id) {
-
-        fetch(`${GET_USER_PROFILE}?user_id=${user_id}`).then((response) => response.json()).then((responseJson) => {
+    _getData(followed_user_id, user_id = 0, token = '') {
+        fetch(`${GET_USER_PROFILE}?followed_user_id=${followed_user_id}&user_id=${user_id}&token=${token}`)
+            .then((response) => response.json()).then((responseJson) => {
             //alert(responseJson.name);
-            this.setState({dataSource: responseJson})
-        }).catch((e)=>alert(e))
+            this.setState({dataSource: responseJson, isfollow: responseJson.isfollow})
+        }).catch((e) => alert(e));
+        fetch(`${USER_RECENT}?user_id=${followed_user_id}`)
+            .then((response) => response.json())
+            .then((json) => {
+                if (json.code === 200) {
+                    this.setState({recentData: json.data});
+                }
+            })
     }
 
-    noData = () => {
-        return (
-            <View style={{height: 40}}>
-                <Text>最近没有动态</Text>
-            </View>
-        )
-    }
-    haveData = () => {
-        return (
-            <FlatList></FlatList>
-        )
-    }
-
-
-    show() {
-        let show = (this.state.dataSource.recent == undefined||this.state.dataSource.recent=='' )? this.noData() : this.haveData;
-        return show
+    _follow() {
+        if (this.state.isLogin === false) {
+            this.refs.toast.show('暂未登陆，登陆后即可关注该用户');
+            return false;
+        } else {
+            let token = this.state.login.token;
+            let formData = new FormData();
+            formData.append('user_id', this.state.login.user_id);
+            formData.append('followed_user_id', this.state.followed_user_id);
+            fetch(`${FOLLOW}?user_id=${this.state.login.user_id}&token=${token}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                body: formData,
+            }).then(
+                (response) => response.json())
+                .then((responseJson) => {
+                    //alert(responseJson.code+"|"+responseJson.message);
+                    this.setState({isfollow: !this.state.isfollow}, () => {
+                        let msg = this.state.isfollow ? '关注成功' : '取消关注';
+                        this.refs.toast.show(msg);
+                    });
+                }).catch((e) => alert(e));
+        }
     }
 
     render() {
+        const {navigate} = this.props.navigation;
         return (
             <View style={{flex: 1}}>
                 <View style={styles.top}>
@@ -76,33 +109,57 @@ class InformationScreen extends Component {
                         </Text>
                     </View>
                     <View style={styles.smallButton}>
-                        <TouchableOpacity>
-                            <Button buttonStyle={styles.function} title={'关注'}/>
-                        </TouchableOpacity>
+                        <Button
+                            borderRadius={12}
+                            buttonStyle={{marginTop: 20, width: 62, marginRight: 20, height: 30, paddingVertical: 2}}
+                            textStyle={{color: 'white', fontSize: 12,}}
+                            backgroundColor={"#ff7a17"}
+                            title={this.state.isfollow ? '已关注' : '关注'}
+                            onPress={() => this._follow()}/>
                     </View>
                 </View>
                 <View style={{height: 12, backgroundColor: '#f5f5f9'}}/>
                 <View style={styles.horizontalList}>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.article_count}</Text>
+                        <Text style={{
+                            color: '#333',
+                            fontSize: 16,
+                            marginTop: 10,
+                            textAlign: 'center'
+                        }}>{this.state.dataSource.article_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>帖子</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.fan_count}</Text>
+                        <Text style={{
+                            color: '#333',
+                            fontSize: 16,
+                            marginTop: 10,
+                            textAlign: 'center'
+                        }}>{this.state.dataSource.fan_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>粉丝</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.follow_count}</Text>
+                        <Text style={{
+                            color: '#333',
+                            fontSize: 16,
+                            marginTop: 10,
+                            textAlign: 'center'
+                        }}>{this.state.dataSource.follow_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>关注</Text>
                     </View>
                     <View style={styles.listItem}>
-                        <Text style={{color: '#333', fontSize: 16, marginTop: 10, textAlign: 'center'}}>{this.state.dataSource.restore_count}</Text>
+                        <Text style={{
+                            color: '#333',
+                            fontSize: 16,
+                            marginTop: 10,
+                            textAlign: 'center'
+                        }}>{this.state.dataSource.restore_count}</Text>
                         <Text style={{color: '#999', fontSize: 14, marginTop: 10, marginBottom: 15}}>收藏</Text>
                     </View>
                 </View>
                 <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                 <View style={styles.littleTitle}>
-                    <Text>最近动态</Text>
+                    <Text style={{color: 'black'}}>最近动态</Text>
                 </View>
                 <View style={{height: 2, backgroundColor: '#f5f5f9'}}/>
                 <View style={{
@@ -112,8 +169,75 @@ class InformationScreen extends Component {
                     alignItems: 'center',
                     height: 1
                 }}>
-                    <View>{this.show()}</View>
+                    <View><FlatList
+                        data={this.state.recentData}
+                        ItemSeparatorComponent={() => {
+                            return <View style={{height: 10}}/>
+                        }}
+                        renderItem={({item, index}) => {
+                            if (item.img === '' || item.img === undefined) {
+                                return (
+                                    <View>
+                                        <TouchableOpacity style={{
+                                            marginTop: 20,
+                                            flexDirection: 'row',
+                                            justifyContent: 'flex-start',
+                                            alignItems: 'flex-start',
+                                            marginLeft: 10,
+                                        }} onPress={() => navigate('ArticleDetail', {id: item.id})}>
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    fontWeight: 'bold',
+                                                }}>{item.title}</Text>
+                                            <Text
+                                                numberOfLines={1}
+                                                style={{
+                                                    fontSize: 10,
+                                                    color: '#585858'
+                                                }}>{item.created_at}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )
+                            }
+                            return (<View>
+                                <TouchableOpacity style={styles.item}
+                                                  onPress={() => {
+                                                      navigate('ArticleDetail', {id: item.id})
+                                                  }}>
+                                    <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 5}}
+                                           source={{uri: item.img}}/>
+                                    <View style={{paddingLeft: 10, alignItems: 'center', justifyContent: 'center'}}>
+                                        <Text
+                                            numberOfLines={1}
+                                            style={{
+                                                marginTop: -10,
+                                                fontWeight: 'bold',
+                                                width: 200,
+                                            }}>{item.title}</Text>
+                                        <Text
+                                            numberOfLines={1}
+                                            style={{
+                                                marginTop: 20,
+                                                width: 200,
+                                                fontSize: 10,
+                                                color: '#585858'
+                                            }}>{item.created_at}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>)
+                        }}
+                        ListEmptyComponent={() => {
+                            return <View style={{height: 40}}>
+                                <Text>最近没有动态</Text>
+                            </View>
+                        }}/>
+                    </View>
                 </View>
+                <Toast ref="toast"
+                       position='bottom'
+                       textStyle={{color: 'red'}}
+                       style={{backgroundColor: 'white'}}/>
 
             </View>)
     }
@@ -152,8 +276,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     name: {
-        fontSize: 20,
-        marginTop: 5
+        fontSize: 16,
+        marginTop: 10
     },
     desc: {
         fontSize: 14
@@ -164,18 +288,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     function: {
-        backgroundColor: "#ff7c50",
         marginRight: 10,
         marginTop: 20,
         borderRadius: 10,
         width: 60,
-        height: 20
+        height: 20,
     },
     littleTitle: {
         height: 30,
         justifyContent: 'center',
-        padding: 15,
-        backgroundColor: 'white'
-    }
+        backgroundColor: 'white',
+        alignItems: 'flex-start',
+        paddingLeft: 20
+    },
+    item: {
+        borderRadius: 5,
+        backgroundColor: 'white',
+        marginTop: 8,
+        marginLeft: 10,
+        marginRight: 10,
+        flexDirection: 'row'
+    },
 })
 export {InformationScreen}

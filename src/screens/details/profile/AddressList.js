@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, Text, View,
+import {
+    StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import {Icon} from 'react-native-elements'
+import App from "../../../utils/app.core";
 
 class AddressListScreen extends Component {
 
@@ -15,19 +17,18 @@ class AddressListScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "我的",
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        ...App.commonHeaderStyle,
         title: '地址',
     };
 
-    render(){
+    render() {
         const {navigate} = this.props.navigation;
-        return(
+        return (
             <View>
                 <Text>地址</Text>
             </View>
         )
     }
 }
+
 export {AddressListScreen}

@@ -17,7 +17,8 @@ class PersonalScreen extends Component {
             desc: '',
             points: '',
             userInfo: ''
-        }
+        };
+        this._refresh = this._refresh.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -27,6 +28,10 @@ class PersonalScreen extends Component {
         headerStyle: {backgroundColor: '#fb8c00'},
         headerRight: null
     })
+
+    _refresh() {
+        this.componentDidMount();
+    }
 
     componentDidMount() {
         let info = App.getUserInfo();
@@ -38,9 +43,16 @@ class PersonalScreen extends Component {
     }
 
     _getInfo(user_id, token) {
-        fetch(`${GET_PROFILE}?items=name,desc,points,sex,avatar_img&user_id=${user_id}&token=${token}`)
+        fetch(`${GET_PROFILE}?items=name,desc,points,sex,avatar_img,relationship_state,birthday&user_id=${user_id}&token=${token}`)
             .then((response) => response.json()).then((data) => {
-            this.setState({name: data.name, desc: data.desc, points: data.points, avatar: {uri: data.avatar_img}});
+            this.setState({
+                name: data.name,
+                desc: data.desc,
+                points: data.points,
+                avatar: {uri: data.avatar_img},
+                relationship_state: data.relationship_state,
+                birthday: data.birthday
+            });
         })
     }
 
@@ -113,7 +125,8 @@ class PersonalScreen extends Component {
                     </View>
                 </TouchableOpacity>
                 <View style={styles.crack}/>
-                <TouchableOpacity onPress={() => navigate('ChangeProfile', {item: 'name'})}>
+                <TouchableOpacity
+                    onPress={() => navigate('ChangeProfile', {item: 'name', refresh: () => this._refresh()})}>
                     <View style={styles.textView}>
                         <Text style={styles.leftText}>昵称</Text>
                         <View style={styles.floatRight}>
@@ -124,7 +137,8 @@ class PersonalScreen extends Component {
                     </View>
                 </TouchableOpacity>
                 <View style={styles.crack}/>
-                <TouchableOpacity onPress={() => navigate('ChangeProfile', {item: 'desc'})}>
+                <TouchableOpacity
+                    onPress={() => navigate('ChangeProfile', {item: 'desc', refresh: () => this._refresh()})}>
                     <View style={styles.textView}>
                         <Text style={styles.leftText} numberOfLines={1}>个人简介</Text>
                         <View style={styles.floatRight}>
@@ -136,7 +150,8 @@ class PersonalScreen extends Component {
                 </TouchableOpacity>
                 <View style={styles.crack}/>
 
-                <TouchableOpacity onPress={() => navigate('ChangeProfile', {item: 'email'})}>
+                <TouchableOpacity
+                    onPress={() => navigate('ChangeProfile', {item: 'email', refresh: () => this._refresh()})}>
                     <View style={styles.textView}>
                         <Text style={styles.leftText}>邮箱绑定</Text>
                         <View style={styles.floatRight}>
@@ -160,11 +175,12 @@ class PersonalScreen extends Component {
                 </TouchableOpacity>
                 <View style={styles.crack}/>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigate('ChangeProfile', {item: 'birthday', refresh: () => this._refresh()})}>
                     <View style={styles.textView}>
-                        <Text style={styles.leftText}>年龄</Text>
+                        <Text style={styles.leftText}>生日</Text>
                         <View style={styles.floatRight}>
-                            <Text style={styles.rightText}>年龄</Text>
+                            <Text style={styles.rightText}>{this.state.birthday}</Text>
                             <Image style={styles.arrow}
                                    source={require('../../../image/right-arrow.png')}/>
                         </View>
@@ -184,11 +200,14 @@ class PersonalScreen extends Component {
                 </TouchableOpacity>
                 <View style={styles.crack}/>
 
-                <TouchableOpacity onPress={() => navigate('ChangeProfile', {item: 'relationship'})}>
+                <TouchableOpacity onPress={() => navigate('ChangeProfile', {
+                    item: 'relationship_state',
+                    refresh: () => this._refresh()
+                })}>
                     <View style={styles.textView}>
                         <Text style={styles.leftText}>感情状态</Text>
                         <View style={styles.floatRight}>
-                            <Text style={styles.rightText}>感情状态</Text>
+                            <Text style={styles.rightText}>{this.state.relationship_state}</Text>
                             <Image style={styles.arrow}
                                    source={require('../../../image/right-arrow.png')}/>
                         </View>

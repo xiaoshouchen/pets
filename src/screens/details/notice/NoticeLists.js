@@ -72,8 +72,8 @@ class NoticeListsScreen extends Component {
         const {navigate, goBack} = this.props.navigation;
         if (this.state.isLogin === false) {
             return (
-                <View>
-                    <Text>你好</Text>
+                <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+                    <Text style={{fontWeight: 'bold'}}>登陆后即可以查看</Text>
                 </View>);
         }
         return (

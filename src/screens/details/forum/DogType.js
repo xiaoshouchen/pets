@@ -2,24 +2,27 @@ import React, {Component} from 'react'
 import {ActivityIndicator, FlatList, TouchableOpacity, View, TextInput, Text} from "react-native";
 import {GET_DOG_TYPES} from "../../../config/api";
 import App from '../../../utils/app.core'
+import Dimensions from 'Dimensions';
 
 class DogTypeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             text: '',
+            filterText: '',
+            isLoading: true
         }
     }
 
     static navigationOptions = {
         ...App.commonHeaderStyle,
         title: '宠物品种',
-        tabBarLabel: '狗',
+        tabBarLabel: '汪星人',
     }
 
     componentDidMount() {
-        let userInfo=App.getUserInfo();
-        userInfo.then((data)=>{
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
             fetch(`${GET_DOG_TYPES}?user_id=${data.user_id}&token=${data.token}`)
                 .then((response) => response.json())
                 .then((responseJson) => {
@@ -58,27 +61,43 @@ class DogTypeScreen extends Component {
             );
         }
         const {state, goBack} = this.props.navigation;
+        const filterRegex = new RegExp(String(this.state.filterText), 'i');
+        const filter = (item) => (
+            filterRegex.test(item.name) || filterRegex.test(item.title)
+        );
+        const filteredData = this.state.dataSource.filter(filter);
         return (
-            <View>
+            <View style={{backgroundColor: 'white', flex: 1}}>
                 <TextInput
-                    underlineColorAndroid='transparent'
-                    onChangeText={({text}) => this.setState({text})}
-                    value={this.state.text}/>
+                    style={{width: Dimensions.get('window').width, height: 50, borderRadius: 10,marginLeft: 20,}}
+                    onChangeText={(text) => {
+                        this.setState({filterText: {text}.text})
+                    }}
+                    placeholder="搜索..."
+                    value={this.state.filterText}
+                />
                 <FlatList
-                    data={this.state.dataSource}
+                    data={filteredData}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     renderItem={({item}) => (
                         <TouchableOpacity onPress={() => {
                             state.params.callBack(item);
                             goBack(null);
-                            goBack(null)
+                            goBack(null);
                         }}>
-                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                            <View style={{
+                                flexDirection: 'row',
+                                backgroundColor: 'white',
+                                height: 40,
+                                alignItems: 'center',
+                                justifyContent: 'flex-start'
+                            }}>
                                 <Text style={{
-                                    flexDirection: 'row',
-                                    backgroundColor: 'white',
-                                    height: 40,
-                                    alignItems: 'center'
+                                    fontSize: 14,
+                                    lineHeight: 50,
+                                    marginLeft: 20,
+                                    fontWeight: 'bold',
+                                    alignSelf: 'center'
                                 }}>{item.name}</Text>
                             </View>
                         </TouchableOpacity>)

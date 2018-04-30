@@ -2,8 +2,9 @@
 import React, {Component} from 'react';
 import {
     AsyncStorage,
-    Button, StyleSheet, View, TouchableOpacity, Image, Text, TextInput
+    Button, StyleSheet, View, TouchableOpacity, Image, Text, TextInput, Picker
 } from 'react-native';
+import DatePicker from 'react-native-datepicker'
 import App from '../../../utils/app.core';
 import {CHANGE_PROFILE} from "../../../config/api";
 
@@ -30,6 +31,7 @@ class ChangeProfileScreen extends Component {
         </TouchableOpacity>
     })
 
+
     componentDidMount() {
         this.props.navigation.setParams({Change: this._changeInfo});
         let info = App.getUserInfo();
@@ -46,10 +48,11 @@ class ChangeProfileScreen extends Component {
         form.append('token', info.token);
         form.append('new_info', this.state.content);
         fetch(`${CHANGE_PROFILE}/${item}`, {
-            method: 'post',
+            method: 'POST',
             body: form
         }).then((response) => response.json()).then((responseJson) => {
             if (responseJson.code === 200) {
+                this.props.navigation.state.params.refresh();
                 this.props.navigation.goBack();
             }
             else {
@@ -62,6 +65,7 @@ class ChangeProfileScreen extends Component {
     render() {
         const {params} = this.props.navigation.state;
         let title, maxCount, tint = '新的信息', multiline = false;
+
         switch (this.state.item) {
             case 'name':
                 title = '昵称';
@@ -81,15 +85,59 @@ class ChangeProfileScreen extends Component {
                 title = '邮箱';
                 maxCount = 32;
                 break;
+            case 'relationship_state':
+                title = '情感状态';
+                break;
             default:
                 title = '其他';
         }
-        return (
-            <View>
-                <View style={styles.textView}>
-                    <Text style={styles.leftText}>{title}</Text>
-                    <View style={styles.floatRight}>
-                        <TextInput style={styles.rightText}
+        let input;
+        switch (this.state.item) {
+            case 'relationship_state':
+                input = <Picker
+                    style={styles.rightText}
+                    selectedValue={this.state.content}
+                    onValueChange={(lang) => this.setState({content: lang})}>
+                    <Picker.Item label="单身" value="单身"/>
+                    <Picker.Item label="已婚" value="已婚"/>
+                    <Picker.Item label="恋爱中" value="恋爱中"/>
+                </Picker>;
+                break;
+            case 'birthday':
+                input = <DatePicker
+                    style={{width: 200}}
+                    date={this.state.content}
+                    mode="date"
+                    placeholder="选择您的生日"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="确认"
+                    cancelBtnText="取消"
+                    androidMode="spinner"
+                    showIcon={false}
+                    customStyles={{
+                        dateText: {},
+                        dateInput: {
+                            borderColor: 'white',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                        },
+                        btnTextConfirm: {
+                            height: 20,
+                            color: "#000"
+                        },
+                        btnTextCancel: {
+                            height: 20,
+                            color: "#b6b6b6"
+                        },
+                        dateTouchBody: {},
+                        placeholderText: {}
+                    }}
+                    onDateChange={(date) => {
+                        this.setState({content: date})
+                    }}/>;
+                break;
+            default:
+                input = <TextInput style={styles.rightText}
                                    maxLength={maxCount}
                                    multiline={multiline}
                                    underlineColorAndroid={'transparent'}
@@ -97,14 +145,21 @@ class ChangeProfileScreen extends Component {
                                    onChangeText={(text) => {
                                        this.setState({content: {text}.text})
                                    }}
-                                   value={this.state.content}/>
+                                   value={this.state.content}/>;
+        }
+        return (
+            <View>
+                <View style={styles.textView}>
+                    <Text style={styles.leftText}>{title}</Text>
+                    <View style={styles.floatRight}>
+                        {input}
                     </View>
                 </View>
 
             </View>
         )
-    }
 
+    }
 }
 
 const styles = StyleSheet.create({
@@ -142,7 +197,8 @@ const styles = StyleSheet.create({
     },
     rightText: {
         width: 260,
-        textAlign: 'right'
+        textAlign: 'right',
+        fontSize: 14
     },
     arrow: {
         height: 16,
@@ -159,4 +215,6 @@ const styles = StyleSheet.create({
     }
 });
 
-export {ChangeProfileScreen}
+export {
+    ChangeProfileScreen
+}

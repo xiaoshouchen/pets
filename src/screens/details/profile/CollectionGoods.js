@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, Text, View,
+import {
+    StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import {Icon} from 'react-native-elements'
+import App from "../../../utils/app.core";
 
 class CollectionGoodsScreen extends Component {
 
@@ -15,18 +17,17 @@ class CollectionGoodsScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "我的",
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        ...App.commonHeaderStyle,
         title: '收藏',
     };
 
-    render(){
-        return(
+    render() {
+        return (
             <View>
                 <Text>收藏</Text>
             </View>
         )
     }
 }
+
 export {CollectionGoodsScreen}

@@ -96,7 +96,7 @@ class PetList extends Component {
         const {navigate, goBack} = this.props.navigation;
         if (this.state.isLogin === false) {
             return (
-                <View>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <Text>请您先登陆</Text>
                 </View>
             )

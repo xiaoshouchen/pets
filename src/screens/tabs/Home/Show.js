@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import {GET_ARTICLES, LIKE, RESTORE} from "../../../config/api";
 import Dimensions from 'Dimensions'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import App from "../../../utils/app.core";
 
 class ShowScreen extends Component {
     constructor(props) {
@@ -21,7 +22,8 @@ class ShowScreen extends Component {
             restored_url: '../../../image/forum/restored.png',
             login: "",
             pageNo: 1,
-            totalPage: 1
+            totalPage: 1,
+            isLogin: false,
         }
         this._getData = this._getData.bind(this);
         this._like = this._like.bind(this);
@@ -33,25 +35,22 @@ class ShowScreen extends Component {
     })
 
     componentDidMount() {
-        AsyncStorage.getItem('login').then((result) => {
-            //alert(result);
-            if (result == null) {
-                this.setState({login: {token: '', user_id: ''}})
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            if (data === false) {
+                //TO DO
                 this._getData(1, 0);
+            } else {
+                this.setState({
+                    isLogin: true,
+                    login: data
+                }, () => {
+                    this._getData(1, this.state.login.user_id, this.state.login.token);
+                })
             }
-            else {
-                let that = this;
-                this.setState({login: result}, function () {
-                    let json = JSON.parse(this.state.login);
-                    //console.log(json)
-                    that._getData(1, json.user_id);
-                });
-            }
-
         }).catch((e) => {
-            //alert(e);
-        })
 
+        })
 
     }
 
@@ -59,15 +58,18 @@ class ShowScreen extends Component {
         return (
             <View
                 style={{
-                    height: 1,
+                    height: 10,
                     width: "100%",
-                    backgroundColor: "#d9d7e8",
                 }}
             />
         );
     }
 
     _like(user_id, article_id, index) {
+        if (this.state.isLogin === false) {
+            this.refs.toast.show('请您登陆之后再操作');
+            return false;
+        }
         let data = this.state.dataSource;
         data[index].islike = !data[index].islike;
         this.setState({
@@ -91,6 +93,10 @@ class ShowScreen extends Component {
     }
 
     _restore(user_id, article_id, index) {
+        if (this.state.isLogin === false) {
+            this.refs.toast.show('请您登陆之后再操作');
+            return false;
+        }
         let data = this.state.dataSource;
         data[index].isrestore = !data[index].isrestore;
         this.setState({
@@ -173,28 +179,6 @@ class ShowScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-        let title = (type, title) => {
-            let type_name;
-            switch (type) {
-                case 4:
-                    type_name = "【说说】";
-                    return null;
-                case 1:
-                    type_name = "【分享】";
-                    break;
-                case 2:
-                    type_name = "【提问】";
-                    break;
-                case 5:
-                    type_name = "【精选】";
-                    break;
-                default:
-                    type_name = "【分享】";
-            }
-            return <Text style={styles.title}>
-                {type === undefined ? '【分享】' : type_name}{title}
-            </Text>
-        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20, alignItems: 'center'}}>
@@ -214,14 +198,19 @@ class ShowScreen extends Component {
                     renderItem={({item, index}) => {
                         let images = [];
                         let windowWidth = Dimensions.get('window').width;
-                        let [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 3, windowWidth / 3, 15];
+                        let [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 3, windowWidth / 3, 35];
                         if (item.img.length > 2) {
-                            [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 10 * 3, windowWidth / 10 * 3, windowWidth / 35];
+                            [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 10 * 3, windowWidth / 10 * 3, windowWidth / 60];
                         }
                         for (let i = 0; i < 3 && i < item.img.length; i++) {
                             images.push(
                                 <Image source={{uri: item.img[i]}}
-                                       style={{width: ImgWidth, height: ImgHeight, marginRight: MarginRight}}/>
+                                       style={{
+                                           width: ImgWidth,
+                                           height: ImgHeight,
+                                           marginRight: MarginRight,
+                                           borderRadius: 5
+                                       }}/>
                             );
                         }
                         let img_like = this.state.dataSource[index].islike ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
@@ -242,7 +231,7 @@ class ShowScreen extends Component {
                                     () => navigate('ArticleDetail', {id: item.id})
                                 }>
                                     <Text style={styles.title}>{item.title}</Text>
-                                    <Text style={styles.content} numberOfLines={2}>{item.content}</Text>
+                                    {/*<Text style={styles.content} numberOfLines={2}>{item.content}</Text>*/}
                                     <View style={{flexDirection: 'row'}}>
                                         {images}
                                     </View>
@@ -251,45 +240,32 @@ class ShowScreen extends Component {
                                 <View style={{
                                     flexDirection: 'row',
                                     flex: 1,
-                                    justifyContent: 'center',
+                                    justifyContent: 'flex-end',
                                     alignItems: 'center',
                                     height: 40, marginTop: 8
                                 }}>
-                                    <View style={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <TouchableOpacity onPress={() => this._like(27, item.id, index)}
-                                                          style={{
-                                                              flexDirection: 'row',
-                                                              alignItems: 'center',
-                                                              justifyContent: 'center',
-                                                          }}>
+                                    <View style={styles.iconsView}>
+                                        <TouchableOpacity
+                                            onPress={() => this._like(this.state.login.user_id, item.id, index)}
+                                            style={{
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                            }}>
                                             <Image source={img_like}
                                                    style={styles.smallIcon}
                                             />
-                                            <Text>点赞</Text>
                                         </TouchableOpacity>
                                     </View>
-                                    <View style={{width: 1, backgroundColor: "#d9d7e8", height: 40}}/>
-                                    <View style={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <TouchableOpacity onPress={() => this._restore(27, item.id, index)}
-                                                          style={{
-                                                              flexDirection: 'row',
-                                                              justifyContent: 'center',
-                                                              alignItems: 'center'
-                                                          }}>
+                                    <View style={styles.iconsView}>
+                                        <TouchableOpacity
+                                            onPress={() => this._restore(this.state.login.user_id, item.id, index)}
+                                            style={{
+                                                flexDirection: 'row',
+                                                alignItems: 'center'
+                                            }}>
                                             <Image source={img_restore}
                                                    style={styles.smallIcon}
                                             />
-                                            <Text>收藏</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -336,12 +312,15 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     title: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginVertical: 10
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginVertical: 10,
+        lineHeight: 20
     },
     name: {
-        marginTop: 8,
+        marginTop: 10,
+        marginBottom: 4,
+        fontWeight: 'bold'
     },
     date: {
         marginTop: 4,
@@ -358,9 +337,15 @@ const styles = StyleSheet.create({
     smallIcon: {
         width: 25,
         height: 25,
-        marginRight: 20
+        marginRight: 5
     },
+    iconsView: {
 
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginRight: 15,
+    }
 
 });
 

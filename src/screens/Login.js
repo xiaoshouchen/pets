@@ -102,7 +102,7 @@ class LoginScreen extends Component {
                         style={styles.loginView}
                         onChangeText={(text) => {
                             this.setState({password: {text}.text}, function () {
-                                if (this.state.phone.length == 11 && this.state.password.length >= 6) {
+                                if (this.state.phone.length === 11 && this.state.password.length >= 6) {
                                     this.setState({disableButton: false});
                                 }
                                 else {
@@ -126,7 +126,8 @@ class LoginScreen extends Component {
 
                 </View>
                 <View style={{flexDirection: 'row'}}>
-                    <Text>忘记密码？</Text><Text>|</Text><Text onPress={() => navigate('Register')}>立即注册</Text>
+                    <Text onPress={() => navigate('ForgetPassword')}>忘记密码？</Text><Text>|</Text><Text
+                    onPress={() => navigate('Register')}>立即注册</Text>
                 </View>
             </View>
 
@@ -150,8 +151,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'rgba(0,0,0,0)',
         width: 300,
-        paddingVertical: Platform.OS == 'android' ? 0 : 15,
-        paddingHorizontal: Platform.OS == 'android' ? 10 : 15,
+        paddingVertical: Platform.OS === 'android' ? 10 : 15,
+        paddingHorizontal: Platform.OS === 'android' ? 10 : 15,
         marginBottom: 20,
         color: '#263238'
     },

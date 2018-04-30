@@ -1,33 +1,59 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, FlatList, Text, View,
-    Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
+    Alert, ActivityIndicator, TouchableOpacity, Image, ScrollView, RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation'
+import Dimensions from 'Dimensions'
 import App from '../../../utils/app.core'
-import {GET_ARTICLES} from "../../../config/api";
+import {MY_FOLLOW_RECENT} from "../../../config/api";
 
 class FollowScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            isLogin: false,
+            pageNo: 1,
+            totalPage: 1,
+            login: {},
+            isRefreshing: false
         }
+        this._getData = this._getData.bind(this);
+        this._onRefresh = this._onRefresh.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
         title: '关注',
     })
 
-    componentDidMount() {
+    _onRefresh() {
+        this.setState({isRefreshing: true});
+        this.componentDidMount();
+    }
 
-        return fetch(GET_ARTICLES + 1)
+    componentDidMount() {
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            this.setState({isRefreshing: false});
+            if (data === false) {
+                //未登录
+                this.setState({isLogin: false});
+            } else {
+                this.setState({login: data, isLogin: true}, () => {
+                    this._getData(this.state.pageNo, this.state.login.user_id, this.state.login.token);
+                });
+            }
+        })
+    }
+
+    _getData(pageNo, user_id, token) {
+        fetch(`${MY_FOLLOW_RECENT}?user_id=${this.state.login.user_id}&token=${this.state.login.token}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
                     isLoading: false,
-                    dataSource: responseJson
+                    dataSource: responseJson.data
                 }, function () {
                     // In this block you can do something with new state.
                 });
@@ -41,22 +67,35 @@ class FollowScreen extends Component {
         return (
             <View
                 style={{
-                    height: 1,
+                    height: 10,
                     width: "100%",
-                    backgroundColor: "#d9d7e8",
                 }}
             />
         );
     }
 
-    GetFlatListItem(fruit_name) {
-
-        Alert.alert(fruit_name);
-
-    }
-
     render() {
         const {navigate} = this.props.navigation;
+        if (this.state.isLogin === false) {
+            return (<ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this._onRefresh}
+                            tintColor="#ff0000"
+                            title="Loading..."
+                            titleColor="#00ff00"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="white"
+                        />
+                    }>
+                    <View style={styles.notLogin}>
+                        <Text style={styles.notLoginText}>登陆之后即可以查看关注</Text>
+                        <Text style={styles.notLoginText}>如已登陆，下拉刷新</Text>
+                    </View>
+                </ScrollView>
+            );
+        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
@@ -64,7 +103,6 @@ class FollowScreen extends Component {
                 </View>
             );
         }
-
         return (
 
             <View style={styles.MainContainer}>
@@ -75,35 +113,83 @@ class FollowScreen extends Component {
 
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     keyExtractor={(item, index) => index}
-                    renderItem={({item}) => (
-                        <View style={styles.item}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
-                                <View>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.date}>{item.created_at}</Text>
+                    renderItem={({item, index}) => {
+                        let images = [];
+                        let windowWidth = Dimensions.get('window').width;
+                        let [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 3, windowWidth / 3, 35];
+                        if (item.img.length > 2) {
+                            [ImgWidth, ImgHeight, MarginRight] = [windowWidth / 10 * 3, windowWidth / 10 * 3, windowWidth / 60];
+                        }
+                        for (let i = 0; i < 3 && i < item.img.length; i++) {
+                            images.push(
+                                <Image source={{uri: item.img[i]}}
+                                       style={{
+                                           width: ImgWidth,
+                                           height: ImgHeight,
+                                           marginRight: MarginRight,
+                                           borderRadius: 5
+                                       }}/>
+                            );
+                        }
+                        let img_like = this.state.dataSource[index].islike ? require('../../../image/forum/liked.png') : require('../../../image/forum/like.png');
+                        let img_restore = this.state.dataSource[index].isrestore ? require('../../../image/forum/restored.png') : require('../../../image/forum/restore.png');
+                        return (
+                            <View style={styles.item}>
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <TouchableOpacity
+                                        onPress={() => this.props.navigation.navigate('PrivateInformation', {user_id: item.user_id})}>
+                                        <Image source={{uri: item.avatar_img}} style={styles.avatar}/>
+                                    </TouchableOpacity>
+                                    <View>
+                                        <Text style={styles.name}>{item.name}</Text>
+                                        <Text style={styles.date}>{item.created_at}</Text>
+                                    </View>
                                 </View>
-                            </View>
-                            <Text style={styles.title} onPress={
-                                () => navigate('ArticleDetail', {id: item.id})
-                            }>
-                                {item.type == undefined ? '【分享】' : item.type}{item.title}
-                            </Text>
-                            <Text style={styles.content}>{item.content}</Text>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <TouchableOpacity>
-                                    <Icon
-                                        name='star'
-                                        size={16}
-                                        color='yellow'
-                                    />
+                                <TouchableOpacity onPress={
+                                    () => navigate('ArticleDetail', {id: item.id})
+                                }>
+                                    <Text style={styles.title}>{item.title}</Text>
+                                    {/*<Text style={styles.content} numberOfLines={2}>{item.content}</Text>*/}
+                                    <View style={{flexDirection: 'row'}}>
+                                        {images}
+                                    </View>
                                 </TouchableOpacity>
-                            </View>
-                        </View>)
 
+                                <View style={{
+                                    flexDirection: 'row',
+                                    flex: 1,
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center',
+                                    height: 40, marginTop: 8
+                                }}>
+                                    <View style={styles.iconsView}>
+                                        <TouchableOpacity
+                                            onPress={() => this._like(this.state.login.user_id, item.id, index)}
+                                            style={{
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                            }}>
+                                            <Image source={img_like}
+                                                   style={styles.smallIcon}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.iconsView}>
+                                        <TouchableOpacity
+                                            onPress={() => this._restore(this.state.login.user_id, item.id, index)}
+                                            style={{
+                                                flexDirection: 'row',
+                                                alignItems: 'center'
+                                            }}>
+                                            <Image source={img_restore}
+                                                   style={styles.smallIcon}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>)
                     }
-
-                    keyExtractor={(item, index) => index}
+                    }
 
                 />
 
@@ -135,12 +221,15 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     title: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginBottom: 5
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginVertical: 10,
+        lineHeight: 20
     },
     name: {
-        marginTop: 8,
+        marginTop: 10,
+        marginBottom: 4,
+        fontWeight: 'bold'
     },
     date: {
         marginTop: 4,
@@ -151,7 +240,31 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontSize: 12,
         color: '#495863',
-        marginBottom: 10
+        marginBottom: 10,
+        lineHeight: 18
+    },
+    smallIcon: {
+        width: 25,
+        height: 25,
+        marginRight: 5
+    },
+    iconsView: {
+
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginRight: 15,
+    },
+    notLogin: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 40,
+    },
+    notLoginText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#4c4c4c'
     }
 
 });

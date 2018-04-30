@@ -4,6 +4,7 @@ import {
     Image,
     SectionList, Text, TouchableOpacity, View,
 } from 'react-native';
+import App from "../../../utils/app.core";
 
 const sectonDatas = {
     section1: [
@@ -15,14 +16,11 @@ class SettingScreen extends Component {
 
     static navigationOptions = {
         tabBarLabel: "我的",
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
         title: '设置',
+        ...App.commonHeaderStyle,
     };
 
     _renderItemComponent = ({item}) => {
-
         return (
             <TouchableOpacity onPress={() => AsyncStorage.setItem("login", '')
                 .then(() => {
@@ -40,7 +38,7 @@ class SettingScreen extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1, backgroundColor: 'white'}}>
                 <SectionList
                     keyExtractor={this._keyExtractor}
                     ItemSeparatorComponent={() => <View style={{height: 1, backgroundColor: '#f5f5f9'}}/>}

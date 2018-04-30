@@ -62,7 +62,7 @@ class RegisterScreen extends Component {
 
                     AsyncStorage.setItem("login", login)
                         .then(() => {
-                            this.props.navigation.goBack('Profile');
+                            this.props.navigation.goBack(0);
                         }).catch((error) => alert('error'))
                 }
                 else {
@@ -190,7 +190,7 @@ class RegisterScreen extends Component {
                             maxLength={16}
                             onChangeText={(text) => {
                                 this.setState({password: {text}.text}, () => {
-                                    if (this.state.phone.length == 11 && this.state.password.length >= 6 && this.state.password == this.state.repassword && this.state.code.length == 6) {
+                                    if (this.state.phone.length === 11 && this.state.password.length >= 6 && this.state.password === this.state.repassword && this.state.code.length == 6) {
                                         this.setState({disableButton: false});
                                     }
                                     else {

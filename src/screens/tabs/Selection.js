@@ -122,12 +122,33 @@ class SelectionScreen extends Component {
         fetch(`${GET_PETS}?user_id=${user_id}&token=${token}`)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({
-                    PetLists: responseJson
-                }, function () {
-                    this._getCurrentShowData(user_id, token, this.state.pet_id);
+                if (responseJson.length === 0) {
+                    this.setState({
+                        PetLists:
+                            [{
+                                birthday: "",
+                                sex: null,
+                                id: 0,
+                                typename: "请添加宠物",
+                                name: "暂无宠物",
+                                small_type_id: 0,
+                                avatar: "",
+                                sexText: "",
+                                old: ""
+                            }]
+                    }, function () {
+                        this._getCurrentShowData(user_id, token, this.state.pet_id);
 
-                });
+                    });
+                } else {
+                    this.setState({
+                        PetLists: responseJson
+                    }, function () {
+                        this._getCurrentShowData(user_id, token, this.state.pet_id);
+
+                    });
+                }
+
             })
             .catch((error) => {
                 console.error(error);
@@ -416,7 +437,7 @@ class SelectionScreen extends Component {
                             switch (this.state.currentContent) {
                                 case 'recommends': {
                                     Content = <View style={{height: 100, flexDirection: 'row'}}>
-                                        <Image style={{width: 120, height: 90, marginVertical: 5, marginLeft: 20}}
+                                        <Image style={styles.recImg}
                                                source={{uri: item.img}}/>
                                         <View style={{paddingLeft: 20}}>
                                             <Text
@@ -506,17 +527,6 @@ const styles = StyleSheet.create(
             borderRadius: 45,
             marginLeft: Dimensions.get('window').width * 0.0533,
         },
-        // buttonLeft: {
-        //     width: 80,
-        //     height: 30,
-        //     justifyContent: 'center',
-        //     backgroundColor: 'rgba(107, 242, 252, 0.5)',
-        //     borderBottomRightRadius: 15,
-        //     borderTopRightRadius: 15,
-        //     overflow: 'hidden',
-        //     flex: 1,
-        //     marginTop: 40
-        // },
         buttonRight: {
             width: 50,
             height: 30,
@@ -550,6 +560,13 @@ const styles = StyleSheet.create(
             justifyContent: 'center',
             alignItems: 'center',
             paddingTop: 20
+        },
+        recImg: {
+            width: 120,
+            height: 90,
+            marginVertical: 5,
+            marginLeft: 20,
+            borderRadius: 5
         }
     }
 )

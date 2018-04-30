@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {
-    StyleSheet, Text, View, ScrollView, Image, FlatList, ActivityIndicator,
-    TouchableOpacity, AsyncStorage
+    StyleSheet, Text, View, Image, FlatList, ActivityIndicator, ScrollView, RefreshControl
 } from 'react-native'
 import {Button} from "react-native-elements";
 import {GET_MY_DIARY} from "../../../config/api";
@@ -14,8 +13,12 @@ class DiaryScreen extends Component {
         super(props);
         this.state = {
             isLoading: true,
-            refreshing: false
-        }
+            refreshing: false,
+            isLogin: false,
+            isRefreshing: false
+        };
+        this.getData = this.getData.bind(this);
+        this._onRefresh = this._onRefresh.bind(this);
     }
 
     static navigationOptions = {
@@ -24,27 +27,27 @@ class DiaryScreen extends Component {
     };
 
     componentDidMount() {
-        AsyncStorage.getItem('login').then((result) => {
-            //alert(result);
-            if (result == null) {
-                this.setState({login: {token: '', user_id: ''}})
-            }
-            else {
-                this.setState({login: result}, function () {
-                    let json = JSON.parse(this.state.login);
-                    console.log(json)
-                    this.getData(json.user_id);
-                });
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            this.setState({isRefreshing: false});
+            if (data === false) {
+                //
+            } else {
+                this.setState({login: data, isLogin: true}, () => {
+                    this.getData(this.state.login.user_id, this.state.login.token);
+                })
             }
 
-        }).catch((e) => {
-            alert(e);
         })
-
     }
 
-    getData(user_id) {
-        return fetch(GET_MY_DIARY + '?user_id=' + user_id)
+    _onRefresh() {
+        this.setState({isRefreshing: true});
+        this.componentDidMount();
+    }
+
+    getData(user_id, token) {
+        return fetch(`${GET_MY_DIARY}?user_id=${user_id}&token=${token}`)
             .then((response) => response.json())
             .then((responseJson, key) => {
                 this.setState({
@@ -93,6 +96,27 @@ class DiaryScreen extends Component {
     }
 
     render() {
+        if (this.state.isLogin === false) {
+            return (
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this._onRefresh}
+                            tintColor="#ff0000"
+                            title="Loading..."
+                            titleColor="#00ff00"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="white"
+                        />
+                    }>
+                    <View style={styles.notLogin}>
+                        <Text style={styles.notLoginText}>日记只能登陆之后查看</Text>
+                        <Text style={styles.notLoginText}>日记是小秘密，不能与人分享哦！</Text>
+                    </View>
+                </ScrollView>
+            );
+        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, paddingTop: 20}}>
@@ -103,28 +127,6 @@ class DiaryScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <ScrollView>
-                <Swiper style={styles.wrapper} showsButtons={false}
-                        height={Dimensions.get('window').width / 21 * 9}>
-                    <View style={styles.slide1}>
-                        <Image
-                            source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
-                            style={{
-                                width: Dimensions.get('window').width,
-                                height: Dimensions.get('window').width / 21 * 9
-                            }}/>
-                    </View>
-                    <View style={styles.slide2}>
-                        <Image
-                            source={{uri: "http://pic.90sjimg.com/design/00/60/20/09/07e07c138b19205e561a04611c3708f1.png"}}
-                            style={{
-                                width: Dimensions.get('window').width,
-                                height: Dimensions.get('window').width / 21 * 9
-                            }}/>
-                    </View>
-                    <View style={styles.slide3}>
-                        <Text style={styles.text}>And simple</Text>
-                    </View>
-                </Swiper>
                 <View style={styles.container}>
                     <FlatList
                         data={this.state.dataSource}
@@ -139,7 +141,7 @@ class DiaryScreen extends Component {
                     />
                 </View>
                 <Button buttonStyle={{
-                    backgroundColor: '#44a3ff',
+                    backgroundColor: '#ff7816',
                     borderRadius: 10,
                     marginTop: 40,
                     marginBottom: 40,
@@ -173,7 +175,17 @@ const styles = StyleSheet.create(
             alignItems: 'center',
             justifyContent: 'space-between',
             height: 60
+        },
+        notLogin: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        notLoginText: {
+            fontWeight: 'bold',
+            fontSize: 16
         }
+
     }
 )
 

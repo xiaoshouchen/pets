@@ -67,7 +67,7 @@ class StoreScreen extends Component {
             color='white'
             style={{marginRight: 15,}}
         />,
-        headerTitle: '小宠商城',
+        headerTitle: '捏捏商城',
         tabBarIcon: ({tintColor, focused}) => (
             <Icon
                 name='shopping-cart'

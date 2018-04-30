@@ -24,9 +24,10 @@ class ArticleDetail extends Component {
 
     isClick = false;
     static navigationOptions = {
-        tabBarLabel: "文章详情",
+        headerTitle: "文章详情",
+        headerBackTitle: null,
         ...App.commonHeaderStyle,
-        headerRight: (
+        /*headerRight: (
             <View style={{flexDirection: 'row'}}>
                 <Icon
                     name='star'
@@ -36,7 +37,7 @@ class ArticleDetail extends Component {
                     name='share-apple'
                     size={25}
                     style={{paddingRight: 25}}/>
-            </View>),
+            </View>),*/
     }
 
     onMessage(e) {

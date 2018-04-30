@@ -54,6 +54,7 @@ class AddPet extends Component {
         let formData = new FormData();
         const {state, goBack} = this.props.navigation;
         formData.append('user_id', this.state.userId);
+        formData.append('token', this.state.token);
         formData.append('pet_id', this.state.petId);
         fetch(DELETE_PETS, {
             method: 'POST',
@@ -130,6 +131,7 @@ class AddPet extends Component {
                 formData.append('small_type_id', this.state.typeId);
                 formData.append('avatar', file);
                 formData.append('user_id', this.state.userId);
+                formData.append('token', this.state.token);
                 const {params} = this.props.navigation.state;
                 if (params.item != undefined) {
                     formData.append('id', this.state.petId);
@@ -177,7 +179,7 @@ class AddPet extends Component {
             else {
                 this.setState({login: result}, function () {
                     let json = JSON.parse(this.state.login);
-                    this.setState({userId: json.user_id});
+                    this.setState({userId: json.user_id, 'token': json.token});
                 });
             }
 
@@ -235,6 +237,7 @@ class AddPet extends Component {
                 <View style={styles.imageView}>
                     <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                         <Image style={styles.image} source={this.state.avatarSource}/>
+                        <Text>点击添加头像</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.mainView}>
@@ -298,6 +301,8 @@ class AddPet extends Component {
                             mode="date"
                             placeholder="选择宠物生日"
                             format="YYYY-MM-DD"
+                            confirmBtnText="确认"
+                            cancelBtnText="取消"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             androidMode="spinner"
@@ -308,6 +313,14 @@ class AddPet extends Component {
                                     borderColor: 'white',
                                     flexDirection: 'row',
                                     justifyContent: 'flex-end',
+                                },
+                                btnTextConfirm: {
+                                    height: 20,
+                                    color: "#000"
+                                },
+                                btnTextCancel: {
+                                    height: 20,
+                                    color: "#b6b6b6"
                                 },
                                 dateTouchBody: {},
                                 placeholderText: {}
@@ -329,7 +342,7 @@ class AddPet extends Component {
                 <View style={{flexDirection: 'row', justifyContent: 'center',}}>
                     <Button disabled={!this.state.isClickAble}
                             buttonStyle={{backgroundColor: '#44a3ff', borderRadius: 10, marginTop: 20, width: 350}}
-                            onPress={() => this.post()} title={'保存'}/>
+                            onPress={() => this.post()} title={'添加宠物'}/>
                 </View>
             </View>
         );

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, Text, View,
+import {
+    StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Button, Image
 } from 'react-native';
 import {Icon} from 'react-native-elements'
+import App from "../../../utils/app.core";
 
 class OrderListScreen extends Component {
 
@@ -12,21 +14,21 @@ class OrderListScreen extends Component {
             isLoading: true
         }
     }
+
     static navigationOptions = {
         tabBarLabel: "我的",
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: null,
-        headerStyle: {backgroundColor: '#44a3ff'},
+        ...App.commonHeaderStyle,
         title: '订单',
     };
 
-    render(){
+    render() {
         const {navigate} = this.props.navigation;
-        return(
+        return (
             <View>
                 <Text>订单</Text>
             </View>
         )
     }
 }
+
 export {OrderListScreen}

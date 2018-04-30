@@ -3769,9 +3769,9 @@ react-native-easy-toast@^1.1.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-elements@^0.18.4:
-  version "0.18.5"
-  resolved "http://registry.npm.taobao.org/react-native-elements/download/react-native-elements-0.18.5.tgz#9d9a584395fea63f8cad7904fb21c1eac7cc63cf"
+react-native-elements@^0.19.1:
+  version "0.19.1"
+  resolved "http://registry.npm.taobao.org/react-native-elements/download/react-native-elements-0.19.1.tgz#f92b69d864a150215d01f81fe3c52a9cada83e45"
   dependencies:
     lodash.isempty "^4.4.0"
     lodash.times "^4.3.2"
@@ -3785,10 +3785,6 @@ react-native-image-picker@^0.26.7:
 react-native-keyboard-spacer@^0.4.1:
   version "0.4.1"
   resolved "http://registry.npm.taobao.org/react-native-keyboard-spacer/download/react-native-keyboard-spacer-0.4.1.tgz#46f18a320432098a25ea9fa89f5143dd254d332d"
-
-react-native-puti-pay@^1.0.2:
-  version "1.0.2"
-  resolved "http://registry.npm.taobao.org/react-native-puti-pay/download/react-native-puti-pay-1.0.2.tgz#85b3535d70bf736e0c8be2fc643a2156fd46117e"
 
 "react-native-richeditor@https://github.com/wwlxz22/react-native-richeditor.git":
   version "1.0.0"

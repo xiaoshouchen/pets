@@ -39,14 +39,14 @@ class ProfileScreen extends Component {
                 color={tintColor}
             />
         ),
-        headerRight:
+        /*headerRight:
             <Icon
                 name='bell'
                 size={20}
                 type="MaterialIcons"
                 color="white"
                 style={{paddingRight: 5,}}
-            />
+            />*/
     };
 
     componentWillMount() {
@@ -201,7 +201,7 @@ class ProfileScreen extends Component {
                                             marginLeft: 10,
                                             paddingHorizontal: 10,
                                             color: 'white'
-                                        }}>LV {this.state.info.points / 100}</Text></View>
+                                        }}>LV {parseInt(this.state.info.points / 100)}</Text></View>
                                 <Text>简介： {this.state.info.desc}</Text>
                             </View>
                         </View>
@@ -298,7 +298,7 @@ class ProfileScreen extends Component {
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')}>
                                     <Image source={require('../../image/profile/recent.png')}
                                            style={{width: 30, height: 30, marginBottom: 5}}/>
-                                    <Text>文章</Text>
+                                    <Text>动态</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.blockItem}>
@@ -324,8 +324,8 @@ class ProfileScreen extends Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
-                    <View style={styles.menuView}>
+                    {/*<View style={{height: 10, backgroundColor: '#f5f5f9'}}/>*/}
+                    {/*<View style={styles.menuView}>
                         <View style={styles.littleTitle}>
                             <Text>
                                 商城管理
@@ -362,7 +362,7 @@ class ProfileScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </View>
+                    </View>*/}
                     <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
                     <View style={styles.menuView}>
                         <View style={styles.littleTitle}>
@@ -382,6 +382,7 @@ class ProfileScreen extends Component {
                             </View>
                         </View>
                     </View>
+                    <View style={{height: 10, backgroundColor: '#f5f5f9'}}/>
                 </View>
             </ScrollView>
 

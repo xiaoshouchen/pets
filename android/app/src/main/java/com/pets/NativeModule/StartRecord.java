@@ -1,10 +1,11 @@
 package com.pets.NativeModule;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.pets.videorecord.TCVideoRecordActivity;
 
 /**
  * Created by xiaoz on 2018/3/2.
@@ -24,12 +25,7 @@ public class StartRecord extends ReactContextBaseJavaModule {
     @ReactMethod
     public void start() {
         try {
-            Activity activity = getCurrentActivity();
-            if (null != activity) {
-                Intent intent = new Intent(activity, TCVideoRecordActivity.class);
-                activity.startActivity(intent);
-            }
-
+            //TO DO
         } catch (Exception e) {
             e.printStackTrace();
         }

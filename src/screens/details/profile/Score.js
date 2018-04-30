@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, Text, View,
+import {
+    StyleSheet, FlatList, Text, View,
     Alert, ActivityIndicator, Platform, TouchableOpacity, Image
 } from 'react-native';
+import App from "../../../utils/app.core";
 
 class ScoreScreen extends Component {
 
@@ -13,26 +15,12 @@ class ScoreScreen extends Component {
     }
 
     static navigationOptions = {
-        headerTitleStyle: {color: '#fff'},
-        headerBackTitle: '个人资料',
-        headerStyle: {backgroundColor: '#44a3ff'},
+        ...App.commonHeaderStyle,
         title: '积分',
     }
+
     componentDidMount() {
 
-        return fetch('http://123.207.217.225/api/products')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson
-                }, function () {
-                    // In this block you can do something with new state.
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
     }
 
     FlatListItemSeparator = () => {
@@ -47,32 +35,19 @@ class ScoreScreen extends Component {
         );
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.MainContainer}>
-                <View  style={styles.description}>
-                    <Text style={{fontSize:30}}>100</Text>
+                <View style={styles.description}>
+                    <Text style={{fontSize: 30}}>100</Text>
                     <Text>分</Text>
-                    <Text style={styles.descriptionText}>积分说明</Text>
+                    <Text style={styles.descriptionText}
+                          onPress={() => this.props.navigation.navigate('ArticleDetail', {id: 1})}>积分说明</Text>
                 </View>
                 <View style={styles.goods}>
-                    <Text style={{margin:10}}>兑换物品</Text>
-                    <FlatList
-                        data={this.state.dataSource}
-                        ItemSeparatorComponent={this.FlatListItemSeparator}
-                        renderItem={({item}) => (
-                            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                                <Image source={{uri: item.img1}} style={styles.product_img}/>
-                                <View>
-                                    <Text style={styles.product_title}>{item.title}</Text>
-                                    <Text style={styles.product_describe}>{item.describe}</Text>
-                                    <Text style={styles.product_price}>￥{item.price}</Text>
-                                    <Text>{item.created_at}</Text>
-                                </View>
-                            </View>)
-                        }
-                        keyExtractor={(item, index) => index}
-                    />
+                    <Text style={{margin: 10}}>积分商城即将上线</Text>
+                    <Text style={{margin: 10}}>积分可以在积分商城直接购买商品</Text>
+                    <Text style={{margin: 10}}>积分可以在普通商城作为现金抵扣</Text>
                 </View>
             </View>
         )
@@ -85,14 +60,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
-    description:{
-        backgroundColor:'white',
+    description: {
+        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    descriptionText:{
-        fontSize: 10,
+    descriptionText: {
+        fontSize: 12,
         color: '#912CEE',
     },
     goods: {

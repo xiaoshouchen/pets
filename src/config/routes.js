@@ -51,6 +51,8 @@ import {AddressListScreen} from "../screens/details/profile/AddressList";
 import {ChatScreen} from '../screens/details/store/Chat';
 import {AddNoticeScreen} from '../screens/details/notice/AddNotice';
 import {NoticeListsScreen} from '../screens/details/notice/NoticeLists';
+import {Platform} from "react-native";
+import {ForgetPasswordScreen} from "../screens/ForgetPassword";
 
 const PetTypeTabs = TabNavigator({
         CatType: {screen: CatTypeScreen},
@@ -61,7 +63,20 @@ const PetTypeTabs = TabNavigator({
         tabBarComponent: TabBarTop,
         tabBarPosition: 'top',
         swipeEnabled: true,
-
+        tabBarOptions: {
+            activeTintColor: '#000000',
+            inactiveTintColor: '#646464',
+            labelStyle: {
+                fontSize: 14,
+                fontWeight: "bold"
+            },
+            style: {
+                backgroundColor: '#ffffff',
+            },
+            indicatorStyle: {
+                backgroundColor: '#ffffff',
+            }
+        },
     })
 
 const Tabs = TabNavigator({
@@ -136,6 +151,7 @@ const RootNavigator = StackNavigator({
     AddNotice: {screen: AddNoticeScreen},
     NoticeLists: {screen: NoticeListsScreen},
     ChangeProfile: {screen: ChangeProfileScreen},
+    ForgetPassword: {screen: ForgetPasswordScreen},
 });
 
 export default RootNavigator;
