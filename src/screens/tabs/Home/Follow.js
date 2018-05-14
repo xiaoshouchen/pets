@@ -67,7 +67,7 @@ class FollowScreen extends Component {
         return (
             <View
                 style={{
-                    height: 10,
+                    height: 20,
                     width: "100%",
                 }}
             />
@@ -155,7 +155,7 @@ class FollowScreen extends Component {
                                     </View>
                                 </TouchableOpacity>
 
-                                <View style={{
+                               {/* <View style={{
                                     flexDirection: 'row',
                                     flex: 1,
                                     justifyContent: 'flex-end',
@@ -186,7 +186,7 @@ class FollowScreen extends Component {
                                             />
                                         </TouchableOpacity>
                                     </View>
-                                </View>
+                                </View>*/}
                             </View>)
                     }
                     }

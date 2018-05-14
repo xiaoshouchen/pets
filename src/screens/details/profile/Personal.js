@@ -142,7 +142,7 @@ class PersonalScreen extends Component {
                     <View style={styles.textView}>
                         <Text style={styles.leftText} numberOfLines={1}>个人简介</Text>
                         <View style={styles.floatRight}>
-                            <Text style={styles.rightText}>{this.state.desc}</Text>
+                            <Text style={styles.rightText} numberOfLines={1}>{this.state.desc}</Text>
                             <Image style={styles.arrow}
                                    source={require('../../../image/right-arrow.png')}/>
                         </View>
@@ -167,7 +167,8 @@ class PersonalScreen extends Component {
                     <View style={styles.textView}>
                         <Text style={styles.leftText}>等级</Text>
                         <View style={styles.floatRight}>
-                            <Text style={styles.rightText} numberOfLines={1}>LV{this.state.points / 100}</Text>
+                            <Text style={styles.rightText}
+                                  numberOfLines={1}>LV{parseInt(this.state.points / 100)}</Text>
                             <Image style={styles.arrow}
                                    source={require('../../../image/right-arrow.png')}/>
                         </View>

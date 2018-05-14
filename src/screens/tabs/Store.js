@@ -105,11 +105,11 @@ class StoreScreen extends Component {
                         />
                     }>
                     <Swiper style={styles.wrapper} showsButtons={false}
+                            width={Dimensions.get('window').width}
                             height={Dimensions.get('window').width / 21 * 9}>
                         <View style={styles.slide1}>
-                            <Text style={styles.text}>商城即将上线</Text>
-                            <Text style={styles.text_small}>积分可抵扣现金</Text>
-                            <Text style={styles.text_small}>或直接换取积分好礼</Text>
+                            <Image source={require('../../image/storeiscoming.png')}
+                                   style={{width: Dimensions.get('window').width,height:Dimensions.get('window').width / 21 * 9}}/>
                         </View>
                     </Swiper>
                     <View style={styles.item_list}>
@@ -147,7 +147,7 @@ class StoreScreen extends Component {
                             ItemSeparatorComponent={this.FlatListItemSeparator}
                             renderItem={({item}) => (
                                 <TouchableHighlight
-                                    onPress={() => this.props.navigation.navigate('ProductDetail', {id: item.id})}>
+                                    /*onPress={() => this.props.navigation.navigate('ProductDetail', {id: item.id})}*/>
                                     <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                                         <Image source={{uri: item.img1}} style={styles.product_img}/>
                                         <View>

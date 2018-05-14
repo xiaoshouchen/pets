@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -61,9 +62,6 @@
 		E729E54E206CF2D4009C9972 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E729E54D206CF2D4009C9972 /* SystemConfiguration.framework */; };
 		E729E550206CF2E0009C9972 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E729E54F206CF2E0009C9972 /* libz.tbd */; };
 		E729E552206CF2EF009C9972 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E729E551206CF2EF009C9972 /* libc++.tbd */; };
-		E729E55E206D0758009C9972 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E729E555206D0758009C9972 /* AlipaySDK.bundle */; };
-		E729E55F206D0758009C9972 /* RCTXPay.m in Sources */ = {isa = PBXBuildFile; fileRef = E729E556206D0758009C9972 /* RCTXPay.m */; };
-		E729E560206D0758009C9972 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E729E55A206D0758009C9972 /* README.txt */; };
 		E729E564206D07FA009C9972 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E729E563206D07FA009C9972 /* AlipaySDK.framework */; };
 		E729E566206D0910009C9972 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E729E565206D0910009C9972 /* libWeChatSDK.a */; };
 		EC646775D9584B09904E3624 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D5455644654BA79F40B076 /* libRNVectorIcons.a */; };
@@ -416,15 +414,6 @@
 		E729E54D206CF2D4009C9972 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E729E54F206CF2E0009C9972 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		E729E551206CF2EF009C9972 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		E729E555206D0758009C9972 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		E729E556206D0758009C9972 /* RCTXPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTXPay.m; sourceTree = "<group>"; };
-		E729E557206D0758009C9972 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		E729E558206D0758009C9972 /* RCTXPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTXPay.h; sourceTree = "<group>"; };
-		E729E559206D0758009C9972 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		E729E55A206D0758009C9972 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		E729E55B206D0758009C9972 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		E729E55C206D0758009C9972 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		E729E55D206D0758009C9972 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		E729E563206D07FA009C9972 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlipaySDK.framework; path = pets/ios_pay_lib/AlipaySDK.framework; sourceTree = "<group>"; };
 		E729E565206D0910009C9972 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = pets/ios_pay_lib/libWeChatSDK.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -582,7 +571,6 @@
 		13B07FAE1A68108700A75B9A /* pets */ = {
 			isa = PBXGroup;
 			children = (
-				E729E554206D0758009C9972 /* ios_pay_lib */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -722,23 +710,6 @@
 				2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E729E554206D0758009C9972 /* ios_pay_lib */ = {
-			isa = PBXGroup;
-			children = (
-				E729E555206D0758009C9972 /* AlipaySDK.bundle */,
-				E729E556206D0758009C9972 /* RCTXPay.m */,
-				E729E557206D0758009C9972 /* WXApi.h */,
-				E729E558206D0758009C9972 /* RCTXPay.h */,
-				E729E559206D0758009C9972 /* WXApiObject.h */,
-				E729E55A206D0758009C9972 /* README.txt */,
-				E729E55B206D0758009C9972 /* WechatAuthSDK.h */,
-				E729E55C206D0758009C9972 /* libWeChatSDK.a */,
-				E729E55D206D0758009C9972 /* AlipaySDK.framework */,
-			);
-			name = ios_pay_lib;
-			path = "../node_modules/react-native-puti-pay/ios_pay_lib";
 			sourceTree = "<group>";
 		};
 		E7D647B12058D16E006EC23C /* Recovered References */ = {
@@ -1255,13 +1226,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E729E55E206D0758009C9972 /* AlipaySDK.bundle in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				E722A027207B4A5800F38E8E /* Images.xcassets in Resources */,
 				584D137F41144DC39DACDBB9 /* richeditor.ttf in Resources */,
 				56BD310FE58D4E6A95E6B8D8 /* Entypo.ttf in Resources */,
 				C54D653C7B314DF0989E0AC2 /* EvilIcons.ttf in Resources */,
-				E729E560206D0758009C9972 /* README.txt in Resources */,
 				51A589986E394AE0B7AB1907 /* Feather.ttf in Resources */,
 				C6C4F8EA32C54CEDBED0AF85 /* FontAwesome.ttf in Resources */,
 				E71F3342AB17446CAE933F1C /* Foundation.ttf in Resources */,
@@ -1334,7 +1303,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E729E55F206D0758009C9972 /* RCTXPay.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);

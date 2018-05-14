@@ -69,12 +69,12 @@ class ChangeProfileScreen extends Component {
         switch (this.state.item) {
             case 'name':
                 title = '昵称';
-                maxCount = 16;
+                maxCount = 9;
                 tint = '新的名字';
                 break;
             case 'desc':
                 title = '个性签名';
-                maxCount = 100;
+                maxCount = 30;
                 tint = '介绍自己';
                 multiline = true;
                 break;
@@ -87,6 +87,9 @@ class ChangeProfileScreen extends Component {
                 break;
             case 'relationship_state':
                 title = '情感状态';
+                break;
+            case 'birthday':
+                title = '生日';
                 break;
             default:
                 title = '其他';

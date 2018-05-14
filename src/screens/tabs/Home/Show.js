@@ -16,11 +16,7 @@ class ShowScreen extends Component {
             isLoading: true,
             dataSource: [],
             showFoot: 0,
-            like_url: '../../../image/forum/like.png',
-            liked_url: '../../../image/forum/liked.png',
-            restore_url: '../../../image/forum/restore.png',
-            restored_url: '../../../image/forum/restored.png',
-            login: "",
+            login: {},
             pageNo: 1,
             totalPage: 1,
             isLogin: false,
@@ -38,7 +34,6 @@ class ShowScreen extends Component {
         let userInfo = App.getUserInfo();
         userInfo.then((data) => {
             if (data === false) {
-                //TO DO
                 this._getData(1, 0);
             } else {
                 this.setState({
@@ -78,6 +73,7 @@ class ShowScreen extends Component {
         let formData = new FormData();
         formData.append('article_id', article_id);
         formData.append('user_id', user_id);
+        formData.append('token', this.state.login.token)
         fetch(LIKE, {
             method: 'POST',
             headers: {
@@ -85,7 +81,7 @@ class ShowScreen extends Component {
             },
             body: formData,
         }).then((respone) => respone.json()).then((responeJson) => {
-            //alert(responeJson.message);
+            alert(responeJson.message);
             let message = data[index].islike ? "   点赞成功   " : "   取消点赞   ";
             this.refs.toast.show(message);
         })
@@ -118,8 +114,8 @@ class ShowScreen extends Component {
 
     }
 
-    _getData(_pageNo, user_id) {
-        fetch(GET_ARTICLES + _pageNo + "&user_id=" + user_id)
+    _getData(_pageNo, user_id, token) {
+        fetch(`${GET_ARTICLES}${_pageNo}&user_id=${user_id}&token=${token}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.code === 200) {
@@ -128,7 +124,7 @@ class ShowScreen extends Component {
                         isLoading: false,
                         dataSource: _pageNo === 1 ? responseJson.data : this.state.dataSource.concat(responseJson.data)
                     }, function () {
-                        // In this block you can do something with new state.
+                        this.articles.refreshing = false;
                     });
                 }
 
@@ -152,29 +148,27 @@ class ShowScreen extends Component {
         //底部显示正在加载更多数据
         //this.setState({showFoot: 2});
         //获取数据
-        this._getData(this.state.pageNo);
+        this._getData(this.state.pageNo, this.state.login.user_id, this.state.login.token);
     }
 
     _onRefresh() {
         this.articles.refreshing = true;
-        fetch(GET_ARTICLES + 1)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                //alert(responseJson[0].id+"    "+this.state.dataSource[0].id);
-                //alert();
-                if (responseJson.data[0].id == this.state.dataSource[0].id) {
-                    this.articles.refreshing = false;
-                    return;
-                } else {
-                    this.articles.refreshing = false;
-                    //alert(1111);
-                    return this._getData(1);
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            if (data === false) {
+                //TO DO
+                this._getData(1);
+            } else {
+                this.setState({
+                    isLogin: true,
+                    login: data
+                }, () => {
+                    this._getData(1, this.state.login.user_id, this.state.login.token);
+                })
+            }
+        }).catch((e) => {
 
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
     }
 
     render() {

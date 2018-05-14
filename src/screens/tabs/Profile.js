@@ -28,7 +28,7 @@ class ProfileScreen extends Component {
         this.componentDidMount();
     }
 
-    static navigationOptions = {
+    static navigationOptions = ({navigation}) => ({
         tabBarLabel: "我的",
         ...App.commonHeaderStyle,
         title: '个人资料',
@@ -39,15 +39,16 @@ class ProfileScreen extends Component {
                 color={tintColor}
             />
         ),
-        /*headerRight:
+        headerRight:
             <Icon
                 name='bell'
                 size={20}
                 type="MaterialIcons"
                 color="white"
-                style={{paddingRight: 5,}}
-            />*/
-    };
+                style={{paddingRight: 20,}}
+                onPress={() => navigation.navigate('MessageList')}
+            />
+    });
 
     componentWillMount() {
 

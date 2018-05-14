@@ -53,6 +53,8 @@ import {AddNoticeScreen} from '../screens/details/notice/AddNotice';
 import {NoticeListsScreen} from '../screens/details/notice/NoticeLists';
 import {Platform} from "react-native";
 import {ForgetPasswordScreen} from "../screens/ForgetPassword";
+import {MessageListScreen} from "../screens/details/chat/MessageList";
+import {ChatRoomScreen} from "../screens/details/chat/ChatRoom";
 
 const PetTypeTabs = TabNavigator({
         CatType: {screen: CatTypeScreen},
@@ -152,6 +154,8 @@ const RootNavigator = StackNavigator({
     NoticeLists: {screen: NoticeListsScreen},
     ChangeProfile: {screen: ChangeProfileScreen},
     ForgetPassword: {screen: ForgetPasswordScreen},
+    MessageList: {screen: MessageListScreen},
+    ChatRoom: {screen: ChatRoomScreen},
 });
 
 export default RootNavigator;

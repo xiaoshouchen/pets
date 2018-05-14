@@ -299,12 +299,12 @@ class AddPet extends Component {
                             style={{width: 200}}
                             date={this.state.date}
                             mode="date"
+                            minDate="1990-01-01"
+                            maxDate={new Date()}
                             placeholder="选择宠物生日"
                             format="YYYY-MM-DD"
                             confirmBtnText="确认"
                             cancelBtnText="取消"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
                             androidMode="spinner"
                             showIcon={false}
                             customStyles={{

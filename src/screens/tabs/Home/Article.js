@@ -16,10 +16,6 @@ class ArticleScreen extends Component {
             isLoading: true,
             dataSource: [],
             showFoot: 0,
-            like_url: '../../../image/forum/like.png',
-            liked_url: '../../../image/forum/liked.png',
-            restore_url: '../../../image/forum/restore.png',
-            restored_url: '../../../image/forum/restored.png',
             login: {},
             pageNo: 1,
             totalPage: 1,
@@ -38,7 +34,6 @@ class ArticleScreen extends Component {
         let userInfo = App.getUserInfo();
         userInfo.then((data) => {
             if (data === false) {
-                //TO DO
                 this._getData(1, 0);
             } else {
                 this.setState({
@@ -119,8 +114,8 @@ class ArticleScreen extends Component {
 
     }
 
-    _getData(_pageNo, user_id, token = null) {
-        fetch(`${GET_ARTICLES}${_pageNo}&user_id${user_id}&token=${token}&type_id=5`)
+    _getData(_pageNo, user_id, token) {
+        fetch(`${GET_ARTICLES}${_pageNo}&user_id=${user_id}&token=${token}&type_id=5`)
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.code === 200) {
@@ -129,7 +124,7 @@ class ArticleScreen extends Component {
                         isLoading: false,
                         dataSource: _pageNo === 1 ? responseJson.data : this.state.dataSource.concat(responseJson.data)
                     }, function () {
-                        // In this block you can do something with new state.
+                        this.articles.refreshing = false;
                     });
                 }
 
@@ -153,28 +148,27 @@ class ArticleScreen extends Component {
         //底部显示正在加载更多数据
         //this.setState({showFoot: 2});
         //获取数据
-        this._getData(this.state.pageNo);
+        this._getData(this.state.pageNo, this.state.login.user_id, this.state.login.token);
     }
 
     _onRefresh() {
         this.articles.refreshing = true;
-        fetch(`${GET_ARTICLES}1&user_id${this.state.login.user_id}&type_id=5`)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                //alert(responseJson[0].id+"    "+this.state.dataSource[0].id);
-                //alert();
-                if (responseJson.data[0].id === this.state.dataSource[0].id) {
-                    this.articles.refreshing = false;
-                    return;
-                } else {
-                    this.articles.refreshing = false;
-                    return this._getData(1, this.state.login.user_id);
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            if (data === false) {
+                //TO DO
+                this._getData(1);
+            } else {
+                this.setState({
+                    isLogin: true,
+                    login: data
+                }, () => {
+                    this._getData(1, this.state.login.user_id, this.state.login.token);
+                })
+            }
+        }).catch((e) => {
 
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
     }
 
     render() {
@@ -183,7 +177,7 @@ class ArticleScreen extends Component {
             return (
                 <View style={{flex: 1, paddingTop: 20, alignItems: 'center'}}>
                     <ActivityIndicator/>
-                    <Text style={styles.loading}>文章加载中</Text>
+                    <Text>文章加载中</Text>
                 </View>
             );
         }
