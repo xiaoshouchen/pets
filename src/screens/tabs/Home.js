@@ -16,9 +16,7 @@ const HomeTabs = TabNavigator({
         Show: {screen: ShowScreen},
         Article: {screen: ArticleScreen},
         Follow: {screen: FollowScreen},
-/*
         Diary: {screen: DiaryScreen}
-*/
     },
     {
         tabBarOptions: {

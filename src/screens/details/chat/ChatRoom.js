@@ -8,22 +8,29 @@ class ChatRoomScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sourceData: []
+            sourceData: [],
+            from_user_id: this.props.navigation.state.params.from_user_id,
+            to_user_id: this.props.navigation.state.params.to_user_id,
+            user_id: null,
+            token: '',
+            inputMessage: ''
         }
+        this._SendMessage = this._SendMessage.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
         ...App.commonHeaderStyle,
-        headerTitle: '消息中心',
+        headerTitle: navigation.state.params.ChatName,
     })
 
     componentDidMount() {
-        /**/
-        let msg = AsyncStorage.getItem('message_between_27_and_28');
-        msg.then((data) => {
-            console.log(data)
-            this.setState({sourceData: JSON.parse(data)});
-        })
+
+    }
+
+    _SendMessage() {
+        //发送信息
+        let mes = [{'path': 'from', 'content': this.state.inputMessage}];
+        this.setState({sourceData: mes.concat(this.state.sourceData),inputMessage:''});
     }
 
     render() {
@@ -45,13 +52,13 @@ class ChatRoomScreen extends Component {
                                             onPress={() => console.log("Works!")}
                                             activeOpacity={0.7}/>
                                         <View>
-                                            <Text style={styles.message}>小宠乐园用户</Text>
+                                            <Text style={styles.message}>{item.content}</Text>
                                         </View>
                                     </View>)
                             } else {
                                 return (
                                     <View style={styles.to}>
-                                        <Text style={styles.message}>小宠乐园用户</Text>
+                                        <Text style={styles.message}>{item.content}</Text>
                                         <Avatar
                                             containerStyle={styles.avatar}
                                             rounded
@@ -64,26 +71,31 @@ class ChatRoomScreen extends Component {
                         }
                     }
                 />
-                <View>
+
                     <View style={styles.input}>
                         <FormInput
                             placeholder='输入要发送的信息'
                             containerStyle={
                                 {flex: 1}
                             }
+                            value={this.state.inputMessage}
+                            onChangeText={(text) => {
+                                this.setState({inputMessage: {text}.text})
+                            }}
                         />
                         <Button
                             title='发送'
+                            onPress={() => this._SendMessage()}
                             buttonStyle={{
                                 backgroundColor: "#8babbe",
                                 width: 80,
                                 height: 40,
                                 borderColor: "transparent",
-                                borderWidth: 0,
                                 borderRadius: 5
                             }}
+                            style={{padding:0}}
                         />
-                    </View>
+
                 </View>
             </View>)
     }
@@ -123,7 +135,8 @@ const styles = StyleSheet.create({
     },
     input: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'flex-end',
+        alignItems:'center',
     },
     messageBack: {
         backgroundColor: '#fff'

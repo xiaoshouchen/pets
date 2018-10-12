@@ -3,9 +3,11 @@ package com.pets;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.pets.android_upgrade.UpgradePackage;
 import com.imagepicker.ImagePickerPackage;
+
+import com.pets.android_upgrade.UpgradePackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
@@ -30,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                    new ReactVideoPackage(),
                     new VectorIconsPackage(),
                     new ImagePickerPackage(),
                     new UpgradePackage(),

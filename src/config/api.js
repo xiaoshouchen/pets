@@ -38,7 +38,8 @@ export const GET_MY_DIARY = `${BASE_URL}/api/diaries`;
 
 //social
 
-export const FOLLOW = `${BASE_URL}/api/follow`
+export const FOLLOW = `${BASE_URL}/api/follow`;
+export const MESSAGES_LIST=`${BASE_URL}/api/messages/list`;
 
 //profile
 export const GET_PROFILE = `${BASE_URL}/api/profile/items`

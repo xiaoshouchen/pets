@@ -2,22 +2,35 @@ import React, {Component} from 'react';
 import {AsyncStorage, FlatList, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Avatar, Button} from 'react-native-elements';
 import App from "../../../utils/app.core";
+import {MESSAGES_LIST} from '../../../config/api';
 
 class MessageListScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sourceData: [{'key': 1}, {'key': 2}]
+            sourceData: [],
+            dataError: false
         }
-        AsyncStorage.setItem(`message_between_27_and_28`, `[{
-	"path": "from",
-	"content": "你好",
-	"time": 123
-}, {
-	"path": "to",
-	"content": "你也好",
-	"time": 124
-}]`);
+    }
+
+    componentDidMount() {
+        let userInfo = App.getUserInfo();
+        userInfo.then((data) => {
+            if (data === false) {
+                //
+                alert('fasdfasdfadsfasdfgasdg');
+            } else {
+                let user_id = data.user_id;
+                //console.log('json的值为');
+                        fetch(`${MESSAGES_LIST}?to_user_id=${user_id}`).then((res) => res.json()).then((resJson) => {
+                            //console.log(resJson);
+                            this.setState({sourceData: resJson.data})
+                        })
+                    }
+
+        }).catch((e) => {
+
+        })
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -26,6 +39,12 @@ class MessageListScreen extends Component {
     })
 
     render() {
+        if (this.state.dataError) {
+            return <View>
+                <Text>数据加载错误</Text>
+            </View>
+        }
+        //console.log(this.state.sourceData);
         const {navigate} = this.props.navigation;
         return (
             <View style={styles.main}>
@@ -41,18 +60,18 @@ class MessageListScreen extends Component {
                                         containerStyle={styles.avatar}
                                         rounded
                                         medium
-                                        source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"}}
+                                        source={{uri: item.avatar_img}}
                                         onPress={() => console.log("Works!")}
                                         activeOpacity={0.7}/>
                                     <TouchableOpacity
-                                        onPress={() => navigate('ChatRoom')}
+                                        onPress={() => navigate('ChatRoom',{ChatName:item.name})}
                                         style={{justifyContent: 'space-between', flexDirection: 'row', flex: 1}}>
                                         <View>
-                                            <Text style={styles.userName}>小宠乐园用户</Text>
-                                            <Text style={styles.message}>今天晚上吃啥？</Text>
+                                            <Text style={styles.userName}>{item.name}</Text>
+                                            <Text style={styles.message}>{item.content}</Text>
                                         </View>
                                         <View>
-                                            <Text style={styles.date}>4月28号</Text>
+                                            <Text style={styles.date}>{item.created_at}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </View>)
